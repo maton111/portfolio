@@ -3,13 +3,20 @@ import './SkillsSection.css'
 
 const SEGMENTS = 10
 
-function SegmentedBar({ value, tone = 'green' }: SkillMetric) {
+function SegmentedBar({ label, value, tone = 'green' }: SkillMetric) {
   const activeSegments = Math.max(1, Math.round((value / 100) * SEGMENTS))
 
   return (
-    <div className="skills-segmented" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}>
-      {Array.from({ length: activeSegments }).map((_, index) => (
-        <span key={`${value}-${index}`} className={`is-${tone}`} />
+    <div
+      className="skills-segmented"
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={value}
+      aria-valuetext={`${label} ${value} percent`}
+    >
+      {Array.from({ length: SEGMENTS }).map((_, index) => (
+        <span key={`${value}-${index}`} className={index < activeSegments ? `is-${tone}` : ''} />
       ))}
     </div>
   )

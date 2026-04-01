@@ -1,6 +1,6 @@
 export const aboutHeader = {
     eyebrow: 'Evolution_Protocol // Identification',
-    titleTop: 'MATTIA ARCHINA',
+    titleTop: 'MATTIA ARCHINA\'',
     titleAccent: 'BUILDING SYSTEMS',
     intro:
         'Sviluppo backend, esploro il frontend e trasformo idee in esperienze concrete. Mi piace costruire, imparare e migliorarmi continuamente.',
@@ -30,9 +30,9 @@ export const aboutPhilosophy =
     'Se ti serve qualcuno che costruisce, impara e non si arrende — scrivimi.'
 
 export const aboutStats = [
-    {label: 'BACKEND_PROWESS', value: 94, tone: 'green' as const},
-    {label: 'FRONTEND_SYNC', value: 78, tone: 'mint' as const},
-    {label: 'SYSTEM_RESILIENCE', value: 88, tone: 'orange' as const},
+    {label: 'BACKEND_PROWESS', value: 93, tone: 'green' as const},
+    {label: 'FRONTEND_SYNC', value: 67, tone: 'mint' as const},
+    {label: 'SYSTEM_RESILIENCE', value: 84, tone: 'orange' as const},
 ]
 
 export const aboutQuests = [

@@ -109,16 +109,19 @@ La navbar deve essere minimale e pulita.
 ### Contenuti consigliati
 
 Sinistra:
+
 - logo testuale o monogramma
 - esempio: `MA` oppure `Mattia`
 
 Destra:
+
 - About
 - Skills
 - Projects
 - Contact
 
 Extra opzionale:
+
 - toggle tema
 - piccolo indicatore di stato tipo `Available for work`
 
@@ -146,6 +149,7 @@ Esempi:
 - `Developer, builder, lifelong improver`
 
 ### Stile
+
 - uppercase o small caps
 - tracking largo
 - colore verde tenue o grigio-verde
@@ -157,7 +161,7 @@ L'H1 deve essere chiaro, umano e forte.
 
 Versione consigliata:
 
-**Mattia Archina**  
+**Mattia Archinà**  
 **Backend Developer → Full Stack**
 
 Oppure una versione più personale:
@@ -166,10 +170,12 @@ Oppure una versione più personale:
 **Costruisco sistemi, imparo in fretta, miglioro ogni giorno.**
 
 ### Regola importante
+
 Il nome deve essere chiarissimo.  
 Il ruolo deve emergere subito sotto o dentro lo stesso blocco.
 
 ### Dimensioni consigliate desktop
+
 - 56px–72px per il titolo principale
 - line-height stretta ma respirabile
 - peso bold o semibold forte
@@ -180,13 +186,16 @@ Questo blocco deve umanizzare il portfolio.
 
 Testo consigliato come tono:
 
-> Sono uno sviluppatore backend con una forte curiosità per il frontend e per tutto ciò che può trasformare un'idea in un'esperienza concreta. Mi piace costruire, imparare e migliorarmi continuamente.
+> Sono uno sviluppatore backend con una forte curiosità per il frontend e per tutto ciò che può trasformare un'idea in un'esperienza concreta. Mi piace
+> costruire, imparare e migliorarmi continuamente.
 
 Versione più personale:
 
-> Non sono perfetto, ma sono uno che ci prova davvero. Costruisco sistemi, studio nuove tecnologie e continuo a spingermi verso una versione più completa di me, come developer e come persona.
+> Non sono perfetto, ma sono uno che ci prova davvero. Costruisco sistemi, studio nuove tecnologie e continuo a spingermi verso una versione più completa di me,
+> come developer e come persona.
 
 ### Stile
+
 - massimo 2 o 3 righe su desktop
 - larghezza testo contenuta
 - colore leggermente più morbido del titolo
@@ -205,12 +214,14 @@ La hero deve parlare con un tono:
 - non eccessivamente scherzoso
 
 ### Deve evitare
+
 - frasi da CV
 - slogan generici
 - linguaggio corporate
 - eccesso di autocelebrazione
 
 ### Deve trasmettere
+
 - autenticità
 - energia controllata
 - disponibilità al contatto
@@ -223,33 +234,40 @@ La hero deve parlare con un tono:
 Servono due CTA.
 
 ### CTA primaria
+
 Deve portare alla parte più importante subito dopo la hero.
 
 Possibili testi:
+
 - `Scopri chi sono`
 - `Esplora il portfolio`
 - `Guarda i progetti`
 
 ### CTA secondaria
+
 Deve favorire il contatto o l'approfondimento.
 
 Possibili testi:
+
 - `Scrivimi`
 - `Contattami`
 - `Vedi cosa sto costruendo`
 
 ### Stile CTA primaria
+
 - background verde
 - testo nero o molto scuro
 - hover con glow e leggera elevazione
 
 ### Stile CTA secondaria
+
 - outline
 - bordo arancione o verde tenue
 - background trasparente
 - hover con riempimento molto soft
 
 ### Layout CTA
+
 - su desktop affiancate
 - su mobile stacked
 
@@ -281,6 +299,7 @@ La soluzione più coerente con il tuo profilo è una:
 Questa area deve raccontarti senza usare troppo testo.
 
 ### Cosa deve comunicare il visual
+
 - builder mindset
 - crescita continua
 - disciplina
@@ -335,6 +354,7 @@ La UI deve ispirarsi a un HUD da gioco, ma non diventare cosplay grafico.
 Quindi:
 
 ### Sì a:
+
 - barre
 - pannelli
 - indicatori
@@ -343,6 +363,7 @@ Quindi:
 - etichette tipo status
 
 ### No a:
+
 - interfacce troppo fantasy
 - icone troppo arcade
 - skin da videogioco invasiva
@@ -355,39 +376,48 @@ Quindi:
 Puoi dividere la visual area in 4 moduli.
 
 ### 1. Identity Card
+
 Contiene:
+
 - nome
 - età / level
 - ruolo
 - status breve
 
 Esempio:
+
 - `Mattia Archina`
 - `LVL 26`
 - `Backend Dev`
 - `Status: Leveling up`
 
 ### 2. Skill Bars
+
 Valori visivi non scientifici ma narrativi.
 
 Esempio:
+
 - Backend — 80
 - Frontend — 60
 - Creativity — 78
 - Discipline — 74
 
 ### 3. Focus / Current Quest
+
 Piccolo pannello con ciò che stai facendo ora.
 
 Esempio:
+
 - `Current build: Everyday Life Core`
 - `Main quest: Becoming full stack`
 - `Side quest: Exploring AI workflows`
 
 ### 4. Personal Tags
+
 Tag piccoli, visivamente interessanti.
 
 Esempi:
+
 - `.NET`
 - `React`
 - `Flutter`
@@ -404,25 +434,31 @@ Le animazioni devono essere sobrie ma presenti.
 ### Animazioni consigliate
 
 #### 1. Entrata iniziale
+
 - fade + translate up del testo
 - il visual compare con un leggero delay
 - le skill bar si riempiono una volta entrate in viewport
 
 #### 2. Glow pulsato leggero
+
 - alcuni bordi della card hanno un glow lentissimo
 - non continuo in modo aggressivo
 
 #### 3. Status text cycling
+
 Un piccolo testo che cambia ogni pochi secondi.
 
 Esempi:
+
 - `Currently building`
 - `Exploring new systems`
 - `Leveling up to full stack`
 - `Learning through real projects`
 
 #### 4. Pointer reaction
+
 Opzionale:
+
 - piccoli riflessi o gradienti che reagiscono al mouse
 - effetto lieve, non invasivo
 
@@ -435,23 +471,30 @@ Il background non deve essere vuoto.
 ### Struttura consigliata in layer
 
 #### Layer 1
+
 Nero profondo come base.
 
 #### Layer 2
+
 Gradienti soft:
+
 - alone verde molto tenue
 - alone arancione molto tenue
 
 #### Layer 3
+
 Grid o pattern quasi invisibile
+
 - tech grid
 - linee sottili
 - noise leggero
 
 #### Layer 4 opzionale
+
 Particelle molto leggere o glow floating sfocati
 
 ### Obiettivo
+
 Creare profondità senza distrarre.
 
 ---
@@ -459,6 +502,7 @@ Creare profondità senza distrarre.
 ## Palette della Hero
 
 ### Colori principali
+
 - Background base: `#0B0F0C`
 - Verde accent: `#00FF88`
 - Verde soft: `#38D996`
@@ -467,6 +511,7 @@ Creare profondità senza distrarre.
 - Testo secondario: `#A7B3AD`
 
 ### Regola d'uso
+
 - verde per azione, stati attivi, progress
 - arancione per highlight e dettagli speciali
 - il bianco puro va evitato: meglio off-white
@@ -476,17 +521,22 @@ Creare profondità senza distrarre.
 ## Tipografia della Hero
 
 ### Font titoli
+
 Consigliati:
+
 - Space Grotesk
 - Sora
 - Clash Display se vuoi più personalità
 
 ### Font corpo
+
 Consigliati:
+
 - Inter
 - Manrope
 
 ### Gerarchia tipografica
+
 - eyebrow: 12–14px
 - H1: 56–72px
 - paragrafo: 18–20px
@@ -500,6 +550,7 @@ Consigliati:
 La hero deve respirare.
 
 ### Spacing desktop consigliato
+
 - padding top: 120px
 - padding bottom: 80px
 - gap tra colonne: 48px–72px
@@ -508,6 +559,7 @@ La hero deve respirare.
 - gap tra CTA e trust signals: 20px
 
 ### Spacing mobile
+
 - padding top: 96px
 - padding laterale: 24px
 - gap complessivo più compatto ma generoso
@@ -519,6 +571,7 @@ La hero deve respirare.
 Su mobile la hero non deve perdere personalità.
 
 ### Ordine consigliato
+
 1. navbar
 2. visual hero compatto
 3. eyebrow
@@ -528,6 +581,7 @@ Su mobile la hero non deve perdere personalità.
 7. micro trust signals
 
 ### Adattamenti
+
 - il visual diventa una card singola molto pulita
 - meno moduli, ma leggibili
 - skill bar ridotte
@@ -539,19 +593,24 @@ Su mobile la hero non deve perdere personalità.
 ## Contenuti Testuali Consigliati — Versione 1
 
 ### Eyebrow
+
 `Backend developer in evoluzione verso il full stack`
 
 ### H1
+
 `Mattia Archina`  
 `Building systems. Leveling up every day.`
 
 ### Intro
+
 `Sviluppo backend, esploro il frontend e trasformo idee in esperienze concrete. Mi piace costruire, imparare e migliorarmi continuamente.`
 
 ### CTA primaria
+
 `Scopri chi sono`
 
 ### CTA secondaria
+
 `Guarda i progetti`
 
 ---
@@ -559,19 +618,24 @@ Su mobile la hero non deve perdere personalità.
 ## Contenuti Testuali Consigliati — Versione 2 Più Umana
 
 ### Eyebrow
+
 `Builder mindset · backend first · full stack direction`
 
 ### H1
+
 `Ciao, sono Mattia.`  
 `Creo, imparo e continuo a crescere.`
 
 ### Intro
+
 `Sono uno sviluppatore backend con una forte spinta verso il full stack. Mi piacciono i sistemi ben pensati, l'estetica fatta bene e tutto ciò che mi fa salire di livello.`
 
 ### CTA primaria
+
 `Entra nel mio mondo`
 
 ### CTA secondaria
+
 `Scrivimi`
 
 ---
@@ -579,19 +643,24 @@ Su mobile la hero non deve perdere personalità.
 ## Contenuti Testuali Consigliati — Versione 3 Più Forte
 
 ### Eyebrow
+
 `Available for work · backend developer · full stack journey`
 
 ### H1
+
 `Non sono perfetto.`  
 `Ma costruisco, imparo e miglioro ogni giorno.`
 
 ### Intro
+
 `Dal backend all'interfaccia, dalla disciplina personale ai progetti digitali: sto costruendo una versione sempre più completa di me, una riga di codice alla volta.`
 
 ### CTA primaria
+
 `Scopri il percorso`
 
 ### CTA secondaria
+
 `Contattami`
 
 ---
@@ -601,6 +670,7 @@ Su mobile la hero non deve perdere personalità.
 Per il tuo profilo, la direzione più forte è una fusione tra la versione 2 e la versione 3.
 
 Perché:
+
 - ti rende umano
 - ti differenzia
 - resta professionale
@@ -611,6 +681,7 @@ Perché:
 ## Componenti UI Precisi della Hero
 
 ### Componenti da progettare
+
 1. Navbar
 2. Eyebrow
 3. H1
@@ -628,40 +699,52 @@ Perché:
 ## Varianti Visive della Hero
 
 ### Variante A — Dashboard Centrale
+
 Il visual è una card unica, molto forte, pulita e protagonista.
 
 **Pro**
+
 - leggibile
 - elegante
 - facile da sviluppare
 
 **Contro**
+
 - meno dinamica
 
 ### Variante B — Dashboard Stratificata
+
 Una card principale con mini-card flottanti intorno:
+
 - status
 - project focus
 - tags
 
 **Pro**
+
 - molto wow
 - più moderna
 
 **Contro**
+
 - più difficile da mantenere pulita
 
 ### Variante C — Interactive HUD
+
 Dashboard con piccoli effetti al mouse e testi che cambiano.
 
 **Pro**
+
 - molto memorabile
 
 **Contro**
+
 - più effort tecnico
 
 ### Scelta consigliata
+
 **Variante B con moderazione**, perché è quella che meglio unisce:
+
 - wow
 - personalità
 - leggibilità
@@ -674,6 +757,7 @@ Dashboard con piccoli effetti al mouse e testi che cambiano.
 Anche se la hero deve essere d'impatto, non deve mai sacrificare l'uso.
 
 ### Regole
+
 - contrasto alto sui testi
 - CTA molto leggibili
 - niente testo sopra sfondi rumorosi
@@ -696,13 +780,18 @@ Anche se la hero deve essere d'impatto, non deve mai sacrificare l'uso.
 
 ## Prompt sintetico per design/stitch
 
-Progettare una hero section per il portfolio personale di Mattia Archina, developer backend in evoluzione verso il full stack. Lo stile deve essere dark, moderno, originale, con influenze game UI e HUD tech, ma elegante e leggibile. La hero deve avere una colonna testuale con nome, ruolo, copy umano e due CTA, e una colonna visuale con una dashboard personale che rappresenta Mattia come builder in crescita continua. Colori principali: nero profondo, verde acceso, arancione come accento. Animazioni sobrie: glow, progress bar, status dinamico. Il risultato deve comunicare personalità, disciplina, curiosità, disponibilità al contatto e forte memorabilità.
+Progettare una hero section per il portfolio personale di Mattia Archina, developer backend in evoluzione verso il full stack. Lo stile deve essere dark,
+moderno, originale, con influenze game UI e HUD tech, ma elegante e leggibile. La hero deve avere una colonna testuale con nome, ruolo, copy umano e due CTA, e
+una colonna visuale con una dashboard personale che rappresenta Mattia come builder in crescita continua. Colori principali: nero profondo, verde acceso,
+arancione come accento. Animazioni sobrie: glow, progress bar, status dinamico. Il risultato deve comunicare personalità, disciplina, curiosità, disponibilità
+al contatto e forte memorabilità.
 
 ---
 
 ## Decisione progettuale consigliata
 
 ### Hero finale raccomandata
+
 - layout a 2 colonne
 - testo a sinistra
 - personal HUD stratificato a destra

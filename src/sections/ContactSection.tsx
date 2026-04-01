@@ -38,18 +38,18 @@ function ContactSection() {
                 <div className="contact-form-grid">
                   <label>
                     <span>&gt; NAME:</span>
-                    <input placeholder="USER_IDENTIFIER" type="text" />
+                    <input placeholder="USER_IDENTIFIER" type="text" name="name" autoComplete="name" required />
                   </label>
 
                   <label>
                     <span>&gt; EMAIL:</span>
-                    <input placeholder="COMMS_ADDRESS" type="email" />
+                    <input placeholder="COMMS_ADDRESS" type="email" name="email" autoComplete="email" required />
                   </label>
                 </div>
 
                 <label>
                   <span>&gt; SUBJECT:</span>
-                  <select defaultValue={contactSubjectOptions[0]}>
+                  <select defaultValue={contactSubjectOptions[0]} name="subject" required>
                     {contactSubjectOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}
@@ -60,7 +60,7 @@ function ContactSection() {
 
                 <label>
                   <span>&gt; MESSAGE_DATA:</span>
-                  <textarea placeholder="ENTER_DATA_PACKET..." rows={5} />
+                  <textarea placeholder="ENTER_DATA_PACKET..." rows={5} name="message" required />
                 </label>
 
                 <button type="submit">
@@ -81,7 +81,13 @@ function ContactSection() {
               </h3>
               <div>
                 {externalNodes.map((node) => (
-                  <a href={node.href} key={node.label}>
+                  <a
+                    href={node.href}
+                    key={node.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${node.label} in a new tab`}
+                  >
                     <span>
                       <i className="material-symbols-outlined" aria-hidden="true">
                         {node.icon}

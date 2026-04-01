@@ -45,7 +45,14 @@ function HeroHudCard({name, role, level, status, stats, quests, tags}: HeroHudCa
                                 <span>{stat.label}</span>
                                 <strong>{stat.value}/100</strong>
                             </div>
-                            <div className="stat-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={stat.value}>
+                            <div
+                                className="stat-bar"
+                                role="progressbar"
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                aria-valuenow={stat.value}
+                                aria-valuetext={`${stat.label} ${stat.value} percent`}
+                            >
                                 <span className={stat.colorClass} style={{width: `${stat.value}%`}}/>
                             </div>
                         </div>

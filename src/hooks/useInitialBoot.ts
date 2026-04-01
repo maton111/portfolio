@@ -58,6 +58,19 @@ export function useInitialBoot(): UseInitialBootResult {
     }
 
     let canceled = false
+    const intervalIds: number[] = []
+    const timeoutIds: number[] = []
+
+    const clearTrackedTimers = () => {
+      intervalIds.forEach((id) => window.clearInterval(id))
+      timeoutIds.forEach((id) => window.clearTimeout(id))
+    }
+
+    const scheduleTimeout = (callback: () => void, delay: number) => {
+      const id = window.setTimeout(callback, delay)
+      timeoutIds.push(id)
+      return id
+    }
 
     const runTask = (index: number) => {
       if (canceled) {
@@ -68,11 +81,11 @@ export function useInitialBoot(): UseInitialBootResult {
       if (!task) {
         setProgress(100)
         window.sessionStorage.setItem(BOOT_STORAGE_KEY, '1')
-        window.setTimeout(() => {
+        scheduleTimeout(() => {
           if (!canceled) {
             setIsBootVisible(false)
             setIsPageGlitching(true)
-            window.setTimeout(() => {
+            scheduleTimeout(() => {
               if (!canceled) {
                 setIsPageGlitching(false)
               }
@@ -113,12 +126,15 @@ export function useInitialBoot(): UseInitialBootResult {
           setTaskIndex(index + 1)
         }
       }, Math.max(34, Math.floor(duration / ticks)))
+
+      intervalIds.push(timer)
     }
 
     runTask(taskIndex)
 
     return () => {
       canceled = true
+      clearTrackedTimers()
     }
   }, [isBootVisible, ranges, taskIndex])
 

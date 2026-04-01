@@ -12,10 +12,16 @@ export const contactSubjectOptions = [
   'GENERAL_HELLO',
 ]
 
-export const externalNodes = [
-  { label: 'GITHUB', icon: 'terminal', href: '#' },
-  { label: 'LINKEDIN', icon: 'lan', href: '#' },
-  { label: 'TWITTER', icon: 'alternate_email', href: '#' },
+export type ExternalNode = {
+  label: string
+  icon: string
+  href: `https://${string}`
+}
+
+export const externalNodes: ExternalNode[] = [
+  { label: 'GITHUB', icon: 'terminal', href: 'https://github.com' },
+  { label: 'LINKEDIN', icon: 'lan', href: 'https://linkedin.com' },
+  { label: 'TWITTER', icon: 'alternate_email', href: 'https://x.com' },
 ]
 
 export const systemHud = {

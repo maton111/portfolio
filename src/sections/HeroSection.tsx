@@ -1,5 +1,6 @@
 import HeroHudCard from '../components/HeroHudCard'
 import { heroContent } from '../data/heroContent'
+import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import './HeroSection.css'
 
 function HeroSection() {
@@ -27,7 +28,19 @@ function HeroSection() {
               <a href="#contact">Contact</a>
             </li>
           </ul>
-          <span>{heroContent.availability}</span>
+          <div className="topbar-actions">
+            <span>{heroContent.availability}</span>
+            <a
+              className="cv-btn"
+              href={cvFile}
+              download="Mattia-Archina-CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download CV in a new tab"
+            >
+              Download CV
+            </a>
+          </div>
         </nav>
       </header>
 
