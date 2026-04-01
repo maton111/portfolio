@@ -1,0 +1,330 @@
+.contact-page {
+  padding: 104px 24px 120px;
+  background-color: #0b0f0c;
+  background-image: radial-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.contact-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.contact-hud-meta {
+  display: none;
+  position: absolute;
+  top: -18px;
+  left: 0;
+}
+
+.contact-hud-meta p {
+  margin: 0 0 4px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #42e09c 70%, transparent);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+}
+
+.contact-main header h2 {
+  margin: 0 0 14px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(2.2rem, 7vw, 4.7rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--text-strong);
+}
+
+.contact-main header h2 span {
+  color: var(--accent-green);
+}
+
+.contact-main header p {
+  margin: 0;
+  max-width: 660px;
+  color: color-mix(in oklab, var(--text-main) 76%, transparent);
+  line-height: 1.7;
+}
+
+.contact-main header p span {
+  color: #42e09c;
+}
+
+.contact-panel {
+  margin-top: 24px;
+  position: relative;
+  padding: 26px;
+  border-left: 1px solid color-mix(in oklab, var(--accent-green) 30%, transparent);
+  background: color-mix(in oklab, var(--panel) 68%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.contact-panel .corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+}
+
+.contact-panel .corner.top-right {
+  top: 0;
+  right: 0;
+  border-top: 1px solid color-mix(in oklab, var(--accent-green) 52%, transparent);
+  border-right: 1px solid color-mix(in oklab, var(--accent-green) 52%, transparent);
+}
+
+.contact-panel .corner.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent-green) 52%, transparent);
+  border-left: 1px solid color-mix(in oklab, var(--accent-green) 52%, transparent);
+}
+
+.contact-form {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form label > span {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--outline) 50%, transparent);
+  background: color-mix(in oklab, var(--bg-base) 88%, transparent);
+  padding: 12px;
+  color: var(--accent-green);
+  font-family: var(--font-headline), sans-serif;
+  outline: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: color-mix(in oklab, var(--panel-strong) 85%, transparent);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-bottom-color: var(--accent-green);
+}
+
+.contact-form button {
+  justify-self: start;
+  margin-top: 8px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  background: var(--accent-green);
+  color: #003919;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.contact-form button:hover {
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.34);
+}
+
+.contact-form button:active {
+  transform: scale(0.98);
+}
+
+.contact-sidebar {
+  display: grid;
+  gap: 16px;
+}
+
+.contact-node-panel {
+  padding: 18px;
+  background: color-mix(in oklab, var(--panel) 65%, transparent);
+  border-left: 2px solid #42e09c;
+}
+
+.contact-node-panel.tone-orange {
+  border-left-color: var(--accent-orange);
+}
+
+.contact-node-panel h3 {
+  margin: 0 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.contact-node-panel.tone-orange h3 {
+  color: var(--accent-orange);
+}
+
+.contact-node-panel h3 span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.contact-node-panel > div {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-node-panel a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  background: color-mix(in oklab, var(--bg-elevated) 70%, transparent);
+  color: color-mix(in oklab, var(--text-main) 88%, transparent);
+  transition: background 0.2s ease;
+}
+
+.contact-node-panel a:hover {
+  background: color-mix(in oklab, var(--panel-strong) 66%, transparent);
+}
+
+.contact-node-panel a span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.location-map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
+  background:
+    radial-gradient(circle at 68% 34%, rgba(0, 255, 136, 0.22), transparent 26%),
+    linear-gradient(125deg, rgba(50, 54, 50, 0.7), rgba(16, 20, 17, 0.8));
+}
+
+.location-map > div {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.location-map p {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  margin: 0;
+  padding: 4px 8px;
+  background: color-mix(in oklab, var(--panel-strong) 74%, transparent);
+  color: var(--accent-green);
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contact-scanner {
+  overflow: hidden;
+  border-top: 1px solid color-mix(in oklab, var(--outline) 28%, transparent);
+  padding-top: 10px;
+}
+
+.contact-scanner-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: contact-scroll 20s linear infinite;
+  will-change: transform;
+}
+
+.contact-scanner-group {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 18px;
+  padding-right: 18px;
+}
+
+.contact-scanner span {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #42e09c 64%, transparent);
+}
+
+@keyframes contact-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 900px) {
+  .contact-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .contact-hud-meta {
+    display: block;
+  }
+
+  .contact-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form button,
+  .contact-scanner-track {
+    transition: none;
+    animation: none;
+  }
+}
+

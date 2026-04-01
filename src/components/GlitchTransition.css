@@ -1,0 +1,118 @@
+.glitch-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 95;
+    pointer-events: none;
+    background: rgba(11, 15, 12, 0.9);
+    animation: glitch-fade 720ms ease-out forwards;
+}
+
+.glitch-layer {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+            to bottom,
+            rgba(224, 227, 222, 0.11) 0 2px,
+            transparent 2px 4px
+    );
+    mix-blend-mode: screen;
+    opacity: 0.7;
+}
+
+.glitch-layer-a {
+    transform: translateX(0);
+    animation: glitch-shift-a 360ms steps(2, end) 2;
+}
+
+.glitch-layer-b {
+    opacity: 0.35;
+    background: linear-gradient(90deg, rgba(255, 0, 98, 0.22), rgba(0, 255, 136, 0.2));
+    mix-blend-mode: lighten;
+    animation: glitch-shift-b 340ms steps(2, end) 2;
+}
+
+.glitch-scan {
+    position: absolute;
+    inset: -25% 0 auto;
+    height: 26%;
+    background: linear-gradient(
+            to bottom,
+            rgba(0, 255, 136, 0),
+            rgba(0, 255, 136, 0.28),
+            rgba(0, 255, 136, 0)
+    );
+    animation: glitch-scan 620ms ease-out;
+}
+
+@keyframes glitch-shift-a {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-10px);
+    }
+    40% {
+        transform: translateX(9px);
+    }
+    60% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes glitch-shift-b {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(8px);
+    }
+    50% {
+        transform: translateX(-12px);
+    }
+    70% {
+        transform: translateX(6px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes glitch-scan {
+    from {
+        transform: translateY(-20%);
+    }
+    to {
+        transform: translateY(420%);
+    }
+}
+
+@keyframes glitch-fade {
+    0% {
+        opacity: 1;
+    }
+    55% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0.72;
+    }
+    90% {
+        opacity: 0.24;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glitch-transition,
+    .glitch-layer-a,
+    .glitch-layer-b,
+    .glitch-scan {
+        animation: none;
+    }
+}
+

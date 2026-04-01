@@ -1,0 +1,309 @@
+.skills-page {
+  padding: 88px 24px 120px;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(0, 255, 136, 0.06), transparent 34%),
+    radial-gradient(circle at 88% 72%, rgba(255, 122, 0, 0.06), transparent 38%),
+    var(--bg-elevated);
+}
+
+.skills-content {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.skills-header {
+  margin-bottom: 44px;
+}
+
+.skills-header > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.skills-header > div span {
+  color: #42e09c;
+}
+
+.skills-header > div p {
+  margin: 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.67rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.skills-header h2 {
+  margin: 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(2.1rem, 6vw, 4.1rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--text-strong);
+}
+
+.skills-header h2 span {
+  color: var(--accent-green);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.skills-card {
+  position: relative;
+  padding: 24px;
+  border-left: 2px solid var(--accent-green);
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  border-left-width: 2px;
+  background: color-mix(in oklab, var(--panel) 68%, transparent);
+  backdrop-filter: blur(14px);
+  transition: background 0.22s ease;
+}
+
+.skills-card:hover {
+  background: color-mix(in oklab, var(--panel-strong) 74%, transparent);
+}
+
+.skills-card.tone-orange {
+  border-left-color: var(--accent-orange);
+}
+
+.skills-card-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--accent-orange);
+}
+
+.skills-card-icon span {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.skills-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.skills-card-head h3 {
+  margin: 0;
+  font-family: var(--font-headline), sans-serif;
+  color: var(--text-strong);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  letter-spacing: -0.02em;
+}
+
+.skills-card-head p {
+  margin: 6px 0 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--text-muted) 75%, transparent);
+}
+
+.skills-status {
+  padding: 6px 10px;
+  border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
+  background: color-mix(in oklab, var(--accent-green) 12%, transparent);
+  color: var(--accent-green);
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.skills-status.tone-orange {
+  border-color: color-mix(in oklab, var(--accent-orange) 38%, transparent);
+  background: color-mix(in oklab, var(--accent-orange) 12%, transparent);
+  color: var(--accent-orange);
+}
+
+.skills-metrics {
+  display: grid;
+  gap: 18px;
+}
+
+.skills-metrics > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.skills-metrics span {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--text-main) 88%, transparent);
+}
+
+.skills-metrics strong {
+  font-family: var(--font-headline), sans-serif;
+  color: var(--accent-green);
+  font-size: 0.75rem;
+}
+
+.skills-metrics strong.tone-orange {
+  color: var(--accent-orange);
+}
+
+.skills-segmented {
+  display: flex;
+  width: max-content;
+  gap: 2px;
+}
+
+.skills-segmented span {
+  width: 5px;
+  height: 11px;
+  border-radius: 1px;
+}
+
+.skills-segmented span.is-green {
+  background: var(--accent-green);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.38);
+}
+
+.skills-segmented span.is-orange {
+  background: var(--accent-orange);
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.42);
+}
+
+.skills-tags {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skills-tags span {
+  padding: 6px 8px;
+  border-left: 2px solid #42e09c;
+  background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.57rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--text-main) 86%, transparent);
+}
+
+.skills-tags span.tone-orange {
+  border-left-color: var(--accent-orange);
+}
+
+.skills-bottom {
+  margin-top: 24px;
+  border-top: 1px solid color-mix(in oklab, var(--accent-green) 22%, transparent);
+  background: color-mix(in oklab, var(--panel) 64%, transparent);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skills-bottom > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skills-bottom > div:first-child > div:first-child {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--accent-green) 30%, transparent);
+  background: color-mix(in oklab, var(--accent-green) 12%, transparent);
+}
+
+.skills-bottom > div:first-child span {
+  color: var(--accent-green);
+}
+
+.skills-bottom p,
+.skills-bottom small,
+.skills-bottom strong {
+  margin: 0;
+}
+
+.skills-bottom > div:first-child p,
+.skills-bottom > div:last-child p {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.61rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.skills-bottom > div:first-child small {
+  color: color-mix(in oklab, var(--text-main) 72%, transparent);
+}
+
+.skills-bottom > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.skills-bottom > div:last-child strong {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-strong);
+}
+
+.skills-bottom > div:last-child i {
+  width: 1px;
+  height: 34px;
+  background: color-mix(in oklab, var(--outline) 36%, transparent);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 900px) {
+  .skills-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .skills-card.col-7 {
+    grid-column: span 7;
+  }
+
+  .skills-card.col-5 {
+    grid-column: span 5;
+  }
+
+  .skills-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-card,
+  .skills-card-icon span {
+    transition: none;
+    animation: none;
+  }
+}
+

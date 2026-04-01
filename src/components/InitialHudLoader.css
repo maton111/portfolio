@@ -1,0 +1,268 @@
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--bg-base);
+  color: var(--text-main);
+}
+
+.boot-grid,
+.boot-scanlines,
+.boot-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.boot-grid {
+  background-image:
+    linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.boot-scanlines {
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 136, 0.02) 50%);
+  background-size: 100% 4px;
+  mix-blend-mode: screen;
+}
+
+.boot-vignette {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(0, 255, 136, 0.09), transparent 40%),
+    radial-gradient(circle at 86% 78%, rgba(255, 122, 0, 0.08), transparent 42%),
+    radial-gradient(circle at 50% 45%, transparent 35%, rgba(11, 15, 12, 0.9) 90%);
+}
+
+.boot-main {
+  position: relative;
+  z-index: 2;
+  width: min(920px, calc(100% - 32px));
+  display: grid;
+  gap: 26px;
+}
+
+.boot-header {
+  text-align: center;
+  display: grid;
+  gap: 12px;
+}
+
+.boot-header > div {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0.76;
+}
+
+.boot-header > div span {
+  width: 48px;
+  height: 1px;
+  background: rgba(66, 224, 156, 0.35);
+}
+
+.boot-header small {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.boot-header h1 {
+  margin: 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(2rem, 8vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--text-strong);
+  text-shadow: 0 0 18px rgba(0, 255, 136, 0.24);
+}
+
+.boot-module {
+  border: 1px solid rgba(59, 75, 61, 0.45);
+  background: rgba(24, 29, 25, 0.45);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.boot-module-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.boot-module-head p,
+.boot-module-head strong,
+.boot-module-head b {
+  margin: 0;
+}
+
+.boot-module-head p {
+  font-family: var(--font-headline), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.63rem;
+  color: rgba(0, 255, 136, 0.75);
+}
+
+.boot-module-head strong {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-headline), sans-serif;
+  text-transform: uppercase;
+  font-size: 0.93rem;
+  color: var(--accent-green);
+  letter-spacing: 0.05em;
+}
+
+.boot-module-head b {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--accent-green);
+}
+
+.boot-segments {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+  min-height: 36px;
+  padding: 4px;
+  border: 1px solid rgba(59, 75, 61, 0.4);
+  background: rgba(39, 43, 39, 0.3);
+}
+
+.boot-segments span {
+  border-radius: 2px;
+  background: rgba(24, 29, 25, 0.7);
+  transition: background 180ms ease, box-shadow 180ms ease;
+}
+
+.boot-segments span.filled {
+  background: var(--accent-green);
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
+}
+
+.boot-log {
+  position: relative;
+  min-height: 150px;
+  max-height: 180px;
+  overflow: hidden;
+  border: 1px solid rgba(59, 75, 61, 0.35);
+  padding: 10px 12px;
+  background: rgba(16, 20, 17, 0.5);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: rgba(66, 224, 156, 0.84);
+}
+
+.boot-log p {
+  margin: 0 0 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  animation: log-enter 280ms ease;
+}
+
+.boot-log > div {
+  position: absolute;
+  inset: auto 0 0;
+  height: 34px;
+  background: linear-gradient(to top, rgba(16, 20, 17, 1), transparent);
+}
+
+.boot-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  opacity: 0.72;
+}
+
+.boot-footer > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boot-footer i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.65);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.boot-footer small {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.boot-footer .material-symbols-outlined {
+  font-size: 1rem;
+  color: rgba(66, 224, 156, 0.74);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes log-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .boot-main {
+    width: calc(100% - 20px);
+    gap: 18px;
+  }
+
+  .boot-module {
+    padding: 14px;
+  }
+
+  .boot-module-head b {
+    font-size: 1.5rem;
+  }
+
+  .boot-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-log p,
+  .boot-footer i,
+  .boot-segments span {
+    animation: none;
+    transition: none;
+  }
+}
+
