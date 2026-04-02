@@ -76,7 +76,10 @@ function ContactSection() {
 
                 <label>
                   <span>&gt; SUBJECT:</span>
-                  <select defaultValue={contactSubjectOptions[0]} name="subject" required>
+                  <select defaultValue="" name="subject" required>
+                    <option value="" disabled hidden>
+                      SELECT_SUBJECT
+                    </option>
                     {contactSubjectOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}

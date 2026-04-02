@@ -123,6 +123,10 @@
   outline: none;
 }
 
+.contact-form select:required:invalid {
+  color: color-mix(in oklab, var(--text-main) 56%, transparent);
+}
+
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: color-mix(in oklab, var(--text-main) 56%, transparent);
