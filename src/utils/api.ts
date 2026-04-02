@@ -13,7 +13,7 @@ export interface ContactResponse {
   debug?: string
 }
 
-const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001' : ''
+const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:4307' : ''
 
 export async function submitContactForm(data: ContactFormData): Promise<ContactResponse> {
   try {

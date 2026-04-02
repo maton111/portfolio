@@ -5,7 +5,7 @@
       "script": "server.js",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 3001
+        "SERVER_PORT": 4307
       },
       "error_file": "./logs/pm2-error.log",
       "out_file": "./logs/pm2-out.log",

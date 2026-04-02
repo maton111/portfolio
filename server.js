@@ -12,14 +12,14 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
-const PORT = process.env.SERVER_PORT || 3001
+const PORT = process.env.SERVER_PORT || 4307
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
 // Middleware
 app.use(express.json({ limit: '10kb' }))
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4321',
     methods: ['POST'],
     credentials: true,
   })
