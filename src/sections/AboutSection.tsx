@@ -46,18 +46,18 @@ function AboutSection() {
                             <div className="about-section-head">
                                 <span>01</span>
                                 <div/>
-                                <h3>The Origin Loop</h3>
+                                <h3>Career Snapshot</h3>
                             </div>
                             <div className="about-copy">
                                 <p>
-                                    Non sono perfetto, ma sono uno che ci prova davvero. Costruisco sistemi, studio nuove
-                                    tecnologie e continuo a spingermi verso una versione più completa di me, come developer e
-                                    come persona.
+                                    Lavoro su backend enterprise in .NET presso TeamSystem, dove sviluppo, mantengo e
+                                    rifattorizzo sistemi complessi con API REST e logiche di business pensate per restare
+                                    stabili, manutenibili e scalabili nel tempo.
                                 </p>
                                 <p>
-                                    Ho adottato un <strong>Builder Mindset</strong>. Dal backend all'interfaccia, dalla
-                                    disciplina personale ai progetti digitali: sto costruendo una versione sempre più completa
-                                    di me, una riga di codice alla volta.
+                                    Accanto al lavoro porto avanti <strong>Everyday Life Core</strong>, un progetto personale full
+                                    stack con React, Flutter e .NET che mi permette di esplorare realtime, notifiche,
+                                    architetture moderne e AI-assisted development.
                                 </p>
                             </div>
                         </section>
@@ -147,9 +147,7 @@ function AboutSection() {
                         <div className="about-scanner-group">
                             {aboutScanner.map((item, index) => (
                                 <span key={`a-${index}`}>
-                  {index === 0 ? (
-                      <span className="dot" aria-hidden="true"/>
-                  ) : null}
+                  <span className="dot" aria-hidden="true"/>
                                     {item}
                 </span>
                             ))}
@@ -157,9 +155,7 @@ function AboutSection() {
                         <div className="about-scanner-group" aria-hidden="true">
                             {aboutScanner.map((item, index) => (
                                 <span key={`b-${index}`}>
-                  {index === 0 ? (
-                      <span className="dot" aria-hidden="true"/>
-                  ) : null}
+                  <span className="dot" aria-hidden="true"/>
                                     {item}
                 </span>
                             ))}

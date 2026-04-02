@@ -136,7 +136,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
-  gap: 12px;
+  gap: 8px;
 }
 
 .skills-metrics span {
@@ -167,6 +167,12 @@
   width: 5px;
   height: 11px;
   border-radius: 1px;
+}
+
+.skills-segmented span.is-off {
+  background: color-mix(in oklab, var(--outline) 72%, var(--panel));
+  border: 1px solid color-mix(in oklab, var(--text-muted) 28%, transparent);
+  box-sizing: border-box;
 }
 
 .skills-segmented span.is-green {

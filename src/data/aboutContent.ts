@@ -1,66 +1,71 @@
 export const aboutHeader = {
-    eyebrow: 'Evolution_Protocol // Identification',
-    titleTop: 'MATTIA ARCHINA\'',
-    titleAccent: 'BUILDING SYSTEMS',
+    eyebrow: 'CV Snapshot // About',
+    titleTop: 'MATTIA ARCHINÀ',
+    titleAccent: 'BACKEND DEVELOPER',
     intro:
-        'Sviluppo backend, esploro il frontend e trasformo idee in esperienze concrete. Mi piace costruire, imparare e migliorarmi continuamente.',
+        'Lavoro su backend enterprise in .NET, con focus su Clean Architecture, microservizi, testing e qualità del codice. Nel tempo libero porto avanti EverydayLifeCore: un progetto full stack con React, Flutter e .NET che cresce un pezzo alla volta.',
 }
 
 export const aboutOriginCards = [
     {
         index: '01',
-        title: 'BACKEND_SOUL',
+        title: 'ENTERPRISE_BACKEND',
         description:
-            'Immutable logic, high-performance architectures, and data safety protocols.',
+            'Sviluppo e mantengo sistemi .NET complessi, API REST e logiche di business per piattaforme enterprise con centinaia di endpoint.',
     },
     {
         index: '02',
-        title: 'FRONTEND_SYNC',
+        title: 'CLEAN_ARCHITECTURE',
         description:
-            'Kinetic UI, seamless interactions, and editorial-grade layout precision.',
+            'Rifattorizzo legacy verso architetture più solide, standardizzo il codice e introduco unit test e integration test.',
     },
     {
         index: '03',
-        title: 'LEVEL_UP',
-        description: 'The relentless pursuit of growth. Every line of code is an upgrade in my stack.',
+        title: 'FULL_STACK_LAB',
+        description:
+            'Porto avanti un progetto personale con React, Flutter, PostgreSQL e funzionalità realtime per continuare a crescere.',
     },
 ]
 
 export const aboutPhilosophy =
-    'Se ti serve qualcuno che costruisce, impara e non si arrende — scrivimi.'
+    'Costruisco sistemi solidi, imparo in fretta e continuo a migliorare con ogni progetto. Se stai cercando qualcuno così, scrivimi.'
 
 export const aboutStats = [
-    {label: 'BACKEND_PROWESS', value: 93, tone: 'green' as const},
-    {label: 'FRONTEND_SYNC', value: 67, tone: 'mint' as const},
-    {label: 'SYSTEM_RESILIENCE', value: 84, tone: 'orange' as const},
+    {label: 'BACKEND_DEPTH', value: 96, tone: 'green' as const},
+    {label: 'ARCHITECTURE_FOCUS', value: 94, tone: 'mint' as const},
+    {label: 'TESTING_MINDSET', value: 88, tone: 'orange' as const},
 ]
 
 export const aboutQuests = [
     {
         status: 'Active Quest',
-        title: 'Mastering Rust Architecture',
-        description: 'Refactoring legacy C++ kernels into memory-safe Rust services.',
+        title: 'Scaling EverydayLifeCore',
+        description:
+            'Sto sviluppando un SaaS personale con funzionalità realtime, notifiche, gruppi e gestione attività.',
         active: true,
     },
     {
-        status: 'Pending',
-        title: 'Public Speaking Protocol',
-        description: 'Initiating talk series on "The Kinetic Frontend for Backend Devs".',
+        status: 'Open to opportunities',
+        title: 'Full Stack Software Engineer',
+        description:
+            'Cerco contesti dove lavorare su sistemi enterprise, prodotti solidi e team orientati alla qualità.',
         active: false,
     },
 ]
 
 export const aboutMetadata = [
-    {label: 'Location', value: 'MILAN_NODE_01'},
-    {label: 'Timezone', value: 'UTC+1'},
-    {label: 'Preferred_IDE', value: 'NVIM_STEROIDS'},
-    {label: 'Language_Index', value: 'IT/EN/RU/JS'},
+    {label: 'Location', value: 'Torino, Italy'},
+    {label: 'Focus', value: 'Backend / Software Engineer'},
+    {label: 'Stack', value: '.NET · React · Flutter'},
+    {label: 'Languages', value: 'IT native · EN A2/B1'},
 ]
 
 export const aboutScanner = [
-    'System Status: OPERATIONAL',
-    'Scanning for high-latency nodes...',
-    'NO_THREATS_DETECTED',
-    'Core Temp: 32°C',
+    'Enterprise systems in .NET',
+    'Clean Architecture & microservices',
+    'Unit, integration and E2E tests',
+    'Legacy modernization & refactoring',
+    'React / Flutter side project',
+    'Continuous learning & growth mindset',
 ]
 

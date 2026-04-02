@@ -1,7 +1,7 @@
-import { skillsBottomPanel, skillsHeader, skillsModules, type SkillMetric } from '../data/skillsContent'
+import {type SkillMetric, skillsBottomPanel, skillsHeader, skillsModules} from '../data/skillsContent'
 import './SkillsSection.css'
 
-const SEGMENTS = 10
+const SEGMENTS = 20
 
 function SegmentedBar({ label, value, tone = 'green' }: SkillMetric) {
   const activeSegments = Math.max(1, Math.round((value / 100) * SEGMENTS))
@@ -16,7 +16,7 @@ function SegmentedBar({ label, value, tone = 'green' }: SkillMetric) {
       aria-valuetext={`${label} ${value} percent`}
     >
       {Array.from({ length: SEGMENTS }).map((_, index) => (
-        <span key={`${value}-${index}`} className={index < activeSegments ? `is-${tone}` : ''} />
+        <span key={`${value}-${index}`} className={index < activeSegments ? `is-${tone}` : 'is-off'} />
       ))}
     </div>
   )
