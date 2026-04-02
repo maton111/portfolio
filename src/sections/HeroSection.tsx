@@ -1,5 +1,5 @@
 import HeroHudCard from '../components/HeroHudCard'
-import { heroContent } from '../data/heroContent'
+import {heroContent} from '../data/heroContent'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import './HeroSection.css'
 
@@ -89,14 +89,26 @@ function HeroSection() {
 
       <div className="status-scanner" aria-label="Status scanner">
         <div className="scanner-track">
-          {[...heroContent.scannerItems, ...heroContent.scannerItems].map((item, index) => (
-            <span className={item.highlighted ? 'highlighted' : ''} key={`${item.text}-${index}`}>
-              <span className="material-symbols-outlined" aria-hidden="true">
-                {item.icon}
+          <div className="scanner-group">
+            {heroContent.scannerItems.map((item) => (
+              <span className={item.highlighted ? 'highlighted' : ''} key={item.text}>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {item.icon}
+                </span>
+                {item.text}
               </span>
-              {item.text}
-            </span>
-          ))}
+            ))}
+          </div>
+          <div className="scanner-group" aria-hidden="true">
+            {heroContent.scannerItems.map((item, index) => (
+              <span className={item.highlighted ? 'highlighted' : ''} key={`${item.text}-${index}`}>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {item.icon}
+                </span>
+                {item.text}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -441,11 +441,18 @@
 .scanner-track {
     display: flex;
     align-items: center;
-    gap: 36px;
     min-height: 40px;
-    padding-inline: 24px;
     width: max-content;
-    animation: ticker 36s linear infinite;
+    will-change: transform;
+    animation: ticker 80s linear infinite;
+}
+
+.scanner-group {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    flex-shrink: 0;
+    padding-inline: 24px;
 }
 
 .scanner-track span {
@@ -553,5 +560,13 @@
     .scanner-track,
     .hud-status em {
         animation: none;
+    }
+
+    .scanner-track {
+        width: 100%;
+    }
+
+    .scanner-group + .scanner-group {
+        display: none;
     }
 }

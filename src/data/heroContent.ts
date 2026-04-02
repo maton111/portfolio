@@ -43,5 +43,13 @@ export const heroContent = {
         {icon: 'memory', text: 'System Load: Thinking', highlighted: false},
         {icon: 'hub', text: 'Network: Stable', highlighted: true},
         {icon: 'bolt', text: 'Energy: Optimized', highlighted: false},
+        {icon: 'shield', text: 'Security: Active', highlighted: true},
+        {icon: 'update', text: 'Updates: Up to Date', highlighted: false},
+        {icon: 'code', text: 'Mode: Development', highlighted: true},
+        {icon: 'terminal', text: 'Console: Running', highlighted: false},
+        {icon: 'cloud', text: 'Cloud Sync: Enabled', highlighted: true},
+        {icon: 'bug_report', text: 'Bugs: None Detected', highlighted: false},
+        {icon: 'speed', text: 'Performance: High', highlighted: true},
+        {icon: 'schedule', text: 'Response Time: Instant', highlighted: false},
     ],
 }
