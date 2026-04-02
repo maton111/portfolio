@@ -1,12 +1,16 @@
+import teamsystemSvg from '../assets/teamsystem_enterprise_backend_hero.svg'
+import legacySvg from '../assets/legacy_refactoring_hero.svg'
+
 export type ProjectCard = {
   id: string
   title: string
-  difficulty: 'Hard' | 'Medium' | 'Extreme'
+  difficulty: 'Enterprise' | 'Product' | 'Modernization'
   description: string
   tags: string[]
   icon: string
   tone?: 'green' | 'orange'
   visual: 'circuit' | 'vault' | 'kernel'
+  backgroundImage?: string | { default: string }
   featured?: boolean
 }
 
@@ -18,42 +22,44 @@ export type LogEntry = {
 }
 
 export const projectsHeader = {
-  eyebrow: 'Mission_Control // Projects',
-  titleTop: 'DEPLOYMENT',
-  titleBottom: 'MODULES',
+  eyebrow: 'CV Snapshot // Projects',
+  titleTop: 'PROJECT',
+  titleBottom: 'EXPERIENCE',
   intro:
-    'A curated selection of high-frequency digital architectures. Each module represents a solved computational challenge within the Neon Protocol.',
+    'Una selezione di esperienze e progetti che raccontano il mio lavoro su backend enterprise .NET, modernizzazione legacy e sviluppo full stack.',
 }
 
 export const projectCards: ProjectCard[] = [
   {
-    id: 'ARCH-01',
-    title: 'Cyber_Core V2',
-    difficulty: 'Hard',
+    id: 'TS-API-01',
+    title: 'TeamSystem Enterprise Backend',
+    difficulty: 'Enterprise',
     description:
-      'Next-generation neural network interface designed for high-throughput data processing and real-time visualization.',
-    tags: ['Rust', 'WebAssembly', 'Three.js'],
-    icon: 'terminal',
+      'Sviluppo e manutenzione di backend .NET in ambito enterprise con centinaia di API, logiche business critical e attenzione a stabilita e manutenibilita.',
+    tags: ['.NET', 'C#', 'REST API', 'SQL Server'],
+    icon: 'hub',
+    backgroundImage: teamsystemSvg,
     visual: 'circuit',
   },
   {
-    id: 'ARCH-02',
-    title: 'Void_Vault',
-    difficulty: 'Medium',
+    id: 'SC-LEG-02',
+    title: 'Legacy Refactoring Program',
+    difficulty: 'Modernization',
     description:
-      'Encrypted decentralized storage solution leveraging IPFS and custom encryption protocols for secure file transit.',
-    tags: ['Next.js', 'Solidity', 'IPFS'],
-    icon: 'database',
+      'Refactoring progressivo di sistemi storici verso Clean Architecture con introduzione di standard condivisi, unit test e integration test.',
+    tags: ['Clean Architecture', 'xUnit/NUnit', 'Integration Test'],
+    icon: 'sync_alt',
+    backgroundImage: legacySvg,
     visual: 'vault',
   },
   {
-    id: 'ARCH-03 // PRIORITY_ALPHA',
-    title: 'System_Stable OS',
-    difficulty: 'Extreme',
+    id: 'ELC-CORE-03',
+    title: 'Everyday Life Core (in sviluppo)',
+    difficulty: 'Product',
     description:
-      'A custom-built operating system environment for embedded tactical devices with low-latency kernel and modular drivers.',
-    tags: ['C++ 20', 'Assembly', 'RTOS'],
-    icon: 'memory',
+      'Progetto personale full stack: backend .NET, frontend React, mobile Flutter e funzionalita realtime per task, gruppi, notifiche e gestione quotidiana.',
+    tags: ['.NET', 'React', 'Flutter', 'PostgreSQL', 'WebSocket'],
+    icon: 'rocket_launch',
     tone: 'orange',
     visual: 'kernel',
     featured: true,
@@ -62,34 +68,34 @@ export const projectCards: ProjectCard[] = [
 
 export const systemLogs: LogEntry[] = [
   {
-    date: '2026.03.28 // 14:30',
-    title: 'Cyber_Core V2 Deployed',
-    note: 'Final handshake protocol optimized.',
+    date: '2026 // TeamSystem',
+    title: 'Enterprise backend maintenance',
+    note: 'API e logiche business su sistemi ad alto carico.',
     tone: 'green',
   },
   {
-    date: '2026.03.21 // 09:12',
-    title: 'Vault Encryption Update',
-    note: 'Quantum resistance patch applied.',
+    date: '2025 // TeamSystem',
+    title: 'Testing rollout',
+    note: 'Introduzione di unit e integration test su progetti esistenti.',
     tone: 'secondary',
   },
   {
-    date: '2026.03.10 // 23:45',
-    title: 'Module ARCH-03 Initialized',
-    note: 'Baseline kernel stability achieved.',
+    date: '2024 // TeamSystem',
+    title: 'Legacy modernization',
+    note: 'Refactoring verso Clean Architecture e standardizzazione backend.',
     tone: 'orange',
   },
   {
-    date: '2026.02.27 // 11:00',
-    title: 'System Audit Complete',
-    note: 'No anomalies detected.',
+    date: '2021-2023 // SINCON',
+    title: 'Multi-stack software projects',
+    note: 'Backend con C#, Python e PHP su portali e sistemi dati.',
     tone: 'muted',
   },
 ]
 
 export const repoStatus = {
-  efficiency: '98% Efficient',
-  filledBars: 49,
+  efficiency: 'Backend first / Full stack direction',
+  filledBars: 44,
   totalBars: 50,
 }
 

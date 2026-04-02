@@ -1,12 +1,39 @@
+import { useRef } from 'react'
 import {
   contactHeader,
   contactSubjectOptions,
+  directChannels,
   externalNodes,
   systemHud,
 } from '../data/contactContent'
+import { useContactForm } from '../hooks/useContactForm'
+import turinImage from '../assets/turin.png'
 import './ContactSection.css'
 
 function ContactSection() {
+  const { isLoading, error, success, message, submitForm } = useContactForm()
+  const formRef = useRef<HTMLFormElement>(null)
+  const isExternalLink = (href: string) => href.startsWith('http')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (!formRef.current) return
+
+    const formData = new FormData(formRef.current)
+    const name = formData.get('name') as string
+    const email = formData.get('email') as string
+    const subject = formData.get('subject') as string
+    const message = formData.get('message') as string
+    const honeypot = formData.get('website') as string
+
+    await submitForm({ name, email, subject, message, honeypot })
+
+    if (!error) {
+      formRef.current.reset()
+    }
+  }
+
   return (
     <section className="contact-page" id="contact" aria-labelledby="contact-title">
       <div className="contact-content">
@@ -34,7 +61,7 @@ function ContactSection() {
               <div className="corner top-right" aria-hidden="true" />
               <div className="corner bottom-left" aria-hidden="true" />
 
-              <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <form className="contact-form" ref={formRef} onSubmit={handleSubmit}>
                 <div className="contact-form-grid">
                   <label>
                     <span>&gt; NAME:</span>
@@ -63,10 +90,26 @@ function ContactSection() {
                   <textarea placeholder="ENTER_DATA_PACKET..." rows={5} name="message" required />
                 </label>
 
-                <button type="submit">
-                  INITIALIZE TRANSMISSION
+                {/* Honeypot field for anti-spam */}
+                <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+
+                {/* Status messages */}
+                {error && (
+                  <div className="form-error" role="alert">
+                    ❌ {error}
+                  </div>
+                )}
+
+                {success && message && (
+                  <div className="form-success" role="status">
+                    ✅ {message}
+                  </div>
+                )}
+
+                <button type="submit" disabled={isLoading}>
+                  {isLoading ? 'TRANSMITTING...' : 'INITIALIZE TRANSMISSION'}
                   <span className="material-symbols-outlined" aria-hidden="true">
-                    sensors
+                    {isLoading ? 'hourglass_empty' : 'sensors'}
                   </span>
                 </button>
               </form>
@@ -74,6 +117,34 @@ function ContactSection() {
           </div>
 
           <aside className="contact-sidebar">
+            <section className="contact-node-panel tone-green">
+              <h3>
+                <span aria-hidden="true" />
+                Direct Channel
+              </h3>
+              <div>
+                {directChannels.map((channel) => (
+                  <a
+                    href={channel.href}
+                    key={channel.label}
+                    target={isExternalLink(channel.href) ? '_blank' : undefined}
+                    rel={isExternalLink(channel.href) ? 'noopener noreferrer' : undefined}
+                    aria-label={`Open ${channel.label}`}
+                  >
+                    <span>
+                      <i className="material-symbols-outlined" aria-hidden="true">
+                        {channel.icon}
+                      </i>
+                      {channel.label}
+                    </span>
+                    <i className="material-symbols-outlined" aria-hidden="true">
+                      arrow_forward_ios
+                    </i>
+                  </a>
+                ))}
+              </div>
+            </section>
+
             <section className="contact-node-panel tone-orange">
               <h3>
                 <span aria-hidden="true" />
@@ -108,6 +179,7 @@ function ContactSection() {
                 System Location
               </h3>
               <div className="location-map" aria-hidden="true">
+                <img src={turinImage} alt="" />
                 <div />
                 <p>{systemHud.locationLabel}</p>
               </div>

@@ -1,14 +1,21 @@
-import {
-  projectCards,
-  projectsHeader,
-  repoStatus,
-  systemLogs,
-  type ProjectCard,
-} from '../data/projectsContent'
+import {type ProjectCard, projectCards, projectsHeader, repoStatus, systemLogs,} from '../data/projectsContent'
+import {ElcCompositeVisual} from '../components/ElcCompositeVisual'
 import './ProjectsSection.css'
 
-function ProjectVisual({ visual }: { visual: ProjectCard['visual'] }) {
-  return <div className={`project-visual visual-${visual}`} aria-hidden="true" />
+function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string } }) {
+  if (visual === 'kernel') {
+    return <ElcCompositeVisual />
+  }
+
+  const style = backgroundImage
+    ? {
+        backgroundImage: `url('${typeof backgroundImage === 'string' ? backgroundImage : backgroundImage.default}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }
+    : undefined
+
+  return <div className={`project-visual visual-${visual}`} style={style} aria-hidden="true" />
 }
 
 function ProjectsSection() {
@@ -45,11 +52,11 @@ function ProjectsSection() {
                       <h3>{project.title}</h3>
                     </div>
                     <span className={project.tone === 'orange' ? 'tone-orange' : ''}>
-                      Quest: {project.difficulty}
+                      Scope: {project.difficulty}
                     </span>
                   </div>
 
-                  <ProjectVisual visual={project.visual} />
+                  <ProjectVisual visual={project.visual} backgroundImage={project.backgroundImage} />
                   <p>{project.description}</p>
 
                   <div className="project-tags">
@@ -61,12 +68,12 @@ function ProjectsSection() {
                   <div className="project-actions">
                     <button type="button">
                       <span className="material-symbols-outlined" aria-hidden="true">
-                        code
+                        description
                       </span>
-                      View Source
+                      Case Study
                     </button>
                     <button className="primary" type="button">
-                      Launch_Module
+                      Project Notes
                     </button>
                   </div>
                 </article>
@@ -81,7 +88,7 @@ function ProjectsSection() {
                       <small>ID: {featuredCard.id}</small>
                       <h3>{featuredCard.title}</h3>
                     </div>
-                    <span className="tone-orange">Quest: {featuredCard.difficulty}</span>
+                    <span className="tone-orange">Scope: {featuredCard.difficulty}</span>
                   </div>
 
                   <p>{featuredCard.description}</p>
@@ -93,18 +100,18 @@ function ProjectsSection() {
                   </div>
 
                   <div className="project-actions">
-                    <button className="primary" type="button">
-                      Initiate Deployment
-                    </button>
                     <button type="button">
                       <span className="material-symbols-outlined" aria-hidden="true">
                         description
                       </span>
-                      Whitepaper.pdf
+                      Architecture Notes
+                    </button>
+                    <button className="primary" type="button">
+                      Product Roadmap
                     </button>
                   </div>
                 </div>
-                <ProjectVisual visual={featuredCard.visual} />
+                <ProjectVisual visual={featuredCard.visual} backgroundImage={featuredCard.backgroundImage} />
               </article>
             ) : null}
           </div>
@@ -115,7 +122,7 @@ function ProjectsSection() {
                 <span className="material-symbols-outlined" aria-hidden="true">
                   history_edu
                 </span>
-                <h4>System_Log</h4>
+                <h4>Career Timeline</h4>
               </div>
 
               <div className="log-list">
@@ -148,4 +155,3 @@ function ProjectsSection() {
 }
 
 export default ProjectsSection
-

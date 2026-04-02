@@ -135,7 +135,7 @@
 
 .project-visual {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 8;
   margin-bottom: 14px;
   border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
   background-color: #101411;
@@ -150,18 +150,6 @@
   inset: 0;
 }
 
-.visual-circuit::before {
-  background:
-    linear-gradient(135deg, rgba(0, 255, 136, 0.22), transparent 40%),
-    repeating-linear-gradient(90deg, rgba(0, 255, 136, 0.12) 0 1px, transparent 1px 18px);
-}
-
-.visual-vault::before {
-  background:
-    radial-gradient(circle at 60% 40%, rgba(66, 224, 156, 0.28), transparent 35%),
-    linear-gradient(120deg, rgba(59, 75, 61, 0.5), rgba(16, 20, 17, 0.7));
-}
-
 .visual-kernel::before {
   background:
     radial-gradient(circle at 40% 50%, rgba(0, 255, 136, 0.3), transparent 35%),
@@ -170,6 +158,65 @@
 
 .project-visual::after {
   background: linear-gradient(to top, rgba(11, 15, 12, 0.8), transparent 60%);
+}
+
+/* ELC Composite Visual Styles */
+.elc-composite-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  background: #0a0f0a;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
+}
+
+.elc-composite-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(0, 200, 83, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(0, 150, 60, 0.05) 0%, transparent 60%);
+}
+
+.elc-composite-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(20, 40, 20, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 40, 20, 0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.elc-composite-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  height: 100%;
+  padding: 24px 40px;
+}
+
+.elc-composite-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.elc-composite-item img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.elc-composite-item:nth-child(2) {
+  transform: scale(0.95);
+}
+
+.elc-composite-item:nth-child(3) {
+  transform: scale(0.9);
 }
 
 .project-card p {
@@ -227,10 +274,6 @@
 
 .featured-card {
   border-left-color: var(--accent-orange);
-}
-
-.featured-card .project-actions {
-  justify-content: flex-start;
 }
 
 .projects-sidebar > div {
