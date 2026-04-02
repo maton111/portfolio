@@ -4,28 +4,32 @@ import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import './HeroSection.css'
 
 function HeroSection() {
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div className="hero-page">
       <header className="topbar">
         <nav>
-          <a className="logo" href="#home" aria-label="Torna all'inizio">
+          <button className="logo" type="button" aria-label="Torna all'inizio" onClick={() => scrollToSection('home')}>
             MA
-          </a>
+          </button>
           <ul>
             <li>
-              <a href="#home">Home</a>
+              <button type="button" onClick={() => scrollToSection('home')}>Home</button>
             </li>
             <li>
-              <a href="#about">About</a>
+              <button type="button" onClick={() => scrollToSection('about')}>About</button>
             </li>
             <li>
-              <a href="#skills">Skills</a>
+              <button type="button" onClick={() => scrollToSection('skills')}>Skills</button>
             </li>
             <li>
-              <a href="#projects">Projects</a>
+              <button type="button" onClick={() => scrollToSection('projects')}>Projects</button>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <button type="button" onClick={() => scrollToSection('contact')}>Contact</button>
             </li>
           </ul>
           <div className="topbar-actions">
@@ -57,15 +61,15 @@ function HeroSection() {
             </h1>
             <p className="hero-intro">{heroContent.intro}</p>
             <div className="hero-ctas">
-              <a className="btn btn-primary" href="#projects">
+              <button className="btn btn-primary" type="button" onClick={() => scrollToSection('projects')}>
                 {heroContent.ctas.primary}
                 <span className="material-symbols-outlined" aria-hidden="true">
                   north_east
                 </span>
-              </a>
-              <a className="btn btn-secondary" href="#contact">
+              </button>
+              <button className="btn btn-secondary" type="button" onClick={() => scrollToSection('contact')}>
                 {heroContent.ctas.secondary}
-              </a>
+              </button>
             </div>
             <div className="hero-trust">
               <span className="material-symbols-outlined" aria-hidden="true">

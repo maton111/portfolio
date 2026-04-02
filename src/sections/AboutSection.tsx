@@ -17,6 +17,10 @@ function AboutSegmentBar({value, tone}: { value: number; tone: 'green' | 'mint' 
 }
 
 function AboutSection() {
+    const scrollToSection = (sectionId: string) => {
+        document.getElementById(sectionId)?.scrollIntoView({behavior: 'smooth', block: 'start'})
+    }
+
     return (
         <section className="about-page" id="about" aria-labelledby="about-title">
             <div className="about-content">
@@ -31,12 +35,12 @@ function AboutSection() {
                     </h2>
                     <p>{aboutHeader.intro}</p>
                     <div className="about-ctas">
-                        <a className="about-btn primary" href="#projects">
+                        <button className="about-btn primary" type="button" onClick={() => scrollToSection('projects')}>
                             Entra nel mio mondo
-                        </a>
-                        <a className="about-btn secondary" href="#contact">
+                        </button>
+                        <button className="about-btn secondary" type="button" onClick={() => scrollToSection('contact')}>
                             Contattami
-                        </a>
+                        </button>
                     </div>
                 </header>
 

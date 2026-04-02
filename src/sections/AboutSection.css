@@ -65,7 +65,9 @@
 
 .about-btn {
     text-decoration: none;
+    border: none;
     padding: 13px 18px;
+    cursor: pointer;
     font-family: var(--font-headline), sans-serif;
     font-size: 0.67rem;
     font-weight: 700;
@@ -127,7 +129,7 @@
 .about-section-head div {
     flex: 1;
     height: 1px;
-    background: var(--outline-variant);
+    background: var(--outline);
 }
 
 .about-section-head h3,
