@@ -26,7 +26,7 @@
 
 .logo {
     text-decoration: none;
-    font-family: var(--font-headline);
+    font-family: var(--font-headline), serif;
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.04em;
@@ -48,7 +48,7 @@
 .topbar ul a {
     text-decoration: none;
     color: var(--text-muted);
-    font-family: var(--font-headline);
+    font-family: var(--font-headline), serif;
     font-size: 0.72rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -90,7 +90,7 @@
 .cv-btn {
     text-decoration: none;
     padding: 7px 12px;
-    font-family: var(--font-headline);
+    font-family: var(--font-headline), serif;
     font-size: 0.62rem;
     font-weight: 700;
     border-radius: 999px;
@@ -154,6 +154,11 @@
     grid-template-columns: 1fr;
     gap: 36px;
     align-items: center;
+}
+
+.hero-copy,
+.hud-wrap {
+    min-width: 0;
 }
 
 .hero-copy > p:first-child {
@@ -241,10 +246,12 @@
 
 .hud-wrap {
     position: relative;
+    width: 100%;
 }
 
 .hud-card {
     position: relative;
+    width: 100%;
     border-radius: 14px;
     border: 1px solid color-mix(in oklab, var(--outline) 28%, transparent);
     background: color-mix(in oklab, var(--panel) 70%, transparent);
@@ -482,13 +489,27 @@
     }
 
     .hero-grid {
-        grid-template-columns: 45% 55%;
+        grid-template-columns: minmax(0, 45%) minmax(0, 55%);
         gap: 52px;
     }
 
     .hud-bottom {
         grid-template-columns: 1fr auto;
         align-items: start;
+    }
+}
+
+@media (max-width: 1150px) and (min-width: 900px) {
+    .hero-grid {
+        gap: 32px;
+    }
+
+    .hud-head {
+        flex-wrap: wrap;
+    }
+
+    .hud-bottom {
+        grid-template-columns: 1fr;
     }
 }
 
