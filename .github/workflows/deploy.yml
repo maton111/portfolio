@@ -58,6 +58,9 @@ jobs:
           echo "================================"
 
           mkdir -p "${VPS_PATH}"
+          
+          echo "🔒 Marking repo as safe for Git..."
+          git config --global --add safe.directory "${VPS_PATH}"
 
           if [ ! -d "${VPS_PATH}/.git" ]; then
             echo "📥 First deploy: cloning repository..."
