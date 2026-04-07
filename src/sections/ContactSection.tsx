@@ -1,12 +1,7 @@
-import { useRef } from 'react'
-import {
-  contactHeader,
-  contactSubjectOptions,
-  directChannels,
-  externalNodes,
-  systemHud,
-} from '../data/contactContent'
-import { useContactForm } from '../hooks/useContactForm'
+import {useRef} from 'react'
+import {contactHeader, contactSubjectOptions, directChannels, externalNodes, systemHud,} from '../data/contactContent'
+import {useContactForm} from '../hooks/useContactForm'
+import SystemLocationGlobe from '../components/SystemLocationGlobe'
 import turinImage from '../assets/turin.png'
 import './ContactSection.css'
 
@@ -181,11 +176,7 @@ function ContactSection() {
                 <span aria-hidden="true" />
                 System Location
               </h3>
-              <div className="location-map" aria-hidden="true">
-                <img src={turinImage} alt="" />
-                <div />
-                <p>{systemHud.locationLabel}</p>
-              </div>
+              <SystemLocationGlobe locationLabel={systemHud.locationLabel} fallbackImage={turinImage} />
             </section>
 
             <section className="contact-scanner" aria-label="System scanner">
