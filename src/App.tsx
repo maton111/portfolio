@@ -7,6 +7,9 @@ import GlitchTransition from './components/GlitchTransition'
 import InitialHudLoader from './components/InitialHudLoader'
 import {useInitialBoot} from './hooks/useInitialBoot'
 import ProjectNotesPage from './pages/ProjectNotesPage'
+import TeamSystemProjectPage from './pages/TeamSystemProjectPage'
+import LegacyRefactoringProjectPage from './pages/LegacyRefactoringProjectPage'
+import OpcmProjectPage from './pages/OpcmProjectPage'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useEffect} from 'react'
 
@@ -47,6 +50,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage isPageGlitching={isPageGlitching} />} />
+      <Route path="/projects/teamsystem-enterprise-backend" element={<TeamSystemProjectPage />} />
+      <Route path="/projects/legacy-refactoring-program" element={<LegacyRefactoringProjectPage />} />
+      <Route path="/projects/opcm" element={<OpcmProjectPage />} />
       <Route path="/projects/:slug" element={<ProjectNotesPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
