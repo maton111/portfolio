@@ -1,6 +1,7 @@
 import HeroHudCard from '../components/HeroHudCard'
 import {heroContent} from '../data/heroContent'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
+import logoFile from '../assets/logo.png'
 import './HeroSection.css'
 
 function HeroSection() {
@@ -13,7 +14,7 @@ function HeroSection() {
       <header className="topbar">
         <nav>
           <button className="logo" type="button" aria-label="Torna all'inizio" onClick={() => scrollToSection('home')}>
-            MA
+            <img src={logoFile} alt="Logo Mattia Archina" />
           </button>
           <ul>
             <li>

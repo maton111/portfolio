@@ -30,15 +30,22 @@
     background: none;
     padding: 0;
     cursor: pointer;
-    font-family: var(--font-headline), serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    color: var(--text-strong);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+.logo img {
+    display: block;
+    width: auto;
+    height: 34px;
+    object-fit: contain;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .logo:hover {
-    color: var(--accent-green);
+    opacity: 0.9;
 }
 
 .topbar ul {
@@ -564,6 +571,10 @@
 @media (max-width: 899px) {
     .topbar nav {
         padding-inline: 16px;
+    }
+
+    .logo img {
+        height: 30px;
     }
 
     .topbar nav > span {

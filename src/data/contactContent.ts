@@ -29,8 +29,8 @@ export const directChannels: DirectChannel[] = [
 ]
 
 export const externalNodes: ExternalNode[] = [
-  { label: 'GITHUB', icon: 'terminal', href: 'https://github.com' },
-  { label: 'LINKEDIN', icon: 'lan', href: 'https://linkedin.com' },
+  { label: 'GITHUB', icon: 'terminal', href: 'https://github.com/maton111' },
+  { label: 'LINKEDIN', icon: 'lan', href: 'https://www.linkedin.com/in/mattia-archin%C3%A0/' },
   { label: 'INSTAGRAM', icon: 'photo_camera', href: 'https://www.instagram.com/maton11' },
 ]
 
