@@ -1,22 +1,96 @@
-import heroImg from '../assets/profilo.png'
+import {useEffect, useRef, useState} from 'react'
+import profileFrontImg from '../assets/profilo1.jpeg'
+import profileBackImg from '../assets/profilo2.png'
 import {aboutHeader, aboutMetadata, aboutOriginCards, aboutPhilosophy, aboutQuests, aboutScanner, aboutStats,} from '../data/aboutContent'
 import './AboutSection.css'
 
 const SEGMENTS = 10
+const STAT_ANIMATION_DURATION_MS = 1300
+const STAT_TRIGGER_THRESHOLD = 0.35
 
 function AboutSegmentBar({value, tone}: { value: number; tone: 'green' | 'mint' | 'orange' }) {
-    const activeSegments = Math.max(1, Math.round((value / 100) * SEGMENTS))
+    const activeSegments = Math.max(0, Math.round((value / 100) * SEGMENTS))
 
     return (
         <div className="about-segment-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}>
             {Array.from({length: SEGMENTS}).map((_, index) => (
-                <span key={`${tone}-${value}-${index}`} className={index < activeSegments ? `is-active ${tone}` : ''}/>
+                <span key={`${tone}-${index}`} className={index < activeSegments ? `is-active ${tone}` : ''}/>
             ))}
         </div>
     )
 }
 
 function AboutSection() {
+    const [isProfileFlipped, setIsProfileFlipped] = useState(false)
+    const statsCardRef = useRef<HTMLDivElement | null>(null)
+    const [hasStartedStatsAnimation, setHasStartedStatsAnimation] = useState(false)
+    const [displayedStats, setDisplayedStats] = useState<number[]>(() => aboutStats.map(() => 0))
+
+    useEffect(() => {
+        const cardNode = statsCardRef.current
+
+        if (!cardNode || hasStartedStatsAnimation) {
+            return
+        }
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setHasStartedStatsAnimation(true)
+                    observer.disconnect()
+                }
+            },
+            {threshold: STAT_TRIGGER_THRESHOLD},
+        )
+
+        observer.observe(cardNode)
+
+        return () => {
+            observer.disconnect()
+        }
+    }, [hasStartedStatsAnimation])
+
+    useEffect(() => {
+        if (!hasStartedStatsAnimation) {
+            return
+        }
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+        if (prefersReducedMotion) {
+            setDisplayedStats(aboutStats.map((stat) => stat.value))
+            return
+        }
+
+        let animationFrameId = 0
+        let startTime: number | null = null
+
+        const animate = (timestamp: number) => {
+            if (startTime === null) {
+                startTime = timestamp
+            }
+
+            const elapsed = timestamp - startTime
+            const progress = Math.min(1, elapsed / STAT_ANIMATION_DURATION_MS)
+            const easedProgress = 1 - Math.pow(1 - progress, 3)
+
+            setDisplayedStats(aboutStats.map((stat) => Math.round(stat.value * easedProgress)))
+
+            if (progress < 1) {
+                animationFrameId = window.requestAnimationFrame(animate)
+                return
+            }
+
+            setDisplayedStats(aboutStats.map((stat) => stat.value))
+        }
+
+        animationFrameId = window.requestAnimationFrame(animate)
+
+        return () => {
+            window.cancelAnimationFrame(animationFrameId)
+        }
+    }, [hasStartedStatsAnimation])
+
     const scrollToSection = (sectionId: string) => {
         document.getElementById(sectionId)?.scrollIntoView({behavior: 'smooth', block: 'start'})
     }
@@ -48,7 +122,7 @@ function AboutSection() {
                     <div className="about-narrative">
                         <section>
                             <div className="about-section-head">
-                                <span>01</span>
+                                <span>ENV</span>
                                 <div/>
                                 <h3>Career Snapshot</h3>
                             </div>
@@ -86,27 +160,41 @@ function AboutSection() {
                     </div>
 
                     <div className="about-hud">
-                        <div className="about-hud-card glow-primary">
+                        <div ref={statsCardRef} className="about-hud-card glow-primary">
                             <div className="about-level-row">
                                 <div>
-                                    <span>CHARACTER_LEVEL</span>
+                                    <span>MATON11</span>
                                     <strong>LVL 26</strong>
                                 </div>
-                                <div className="about-avatar">
-                                    <img className="profile-img" alt="Profile HUD" src={heroImg}/>
-                                </div>
+                                <button
+                                    className={`about-avatar ${isProfileFlipped ? 'is-flipped' : ''}`}
+                                    type="button"
+                                    onClick={() => setIsProfileFlipped((prev) => !prev)}
+                                    aria-pressed={isProfileFlipped}
+                                    aria-label={isProfileFlipped ? 'Mostra profilo 1' : 'Mostra profilo 2'}
+                                    title={isProfileFlipped ? 'Mostra profilo 1' : 'Mostra profilo 2'}
+                                >
+                                    <span className="about-avatar-stack" aria-hidden="true">
+                                        <img className="about-avatar-face about-avatar-front" alt="Profilo frontale" src={profileFrontImg}/>
+                                        <img className="about-avatar-face about-avatar-back" alt="Profilo secondario" src={profileBackImg}/>
+                                    </span>
+                                </button>
                             </div>
 
                             <div className="about-stats">
-                                {aboutStats.map((stat) => (
+                                {aboutStats.map((stat, index) => {
+                                    const displayedValue = displayedStats[index] ?? 0
+
+                                    return (
                                     <div key={stat.label}>
                                         <div className="about-stat-head">
                                             <span>{stat.label}</span>
-                                            <strong className={stat.tone}>{stat.value}%</strong>
+                                            <strong className={stat.tone}>{displayedValue}%</strong>
                                         </div>
-                                        <AboutSegmentBar value={stat.value} tone={stat.tone}/>
+                                        <AboutSegmentBar value={displayedValue} tone={stat.tone}/>
                                     </div>
-                                ))}
+                                    )
+                                })}
                             </div>
                         </div>
 

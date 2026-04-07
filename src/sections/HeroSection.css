@@ -147,19 +147,50 @@
 }
 
 .glow-green {
+    position: absolute;
+    z-index: -1;
     width: 480px;
     height: 480px;
     left: -140px;
     top: 4%;
     background: radial-gradient(circle, color-mix(in oklab, var(--accent-green) 16%, transparent) 0%, transparent 70%);
+
+    /* quanto si muove */
+    --tx: 600px;
+    --ty: 100px;
+
+    animation: glow-green-float 30s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes glow-green-float {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(var(--tx), var(--ty)); }
+    100% { transform: translate(0, 0); }
 }
 
 .glow-orange {
+    position: absolute;
+    z-index: -1;
     width: 560px;
     height: 560px;
     right: -180px;
     bottom: -120px;
-    background: radial-gradient(circle, color-mix(in oklab, var(--accent-orange) 14%, transparent) 0%, transparent 68%);
+    background: radial-gradient(circle, color-mix(in oklab, var(--accent-orange) 16%, transparent) 0%, transparent 68%);
+
+    /* quanto si muove */
+    --tx: -400px;
+    --ty: -100px;
+
+
+    animation: glow-orange-float 30s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes glow-orange-float {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(var(--tx), var(--ty)); }
+    100% { transform: translate(0, 0); }
 }
 
 .hero-grid {
@@ -216,7 +247,6 @@
 .btn {
     text-decoration: none;
     border: none;
-    border-radius: 10px;
     padding: 14px 20px;
     cursor: pointer;
     font-family: var(--font-headline), serif;
