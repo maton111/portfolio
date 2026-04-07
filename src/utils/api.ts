@@ -13,6 +13,11 @@ export interface ContactResponse {
   debug?: string
 }
 
+export interface RepoInfoResponse {
+  lastCommitDate?: string
+  error?: string
+}
+
 const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:4307' : ''
 
 export async function submitContactForm(data: ContactFormData): Promise<ContactResponse> {
@@ -44,6 +49,22 @@ export async function checkServerHealth(): Promise<boolean> {
     return response.ok
   } catch {
     return false
+  }
+}
+
+export async function fetchRepoInfo(): Promise<RepoInfoResponse> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/repo-info`)
+    const result = (await response.json()) as RepoInfoResponse
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Failed to load repository metadata')
+    }
+
+    return result
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
+    throw new Error(errorMessage)
   }
 }
 

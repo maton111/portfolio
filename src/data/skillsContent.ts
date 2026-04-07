@@ -46,7 +46,6 @@ export const skillsModules: SkillModule[] = [
       { label: 'Legacy Modernization', value: 92 },
       { label: 'Enterprise Systems', value: 89 },
       { label: 'Authentication (JWT, OAuth2)', value: 92 },
-      { label: 'Error handling patterns', value: 68 },
       { label: 'API versioning', value: 72 },
       { label: 'Logging & observability', value: 64 },
       { label: 'Dependency injection', value: 73 },
@@ -54,7 +53,6 @@ export const skillsModules: SkillModule[] = [
       { label: 'API gateways', value: 85 },
       { label: 'Payment integrations (Stripe, etc.)', value: 32 },
       { label: 'Webhooks handling', value: 82 },
-      { label: 'Internationalization (i18n)', value: 72 },
       { label: 'Notification systems', value: 73 },
       { label: 'GraphQL APIs', value: 46 },
       { label: 'WebSockets / real-time systems', value: 67 },
@@ -70,7 +68,6 @@ export const skillsModules: SkillModule[] = [
       { label: 'REST API Design', value: 87 },
       { label: 'Microservices Mindset', value: 84 },
       { label: 'Domain-Driven Design (DDD)', value: 37 },
-      { label: 'Hexagonal Architecture', value: 7 },
       { label: 'OpenAPI specification', value: 70 },
       { label: 'Reverse proxies (NGINX)', value: 78 },
       { label: 'API security (CORS, CSP)', value: 82 },
@@ -118,7 +115,6 @@ export const skillsModules: SkillModule[] = [
       { label: 'Relational Databases', value: 91 },
       { label: 'Query Optimization', value: 83 },
       { label: 'Data Consistency', value: 88 },
-      { label: 'GraphQL + DB integration', value: 54 },
       { label: 'Schema design', value: 75 },
       { label: 'Data validation', value: 84 },
       { label: 'Soft deletes', value: 90 },
@@ -133,7 +129,6 @@ export const skillsModules: SkillModule[] = [
       { label: 'Docker & Containerization', value: 86 },
       { label: 'CI/CD Pipelines', value: 88 },
       { label: 'Monitoring (Grafana)', value: 82 },
-      { label: 'Kubernetes', value: 34 },
       { label: 'AWS (EC2, S3, RDS, Lambda)', value: 50 },
       { label: 'Azure basics', value: 71 },
       { label: 'Monitoring (Prometheus)', value: 75 },
@@ -179,7 +174,6 @@ export const skillsBottomPanel = {
   title: 'Career_Link: ACTIVE',
   description:
     'Backend engineer focused on scalable systems, software quality and continuous growth across enterprise and personal products.',
-  lastUpdate: '2026.04.02.10:20',
   uptime: 'Always Learning',
 }
 

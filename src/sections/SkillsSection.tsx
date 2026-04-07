@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import {type SkillMetric, type SkillModule, skillsBottomPanel, skillsHeader, skillsModules} from '../data/skillsContent'
+import {fetchRepoInfo} from '../utils/api'
 import './SkillsSection.css'
 
 const SEGMENTS = 20
@@ -54,14 +55,12 @@ function getAnimationDurationMs(targetValue: number): number {
 }
 
 function SkillActiveMetric({ label, targetValue, tone }: { label: string; targetValue: number; tone: 'green' | 'orange' }) {
-  const [animatedValue, setAnimatedValue] = useState(0)
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const safeTarget = Math.min(100, Math.max(0, targetValue))
+  const [animatedValue, setAnimatedValue] = useState(() => (reducedMotion ? safeTarget : 0))
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const safeTarget = Math.min(100, Math.max(0, targetValue))
-
     if (reducedMotion) {
-      setAnimatedValue(safeTarget)
       return
     }
 
@@ -82,19 +81,18 @@ function SkillActiveMetric({ label, targetValue, tone }: { label: string; target
       }
     }
 
-    setAnimatedValue(0)
     rafId = window.requestAnimationFrame(tick)
 
     return () => {
       window.cancelAnimationFrame(rafId)
     }
-  }, [label, targetValue])
+  }, [label, reducedMotion, safeTarget, targetValue])
 
   return (
     <div className="skills-active-metric">
       <div>
         <span>{label}</span>
-        <strong className={tone === 'orange' ? 'tone-orange' : ''}>{Math.round(animatedValue)}%</strong>
+        <strong className={tone === 'orange' ? 'tone-orange' : ''}>{Math.round(reducedMotion ? safeTarget : animatedValue)}%</strong>
       </div>
       <SegmentedBar label={label} value={animatedValue} tone={tone} />
     </div>
@@ -104,6 +102,31 @@ function SkillActiveMetric({ label, targetValue, tone }: { label: string; target
 function SkillsSection() {
   const [lockedSkillByModule, setLockedSkillByModule] = useState<Record<string, string>>({})
   const [hoveredSkillByModule, setHoveredSkillByModule] = useState<Record<string, string | undefined>>({})
+  const [lastUpdate, setLastUpdate] = useState('Loading...')
+
+  useEffect(() => {
+    let isMounted = true
+
+    const loadRepoInfo = async () => {
+      try {
+        const repoInfo = await fetchRepoInfo()
+
+        if (isMounted) {
+          setLastUpdate(repoInfo.lastCommitDate || 'Unavailable')
+        }
+      } catch {
+        if (isMounted) {
+          setLastUpdate('Unavailable')
+        }
+      }
+    }
+
+    void loadRepoInfo()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleSkillHover = (moduleId: string, skillId: string) => {
     setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: skillId }))
@@ -226,7 +249,7 @@ function SkillsSection() {
           <div>
             <div>
               <p>Last Update</p>
-              <strong>{skillsBottomPanel.lastUpdate}</strong>
+              <strong>{lastUpdate}</strong>
             </div>
             <i aria-hidden="true" />
             <div>

@@ -4,7 +4,9 @@ import dotenv from 'dotenv'
 import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
+import { execFile } from 'child_process'
 import { fileURLToPath } from 'url'
+import { promisify } from 'util'
 
 dotenv.config()
 
@@ -14,13 +16,14 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = process.env.SERVER_PORT || 4307
 const NODE_ENV = process.env.NODE_ENV || 'development'
+const execFileAsync = promisify(execFile)
 
 // Middleware
 app.use(express.json({ limit: '10kb' }))
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN || 'http://localhost:4321',
-    methods: ['POST'],
+    methods: ['GET', 'POST'],
     credentials: true,
   })
 )
@@ -107,6 +110,33 @@ function saveContactLog(data) {
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+async function getLatestCommitDate() {
+  try {
+    const { stdout } = await execFileAsync(
+      'git',
+      ['log', '-1', '--date=format:%Y.%m.%d.%H:%M', '--format=%cd'],
+      { cwd: __dirname }
+    )
+
+    return stdout.trim()
+  } catch (error) {
+    console.error('❌ Failed to read latest git commit date:', error.message)
+    return null
+  }
+}
+
+app.get('/api/repo-info', async (req, res) => {
+  const lastCommitDate = await getLatestCommitDate()
+
+  if (!lastCommitDate) {
+    return res.status(500).json({ error: 'Unable to read repository metadata' })
+  }
+
+  return res.json({
+    lastCommitDate,
+  })
 })
 
 // Contact form endpoint
