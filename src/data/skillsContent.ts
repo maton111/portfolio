@@ -4,6 +4,11 @@ export type SkillMetric = {
   tone?: 'green' | 'orange'
 }
 
+export type SkillTag = {
+  label: string
+  value: number
+}
+
 export type SkillModule = {
   title: string
   moduleId: string
@@ -12,7 +17,7 @@ export type SkillModule = {
   borderTone?: 'green' | 'orange'
   columns: number
   metrics: SkillMetric[]
-  tags: string[]
+  tags: SkillTag[]
   icon?: string
 }
 
@@ -34,7 +39,11 @@ export const skillsModules: SkillModule[] = [
       { label: 'Business Logic & Refactoring', value: 94 },
       { label: 'Legacy Modernization', value: 92 },
     ],
-    tags: ['C#', '.NET', 'Enterprise Systems'],
+    tags: [
+      { label: 'C#', value: 95 },
+      { label: '.NET', value: 94 },
+      { label: 'Enterprise Systems', value: 89 },
+    ],
   },
   {
     title: 'ARCHITECTURE & APIS',
@@ -46,7 +55,11 @@ export const skillsModules: SkillModule[] = [
       { label: 'REST API Design', value: 87 },
       { label: 'Microservices Mindset', value: 84 },
     ],
-    tags: ['Controller/Service/Repository', 'Scalability', 'Maintainability'],
+    tags: [
+      { label: 'Controller/Service/Repository', value: 88 },
+      { label: 'Scalability', value: 86 },
+      { label: 'Maintainability', value: 90 },
+    ],
   },
   {
     title: 'TESTING & CODE QUALITY',
@@ -58,7 +71,11 @@ export const skillsModules: SkillModule[] = [
       { label: 'Integration Test', value: 88 },
       { label: 'E2E Coverage', value: 52 },
     ],
-    tags: ['Testing First Mindset', 'Reliability', 'Code Standards'],
+    tags: [
+      { label: 'Testing First Mindset', value: 84 },
+      { label: 'Reliability', value: 89 },
+      { label: 'Code Standards', value: 87 },
+    ],
   },
   {
     title: 'DATA LAYER & SEARCH',
@@ -70,7 +87,11 @@ export const skillsModules: SkillModule[] = [
       { label: 'MySQL / MariaDB / Oracle', value: 84 },
       { label: 'Elasticsearch', value: 79, tone: 'orange' },
     ],
-    tags: ['Relational Databases', 'Query Optimization', 'Data Consistency'],
+    tags: [
+      { label: 'Relational Databases', value: 91 },
+      { label: 'Query Optimization', value: 83 },
+      { label: 'Data Consistency', value: 88 },
+    ],
   },
   {
     title: 'DEVOPS & DELIVERY',
@@ -82,7 +103,11 @@ export const skillsModules: SkillModule[] = [
       { label: 'CI/CD Pipelines', value: 88 },
       { label: 'Monitoring (Grafana)', value: 82 },
     ],
-    tags: ['GitHub Actions', 'Linux/VPS', 'Release Workflow'],
+    tags: [
+      { label: 'GitHub Actions', value: 87 },
+      { label: 'Linux/VPS', value: 80 },
+      { label: 'Release Workflow', value: 85 },
+    ],
   },
   {
     title: 'AI-ASSISTED FULL STACK',
@@ -97,7 +122,7 @@ export const skillsModules: SkillModule[] = [
       { label: 'AI-Assisted Development', value: 90, tone: 'orange' },
       { label: 'Realtime Features', value: 81, tone: 'orange' },
     ],
-    tags: ['Product Mindset'],
+    tags: [{ label: 'Product Mindset', value: 88 }],
   },
 ]
 
