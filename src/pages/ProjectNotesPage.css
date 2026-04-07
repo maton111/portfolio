@@ -95,7 +95,7 @@
   min-height: 220px;
   border-top: 1px solid color-mix(in oklab, var(--outline) 34%, transparent);
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-color: #101411;
 }
 
@@ -103,6 +103,18 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
+}
+
+.project-notes-top-left {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.project-notes-top-right-placeholder {
+  min-height: 100%;
+  border: 1px dashed color-mix(in oklab, var(--outline) 55%, transparent);
+  background: color-mix(in oklab, var(--panel) 28%, transparent);
 }
 
 .project-notes-sections {
@@ -200,6 +212,11 @@
 
   .project-notes-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-notes-grid.project-notes-grid-top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
   }
 
   .project-notes-sections {

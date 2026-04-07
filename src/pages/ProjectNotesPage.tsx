@@ -1,8 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import {useEffect, useMemo, useState} from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
 import GlitchTransition from '../components/GlitchTransition'
-import { getProjectNotesBySlug, projectCards } from '../data/projectsContent'
+import {getProjectNotesBySlug, projectCards} from '../data/projectsContent'
+import opcmHubImage from '../assets/opcm_hub.png'
 import './ProjectNotesPage.css'
+
+type ProjectNotesPageProps = {
+  forcedSlug?: string
+}
 
 function resolveBackgroundImage(backgroundImage?: string | { default: string }) {
   if (!backgroundImage) {
@@ -12,8 +17,9 @@ function resolveBackgroundImage(backgroundImage?: string | { default: string }) 
   return typeof backgroundImage === 'string' ? backgroundImage : backgroundImage.default
 }
 
-function ProjectNotesPage() {
-  const { slug } = useParams()
+function ProjectNotesPage({ forcedSlug }: ProjectNotesPageProps) {
+  const { slug: routeSlug } = useParams()
+  const slug = forcedSlug ?? routeSlug
   const navigate = useNavigate()
   const [isLeaving, setIsLeaving] = useState(false)
 
@@ -54,7 +60,7 @@ function ProjectNotesPage() {
     )
   }
 
-  const heroImage = resolveBackgroundImage(projectCard.backgroundImage)
+  const heroImage = projectCard.slug === 'opcm' ? opcmHubImage : resolveBackgroundImage(projectCard.backgroundImage)
 
   return (
     <main className="project-notes-page" aria-labelledby="project-notes-title">
@@ -79,38 +85,85 @@ function ProjectNotesPage() {
               </button>
             </div>
           </div>
-          <div className="project-notes-hero-visual" style={heroImage ? { backgroundImage: `url('${heroImage}')` } : undefined} />
+          <div
+            className="project-notes-hero-visual"
+            style={
+              heroImage
+                ? {
+                    backgroundImage: `url('${heroImage}')`,
+                    ...(projectCard.slug === 'opcm'
+                        ? { backgroundSize: 'contain',backgroundRepeat: 'no-repeat', }
+                        : {}),                  }
+                : undefined
+            }
+          />
         </header>
 
-        <section className="project-notes-grid" aria-label="Project notes details">
-          <article className="project-notes-panel">
-            <h2>Context</h2>
-            <p>{notes.context}</p>
-          </article>
+        {projectCard.slug === 'opcm' ? (
+          <section className="project-notes-grid project-notes-grid-top" aria-label="Project notes details">
+            <div className="project-notes-top-left">
+              <article className="project-notes-panel">
+                <h2>Context</h2>
+                <p>{notes.context}</p>
+              </article>
 
-          <article className="project-notes-panel">
-            <h2>Challenge</h2>
-            <p>{notes.challenge}</p>
-          </article>
+              <article className="project-notes-panel">
+                <h2>Challenge</h2>
+                <p>{notes.challenge}</p>
+              </article>
 
-          <article className="project-notes-panel">
-            <h2>Timeline</h2>
-            <ul>
-              {notes.timeline.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
+              <article className="project-notes-panel">
+                <h2>Timeline</h2>
+                <ul>
+                  {notes.timeline.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
 
-          <article className="project-notes-panel">
-            <h2>Stack</h2>
-            <div className="project-notes-tags">
-              {notes.stack.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
+              <article className="project-notes-panel">
+                <h2>Stack</h2>
+                <div className="project-notes-tags">
+                  {notes.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </article>
             </div>
-          </article>
-        </section>
+
+            <div className="project-notes-top-right-placeholder" aria-hidden="true" />
+          </section>
+        ) : (
+          <section className="project-notes-grid" aria-label="Project notes details">
+            <article className="project-notes-panel">
+              <h2>Context</h2>
+              <p>{notes.context}</p>
+            </article>
+
+            <article className="project-notes-panel">
+              <h2>Challenge</h2>
+              <p>{notes.challenge}</p>
+            </article>
+
+            <article className="project-notes-panel">
+              <h2>Timeline</h2>
+              <ul>
+                {notes.timeline.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="project-notes-panel">
+              <h2>Stack</h2>
+              <div className="project-notes-tags">
+                {notes.stack.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </article>
+          </section>
+        )}
 
         <section className="project-notes-sections" aria-label="Engineering notes">
           {notes.sections.map((section) => (
