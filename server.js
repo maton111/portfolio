@@ -127,15 +127,55 @@ async function getLatestCommitDate() {
   }
 }
 
+function formatDateToPanel(value) {
+  const date = new Date(value)
+
+  if (Number.isNaN(date.getTime())) {
+    return null
+  }
+
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+
+  return `${year}.${month}.${day}.${hours}:${minutes}`
+}
+
+function getFallbackCommitDate() {
+  if (process.env.LAST_COMMIT_DATE) {
+    const formattedEnvDate = formatDateToPanel(process.env.LAST_COMMIT_DATE)
+
+    if (formattedEnvDate) {
+      return formattedEnvDate
+    }
+  }
+
+  try {
+    const packageJsonPath = path.join(__dirname, 'package.json')
+    const stats = fs.statSync(packageJsonPath)
+    return formatDateToPanel(stats.mtime.toISOString())
+  } catch {
+    return null
+  }
+}
+
 app.get('/api/repo-info', async (req, res) => {
-  const lastCommitDate = await getLatestCommitDate()
+  const gitCommitDate = await getLatestCommitDate()
+  const fallbackCommitDate = gitCommitDate ? null : getFallbackCommitDate()
+  const lastCommitDate = gitCommitDate || fallbackCommitDate
 
   if (!lastCommitDate) {
-    return res.status(500).json({ error: 'Unable to read repository metadata' })
+    return res.json({
+      lastCommitDate: 'Unknown',
+      source: 'unavailable',
+    })
   }
 
   return res.json({
     lastCommitDate,
+    source: gitCommitDate ? 'git' : 'fallback',
   })
 })
 
