@@ -160,6 +160,24 @@
   background: linear-gradient(to top, rgba(11, 15, 12, 0.8), transparent 60%);
 }
 
+.project-visual.visual-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-visual-placeholder-label {
+  position: relative;
+  z-index: 1;
+  padding: 6px 10px;
+  border: 1px dashed color-mix(in oklab, var(--outline) 60%, transparent);
+  color: color-mix(in oklab, var(--text-muted) 82%, transparent);
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* ELC Composite Visual Styles */
 .elc-composite-wrapper {
   width: 100%;

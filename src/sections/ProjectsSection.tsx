@@ -1,5 +1,6 @@
 import {type ProjectCard, projectCards, projectsHeader, repoStatus, systemLogs,} from '../data/projectsContent'
 import {ElcCompositeVisual} from '../components/ElcCompositeVisual'
+import { useNavigate } from 'react-router-dom'
 import './ProjectsSection.css'
 
 function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string } }) {
@@ -15,12 +16,23 @@ function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visua
       }
     : undefined
 
-  return <div className={`project-visual visual-${visual}`} style={style} aria-hidden="true" />
+  const isPlaceholder = !backgroundImage
+
+  return (
+    <div className={`project-visual visual-${visual}${isPlaceholder ? ' visual-placeholder' : ''}`} style={style} aria-hidden="true">
+      {isPlaceholder ? <span className="project-visual-placeholder-label">Image slot</span> : null}
+    </div>
+  )
 }
 
 function ProjectsSection() {
+  const navigate = useNavigate()
   const standardCards = projectCards.filter((card) => !card.featured)
   const featuredCard = projectCards.find((card) => card.featured)
+
+  const openProjectNotes = (slug: string) => {
+    navigate(`/projects/${slug}`)
+  }
 
   return (
     <section className="projects-page" id="projects" aria-labelledby="projects-title">
@@ -72,7 +84,7 @@ function ProjectsSection() {
                       </span>
                       Case Study
                     </button>
-                    <button className="primary" type="button">
+                    <button className="primary" type="button" onClick={() => openProjectNotes(project.slug)}>
                       Project Notes
                     </button>
                   </div>

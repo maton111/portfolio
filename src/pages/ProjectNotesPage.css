@@ -1,0 +1,215 @@
+.project-notes-page {
+  min-height: 100vh;
+  padding: 96px 24px 96px;
+  background-color: #0b0f0c;
+  background-image: radial-gradient(circle at 2px 2px, rgba(39, 43, 39, 0.15) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.project-notes-shell {
+  max-width: 1220px;
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+  animation: notes-enter 360ms ease-out;
+}
+
+.project-notes-hero {
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  background: color-mix(in oklab, var(--panel) 68%, transparent);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.project-notes-hero-copy {
+  padding: 20px;
+}
+
+.project-notes-hero-copy small {
+  display: block;
+  margin-bottom: 8px;
+  color: #42e09c;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.project-notes-hero-copy h1 {
+  margin: 0 0 10px;
+  color: var(--text-strong);
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.project-notes-hero-copy p {
+  margin: 0;
+  color: color-mix(in oklab, var(--text-main) 82%, transparent);
+  line-height: 1.7;
+}
+
+.project-notes-hero-meta {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-notes-hero-meta span {
+  padding: 5px 8px;
+  border-left: 2px solid #42e09c;
+  background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
+  color: #42e09c;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-notes-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.project-notes-actions button {
+  border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
+  background: transparent;
+  color: #42e09c;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.project-notes-actions button.primary {
+  border-color: transparent;
+  background: var(--accent-green);
+  color: #00210c;
+  font-weight: 700;
+}
+
+.project-notes-hero-visual {
+  min-height: 220px;
+  border-top: 1px solid color-mix(in oklab, var(--outline) 34%, transparent);
+  background-position: center;
+  background-size: cover;
+  background-color: #101411;
+}
+
+.project-notes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.project-notes-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.project-notes-panel {
+  border-left: 4px solid var(--accent-green);
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  border-left-width: 4px;
+  padding: 16px;
+  background: color-mix(in oklab, var(--panel) 66%, transparent);
+}
+
+.project-notes-panel h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #42e09c;
+}
+
+.project-notes-panel p,
+.project-notes-panel li {
+  color: color-mix(in oklab, var(--text-main) 82%, transparent);
+  line-height: 1.7;
+}
+
+.project-notes-panel ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.project-notes-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-notes-tags span {
+  padding: 5px 8px;
+  border-left: 2px solid #42e09c;
+  background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
+  color: #42e09c;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-notes-not-found {
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  background: color-mix(in oklab, var(--panel) 66%, transparent);
+  padding: 20px;
+}
+
+.project-notes-not-found button {
+  margin-top: 12px;
+  border: none;
+  padding: 9px 12px;
+  background: var(--accent-green);
+  color: #003919;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@keyframes notes-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 900px) {
+  .project-notes-hero {
+    grid-template-columns: minmax(0, 58%) minmax(0, 42%);
+  }
+
+  .project-notes-hero-visual {
+    border-top: none;
+    border-left: 1px solid color-mix(in oklab, var(--outline) 34%, transparent);
+  }
+
+  .project-notes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-notes-sections {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-notes-shell {
+    animation: none;
+  }
+}
+
