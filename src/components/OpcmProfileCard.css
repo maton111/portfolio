@@ -1,0 +1,459 @@
+.opcm-card-scene {
+  position: relative;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  perspective: 1400px;
+}
+
+.opcm-card-shell {
+  position: relative;
+  width: min(100%, 280px);
+  aspect-ratio: 280 / 390;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  transform-style: preserve-3d;
+  transition: transform 80ms ease-out;
+  transform: rotateX(var(--opcm-tilt-x, 0deg)) rotateY(var(--opcm-tilt-y, 0deg));
+}
+
+.opcm-card-shell:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 6px;
+}
+
+.opcm-card-shell:active {
+  cursor: grabbing;
+}
+
+.opcm-card-edge,
+.opcm-card-face,
+.opcm-card-shimmer,
+.opcm-card-shell-bg,
+.opcm-card-map,
+.opcm-card-surface,
+.opcm-front-shell,
+.opcm-outer-border,
+.opcm-inner-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.opcm-card-edge {
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.edge-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  inset: auto 0 auto 0;
+  transform: rotateX(90deg) translateY(-2.5px);
+  transform-origin: top center;
+  background: linear-gradient(to bottom, #3aaa7a, #1a7a50);
+}
+
+.edge-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  inset: auto 0 auto 0;
+  transform: rotateX(-90deg) translateY(2.5px);
+  transform-origin: bottom center;
+  background: linear-gradient(to top, #3aaa7a, #1a7a50);
+}
+
+.edge-left {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  inset: 0 auto 0 0;
+  transform: rotateY(-90deg) translateX(-2.5px);
+  transform-origin: left center;
+  background: linear-gradient(to right, #1a7a50, #0d5c38);
+}
+
+.edge-right {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  inset: 0 0 0 auto;
+  transform: rotateY(90deg) translateX(2.5px);
+  transform-origin: right center;
+  background: linear-gradient(to left, #3aaa7a, #1a7a50);
+}
+
+.opcm-card-face {
+  overflow: hidden;
+  transition: transform 650ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.opcm-card-back {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  background: linear-gradient(145deg, #101843 0%, #0e1540 40%, #14195e 100%);
+  transform: rotateY(180deg);
+}
+
+.opcm-card-front {
+  background: transparent;
+}
+
+.opcm-card-shell.is-flipped .opcm-card-front {
+  transform: rotateY(180deg);
+}
+
+.opcm-card-shell.is-flipped .opcm-card-back {
+  transform: rotateY(360deg);
+}
+
+.opcm-card-shell-bg {
+  background: linear-gradient(145deg, #0b6b48 0%, #0e7c55 40%, #0a5e40 100%);
+}
+
+.opcm-front-shell {
+  overflow: hidden;
+  background: #0e7c55;
+}
+
+.opcm-card-map {
+  opacity: 0.18;
+  background-image:
+	linear-gradient(rgba(200, 255, 230, 0.45) 0.5px, transparent 0.5px),
+	linear-gradient(90deg, rgba(200, 255, 230, 0.45) 0.5px, transparent 0.5px);
+  background-size: 70px 65px;
+}
+
+.opcm-card-shimmer {
+  pointer-events: none;
+  z-index: 101;
+  background: linear-gradient(
+	108deg,
+	transparent 30%,
+	rgba(255, 255, 255, 0.03) 43%,
+	rgba(255, 255, 255, 0.09) 50%,
+	rgba(255, 255, 255, 0.03) 57%,
+	transparent 68%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.opcm-outer-border {
+  border: 3px solid #4dc98a;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.opcm-inner-border {
+  inset: 5px;
+  border: 1px solid rgba(100, 220, 160, 0.3);
+  border-radius: 9px;
+  pointer-events: none;
+  z-index: 99;
+}
+
+.opcm-artwork-area {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  height: 240px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(100, 220, 160, 0.3);
+  z-index: 2;
+}
+
+.opcm-artwork-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  filter: saturate(1.05) contrast(1.08) brightness(0.98);
+}
+
+.opcm-power-badge,
+.opcm-cost-badge,
+.opcm-life-badge,
+.opcm-handle,
+.opcm-status,
+.opcm-bottom-bar,
+.opcm-effect-area,
+.opcm-type-strip,
+.opcm-name-area {
+  position: absolute;
+  z-index: 10;
+}
+
+.opcm-power-badge {
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.opcm-power-badge strong {
+  background: color-mix(in oklab, var(--accent-orange) 45%, transparent);
+  border: 1.5px solid var(--accent-orange);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 18px;
+  font-weight: 900;
+  color: white;
+  font-family: 'Arial Black', sans-serif;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.opcm-power-badge span {
+  background: var(--accent-orange);
+  border-radius: 5px;
+  padding: 4px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.5px;
+}
+
+.opcm-cost-badge {
+  top: 4px;
+  left: 4px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-orange) 45%, transparent);
+  border: 2px solid var(--accent-orange);
+  color: white;
+  font-family: 'Arial Black', sans-serif;
+  font-size: 14px;
+}
+
+.opcm-effect-area {
+  top: 256px;
+  left: 8px;
+  right: 8px;
+}
+
+.opcm-effect-tags {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.opcm-effect-tags span {
+  border-radius: 10px;
+  padding: 2px 7px;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  color: white;
+}
+
+.opcm-effect-tags span:nth-child(1) {
+  background: #e63b3b;
+  border: 1px solid #ff6060;
+}
+
+.opcm-effect-tags span:nth-child(2) {
+  background: #f5a623;
+  border: 1px solid #ffc350;
+}
+
+.opcm-effect-tags span:nth-child(3) {
+  background: #2a7cff;
+  border: 1px solid #6aaeff;
+}
+
+.opcm-effect-text {
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.55;
+  letter-spacing: 0.1px;
+}
+
+.opcm-type-strip {
+  top: 313px;
+  left: 8px;
+  right: 8px;
+  text-align: center;
+}
+
+.opcm-type-line {
+  display: block;
+  height: 0.5px;
+  background: rgba(200, 240, 220, 0.25);
+  margin: 2px 0;
+}
+
+.opcm-type-text {
+  display: block;
+  font-size: 8px;
+  color: rgba(200, 240, 220, 0.6);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-family: serif;
+}
+
+.opcm-name-area {
+  top: 320px;
+  left: 8px;
+  right: 38px;
+}
+
+.opcm-name-area strong {
+  display: block;
+  font-size: 19px;
+  font-weight: 900;
+  color: white;
+  font-family: 'Arial Black', 'Impact', sans-serif;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.opcm-name-area span {
+  display: block;
+  font-size: 8px;
+  color: rgba(180, 240, 210, 0.7);
+  letter-spacing: 1px;
+  margin-top: 2px;
+  font-family: monospace;
+}
+
+.opcm-life-badge {
+  top: 324px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(20, 30, 50, 0.9);
+  border: 1.5px solid rgba(100, 200, 255, 0.7);
+}
+
+.opcm-life-badge span {
+  font-size: 11px;
+  color: white;
+  font-family: 'Arial Black', sans-serif;
+  font-weight: 900;
+}
+
+.opcm-bottom-bar {
+  bottom: 6px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 7px;
+  color: rgba(180, 240, 210, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.opcm-bottom-label {
+  color: rgba(180, 240, 210, 0.3);
+}
+
+.opcm-handle {
+  top: 336px;
+  left: 8px;
+  font-size: 7px;
+  color: rgba(180, 240, 210, 0.48);
+  font-family: monospace;
+}
+
+.opcm-status {
+  top: 336px;
+  right: 10px;
+  font-size: 7px;
+  color: rgba(180, 240, 210, 0.48);
+  font-family: monospace;
+}
+
+.opcm-card-back .opcm-back-orbit {
+  position: absolute;
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  border: 2px solid #c8a840;
+  opacity: 0.9;
+}
+
+.opcm-card-back .opcm-back-orbit-inner {
+  width: 112px;
+  height: 112px;
+  border-width: 1px;
+  opacity: 0.75;
+}
+
+.opcm-back-center {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.opcm-card-back small {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 9px;
+  letter-spacing: 5px;
+}
+
+
+@media (max-width: 420px) {
+  .opcm-card-shell {
+	width: min(100%, 250px);
+  }
+
+  .opcm-effect-text,
+  .opcm-type-text,
+  .opcm-bottom-bar,
+  .opcm-handle,
+  .opcm-status {
+	font-size: 6px;
+  }
+
+  .opcm-name-area strong {
+	font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opcm-card-shell {
+	transition: none;
+  }
+
+  .opcm-card-face {
+	transition: none;
+  }
+}
+

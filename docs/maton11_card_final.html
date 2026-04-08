@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d1117; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; font-family:sans-serif; }
+  .scene { perspective:1400px; display:flex; align-items:center; justify-content:center; padding:80px 60px; }
+  .card-wrapper { position:relative; transform-style:preserve-3d; transition:transform 0.08s ease-out; cursor:grab; width:280px; height:390px; }
+  .card-wrapper:active { cursor:grabbing; }
+  .edge { position:absolute; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+  .edge-top    { width:280px; height:5px; top:0; left:0; transform:rotateX(90deg) translateY(-2.5px); transform-origin:top center; background:linear-gradient(to bottom,#3aaa7a,#1a7a50); }
+  .edge-bottom { width:280px; height:5px; bottom:0; left:0; transform:rotateX(-90deg) translateY(2.5px); transform-origin:bottom center; background:linear-gradient(to top,#3aaa7a,#1a7a50); }
+  .edge-left   { width:5px; height:390px; top:0; left:0; transform:rotateY(-90deg) translateX(-2.5px); transform-origin:left center; background:linear-gradient(to right,#1a7a50,#0d5c38); }
+  .edge-right  { width:5px; height:390px; top:0; right:0; transform:rotateY(90deg) translateX(2.5px); transform-origin:right center; background:linear-gradient(to left,#3aaa7a,#1a7a50); }
+  .card-face { position:absolute; width:280px; height:390px; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; overflow:visible; }
+  .card-back { transform:rotateY(180deg); border-radius:12px; overflow:hidden; background:#14195e; }
+  .card-front { border-radius:12px; overflow:visible; background:transparent; }
+  .front-shell { position:absolute; inset:0; border-radius:12px; overflow:hidden; background:#0e7c55; }
+  .bg-map { position:absolute; inset:0; background:linear-gradient(145deg,#0b6b48 0%,#0e7c55 40%,#0a5e40 100%); }
+  .outer-border { position:absolute; inset:0; border:3px solid #4dc98a; border-radius:12px; pointer-events:none; z-index:100; }
+  .inner-border { position:absolute; inset:5px; border:1px solid rgba(100,220,160,0.3); border-radius:9px; pointer-events:none; z-index:99; }
+
+  /* artwork */
+  .artwork-area {
+    position:absolute; top:8px; left:8px; right:8px; height:240px;
+    border-radius:6px; overflow:hidden; z-index:2;
+    background:linear-gradient(135deg,#0a1628 0%,#0d2035 30%,#0a1a2e 60%,#111827 100%);
+  }
+  #artCanvas { position:absolute; inset:0; width:100%; height:100%; }
+  .artwork-fade {
+    position:absolute; inset:0;
+    background:linear-gradient(to bottom,transparent 0%,transparent 50%,rgba(10,50,30,0.6) 80%,rgba(10,50,30,0.92) 100%);
+    z-index:3;
+  }
+
+  /* power badge */
+  .power-badge { position:absolute; top:6px; right:6px; z-index:80; display:flex; align-items:center; gap:4px; }
+  .power-number { background:rgba(20,30,50,0.92); border:1.5px solid rgba(100,200,255,0.6); border-radius:6px; padding:3px 10px; font-size:18px; font-weight:900; color:white; font-family:'Arial Black',sans-serif; letter-spacing:1px; line-height:1; }
+  .type-badge { background:#2a7cff; border-radius:5px; padding:4px 5px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:28px; }
+  .type-badge .kanji { font-size:11px; color:white; font-weight:900; line-height:1; font-family:serif; }
+  .type-badge .romaji { font-size:6px; color:rgba(255,255,255,0.85); letter-spacing:0.5px; margin-top:1px; }
+
+  /* effect */
+  .effect-area { position:absolute; top:256px; left:8px; right:8px; z-index:10; }
+  .effect-tags { display:flex; gap:3px; flex-wrap:wrap; margin-bottom:4px; }
+  .tag { border-radius:10px; padding:2px 7px; font-size:7.5px; font-weight:800; letter-spacing:0.3px; line-height:1.4; }
+  .tag-main { background:#e63b3b; color:white; border:1px solid #ff6060; }
+  .tag-turn { background:#f5a623; color:white; border:1px solid #ffc350; }
+  .tag-on { background:#2a7cff; color:white; border:1px solid #6aaeff; }
+  .effect-text { font-size:7px; color:rgba(255,255,255,0.88); line-height:1.55; letter-spacing:0.1px; }
+
+  /* type strip */
+  .card-type-strip { position:absolute; top:313px; left:8px; right:8px; text-align:center; z-index:10; }
+  .card-type-text { font-size:8px; color:rgba(200,240,220,0.6); letter-spacing:4px; text-transform:uppercase; font-family:serif; }
+  .card-type-line { height:0.5px; background:rgba(200,240,220,0.25); margin:2px 0; }
+
+  /* name */
+  .name-area { position:absolute; top:320px; left:8px; right:38px; z-index:10; }
+  .char-name { font-size:19px; font-weight:900; color:white; font-family:'Arial Black','Impact',sans-serif; letter-spacing:0.5px; line-height:1.1; text-shadow:0 1px 4px rgba(0,0,0,0.8); }
+  .char-title { font-size:8px; color:rgba(180,240,210,0.7); letter-spacing:1px; margin-top:2px; font-family:monospace; }
+
+  /* life */
+  .life-badge { position:absolute; top:324px; right:6px; width:30px; height:30px; z-index:10; }
+
+  /* bottom */
+  .bottom-bar { position:absolute; bottom:6px; left:8px; right:8px; display:flex; align-items:center; justify-content:space-between; z-index:10; }
+  .card-id { font-size:7px; color:rgba(180,240,210,0.4); letter-spacing:0.5px; font-family:monospace; }
+  .bandai-mark { font-size:6px; color:rgba(180,240,210,0.3); letter-spacing:0.5px; }
+  .map-svg { position:absolute; inset:0; opacity:0.18; pointer-events:none; z-index:1; }
+  .shimmer { position:absolute; inset:0; border-radius:12px; pointer-events:none; z-index:101; }
+
+  /* cost */
+  .top-left-cost { position:absolute; top:4px; left:4px; width:38px; height:38px; z-index:80; }
+
+  .controls { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; justify-content:center; }
+  .btn { background:rgba(255,255,255,0.07); border:0.5px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.8); border-radius:6px; padding:7px 16px; font-size:12px; cursor:pointer; letter-spacing:0.5px; transition:background 0.2s; }
+  .btn:hover { background:rgba(255,255,255,0.13); }
+  .btn.active { background:rgba(100,200,160,0.2); border-color:rgba(100,200,160,0.5); }
+  .hint { margin-top:10px; color:rgba(255,255,255,0.2); font-size:11px; letter-spacing:0.5px; }
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="card-wrapper" id="cardWrapper">
+    <div class="edge edge-top"></div>
+    <div class="edge edge-bottom"></div>
+    <div class="edge edge-left"></div>
+    <div class="edge edge-right"></div>
+
+    <!-- RETRO -->
+    <div class="card-face card-back">
+      <svg style="position:absolute;inset:0;opacity:0.22;pointer-events:none;" viewBox="0 0 280 390" xmlns="http://www.w3.org/2000/svg" width="280" height="390">
+        <line x1="0" y1="90"  x2="280" y2="220" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="0" y1="180" x2="280" y2="110" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="45" y1="0"  x2="200" y2="390" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="140" y1="0" x2="20"  y2="390" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="220" y1="0" x2="280" y2="140" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="280" y1="200" x2="70" y2="390" stroke="#c8a840" stroke-width="0.5"/>
+        <line x1="0" y1="310"  x2="220" y2="390" stroke="#c8a840" stroke-width="0.5"/>
+      </svg>
+      <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);" viewBox="0 0 160 160" width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="80" r="72" fill="none" stroke="#c8a840" stroke-width="2"/>
+        <circle cx="80" cy="80" r="56" fill="none" stroke="#c8a840" stroke-width="1"/>
+        <circle cx="80" cy="80" r="44" fill="none" stroke="#c8a840" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <g stroke="#c8a840" stroke-width="0.8">
+          <line x1="80" y1="10" x2="80" y2="19"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(30,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(60,80,80)"/><line x1="80" y1="10" x2="80" y2="19" transform="rotate(90,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(120,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(150,80,80)"/><line x1="80" y1="10" x2="80" y2="19" transform="rotate(180,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(210,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(240,80,80)"/><line x1="80" y1="10" x2="80" y2="19" transform="rotate(270,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(300,80,80)"/><line x1="80" y1="10" x2="80" y2="16" transform="rotate(330,80,80)"/>
+        </g>
+        <path d="M80,18 L88,80 L80,90 L72,80 Z" fill="#c8a840"/>
+        <path d="M80,142 L88,80 L80,90 L72,80 Z" fill="#c8a840" opacity="0.5"/>
+        <circle cx="80" cy="80" r="6" fill="#c8a840"/>
+        <circle cx="80" cy="80" r="3" fill="#14195e"/>
+      </svg>
+      <div style="position:absolute;bottom:36px;left:0;right:0;text-align:center;">
+        <div style="font-size:22px;font-weight:800;color:white;letter-spacing:2px;font-family:Georgia,serif;display:flex;align-items:center;justify-content:center;gap:2px;">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border:2.5px solid white;border-radius:50%;font-size:9px;font-weight:900;">✕</span>NE PIECE
+        </div>
+        <div style="font-size:9px;color:white;letter-spacing:5px;margin-top:3px;opacity:0.9;">CARD GAME</div>
+      </div>
+    </div>
+
+    <!-- FRONTE -->
+    <div class="card-face card-front">
+      <div class="front-shell">
+        <div class="bg-map"></div>
+        <svg class="map-svg" viewBox="0 0 280 390" xmlns="http://www.w3.org/2000/svg" width="280" height="390">
+          <g stroke="rgba(200,255,230,0.45)" stroke-width="0.4" fill="none">
+            <line x1="0" y1="65" x2="280" y2="65"/><line x1="0" y1="130" x2="280" y2="130"/>
+            <line x1="0" y1="195" x2="280" y2="195"/><line x1="0" y1="260" x2="280" y2="260"/>
+            <line x1="0" y1="325" x2="280" y2="325"/>
+            <line x1="70" y1="0" x2="70" y2="390"/><line x1="140" y1="0" x2="140" y2="390"/><line x1="210" y1="0" x2="210" y2="390"/>
+          </g>
+          <g fill="none" stroke="rgba(200,255,230,0.3)" stroke-width="0.8">
+            <path d="M20,90 Q50,70 90,80 Q112,86 100,112 Q88,132 55,126 Q22,118 20,90Z"/>
+            <path d="M115,55 Q150,44 182,60 Q195,76 178,98 Q160,112 130,98 Q108,83 115,55Z"/>
+            <path d="M30,160 Q65,148 100,162 Q118,176 104,196 Q82,210 50,202 Q22,190 30,160Z"/>
+            <path d="M160,138 Q198,126 225,148 Q238,165 228,186 Q208,200 178,190 Q150,178 160,138Z"/>
+          </g>
+        </svg>
+
+        <!-- ARTWORK con foto -->
+        <div class="artwork-area">
+          <canvas id="artCanvas"></canvas>
+          <div class="artwork-fade"></div>
+        </div>
+
+        <!-- POWER -->
+        <div class="power-badge">
+          <div class="power-number">9000</div>
+          <div class="type-badge"><span class="kanji">開</span><span class="romaji">DEPLOY</span></div>
+        </div>
+
+        <!-- EFFECT -->
+        <div class="effect-area">
+          <div class="effect-tags">
+            <span class="tag tag-main">Activate:Main</span>
+            <span class="tag tag-turn">Once Per Turn</span>
+            <span class="tag tag-on">On Deploy</span>
+          </div>
+          <div class="effect-text">If your stack has 5 or more commits, give all enemy processes −3000 uptime until end of sprint. Your Leader gains [Rush] while running on caffeine. Draw 1 card from the tech stack.</div>
+        </div>
+
+        <div class="card-type-strip">
+          <div class="card-type-line"></div>
+          <div class="card-type-text">Leader</div>
+          <div class="card-type-line"></div>
+        </div>
+
+        <div class="name-area">
+          <div class="char-name">maton11</div>
+          <div class="char-title">Full Stack Developer</div>
+        </div>
+
+        <svg class="life-badge" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="15" r="13" fill="rgba(20,30,50,0.9)" stroke="rgba(100,200,255,0.7)" stroke-width="1.5"/>
+          <text x="15" y="13" text-anchor="middle" font-size="5" fill="rgba(180,220,255,0.8)" font-family="sans-serif" font-weight="600" dominant-baseline="middle">LIFE</text>
+          <text x="15" y="22" text-anchor="middle" font-size="11" fill="white" font-family="Arial Black,sans-serif" font-weight="900" dominant-baseline="middle">5</text>
+        </svg>
+
+        <div class="bottom-bar">
+          <div style="display:flex;align-items:center;gap:4px;">
+            <svg width="18" height="20" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="10,1 19,6 19,16 10,21 1,16 1,6" fill="none" stroke="rgba(200,240,220,0.4)" stroke-width="1.2"/>
+              <polygon points="10,4 16,7.5 16,14.5 10,18 4,14.5 4,7.5" fill="rgba(200,240,220,0.1)" stroke="rgba(200,240,220,0.25)" stroke-width="0.8"/>
+            </svg>
+            <span class="card-id">OP-DEV-001</span>
+          </div>
+          <span class="bandai-mark">PORTFOLIO CARD</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="7" r="6" fill="none" stroke="rgba(200,240,220,0.4)" stroke-width="1"/>
+            <text x="7" y="10" text-anchor="middle" font-size="7" fill="rgba(200,240,220,0.6)" font-family="sans-serif" font-weight="700">1</text>
+          </svg>
+        </div>
+
+        <!-- COST (piccolo, dentro la card) -->
+        <div class="top-left-cost">
+          <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+            <circle cx="19" cy="19" r="17" fill="rgba(15,25,45,0.95)" stroke="rgba(100,200,255,0.75)" stroke-width="2"/>
+            <text x="19" y="14" text-anchor="middle" font-size="6" fill="rgba(180,220,255,0.8)" font-family="sans-serif" font-weight="600" dominant-baseline="middle">COST</text>
+            <text x="19" y="25" text-anchor="middle" font-size="14" fill="white" font-family="Arial Black,sans-serif" font-weight="900" dominant-baseline="middle">3</text>
+          </svg>
+        </div>
+
+        <div class="outer-border"></div>
+        <div class="inner-border"></div>
+        <div class="shimmer" id="shimmer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn active" id="btnFlip" onclick="toggleFlip()">↩ Gira carta</button>
+  <button class="btn" id="btnAuto" onclick="toggleAuto()">▶ Auto-rotate</button>
+  <button class="btn" onclick="resetCard()">⟳ Reset</button>
+</div>
+<div class="hint">Trascina per ruotare · Gira per vedere retro/fronte</div>
+
+<script>
+// ===== DISEGNA FOTO CON RIMOZIONE SFONDO SCURO =====
+const canvas = document.getElementById('artCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 264;
+canvas.height = 240;
+
+const img = new Image();
+img.onload = function() {
+  // Disegna prima il canvas temporaneo per processare l'immagine
+  const tmpCanvas = document.createElement('canvas');
+  const tmpCtx = tmpCanvas.getContext('2d');
+  
+  // Calcola il crop: la foto è portrait, vogliamo il viso (zona alta)
+  const srcAspect = img.naturalWidth / img.naturalHeight;
+  const dstAspect = 264 / 240;
+  
+  let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+  
+  // Crop verticale: prendiamo il 55% alto dell'immagine (viso + spalle)
+  sh = img.naturalHeight * 0.62;
+  sw = sh * dstAspect;
+  sx = (img.naturalWidth - sw) / 2;
+  sy = 0;
+  
+  tmpCanvas.width = 264;
+  tmpCanvas.height = 240;
+  tmpCtx.drawImage(img, sx, sy, sw, sh, 0, 0, 264, 240);
+  
+  const imageData = tmpCtx.getImageData(0, 0, 264, 240);
+  const data = imageData.data;
+  
+  // Rimuovi sfondo: pixel molto scuri (muro scuro) o molto chiari (parete chiara)
+  // La foto ha sfondo scuro dietro la persona → rimuoviamo i pixel con bassi valori RGB
+  // e non facenti parte della zona centrale del viso
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const px = (i / 4) % 264;
+    const py = Math.floor((i / 4) / 264);
+    
+    // Luminosità
+    const lum = (r * 0.299 + g * 0.587 + b * 0.114);
+    
+    // Distanza dal centro orizzontale
+    const cx = 132;
+    const distX = Math.abs(px - cx);
+    
+    // Sfondo scuro (muro) → quasi nero
+    if (lum < 28 && distX > 30) {
+      data[i+3] = 0; // trasparente
+      continue;
+    }
+    
+    // Angoli molto scuri → rimuovi
+    if (lum < 15) {
+      data[i+3] = 0;
+      continue;
+    }
+    
+    // Zona sinistra con muro arancione chiaro → mantieni colori simili a pelle/felpa
+    // ma rimuovi pixel molto saturi in arancione (sfondo)
+    if (px < 40 || px > 224) {
+      const isOrangeBg = r > 120 && g < 80 && b < 60 && (r - g) > 60;
+      const isWall = r > 160 && g > 100 && b > 80 && lum > 140;
+      if (isOrangeBg || isWall) {
+        data[i+3] = 0;
+        continue;
+      }
+    }
+    
+    // Zona molto in alto a destra (sfondo bianco/grigio) → rimuovi
+    if (py < 30 && px > 150 && lum > 150) {
+      data[i+3] = Math.max(0, data[i+3] - 200);
+      continue;
+    }
+    
+    // Fade ai bordi orizzontali per blend naturale
+    if (distX > 100) {
+      const fade = 1 - (distX - 100) / 32;
+      data[i+3] = Math.floor(data[i+3] * Math.max(0, Math.min(1, fade)));
+    }
+    
+    // Fade bordo superiore
+    if (py < 8) {
+      data[i+3] = Math.floor(data[i+3] * (py / 8));
+    }
+  }
+  
+  tmpCtx.putImageData(imageData, 0, 0);
+  
+  // Disegna sfondo scuro sfumato + foto processata
+  ctx.clearRect(0, 0, 264, 240);
+  
+  // Sfondo: gradiente dark con hint verde
+  const grad = ctx.createLinearGradient(0, 0, 264, 240);
+  grad.addColorStop(0, '#0a1828');
+  grad.addColorStop(0.5, '#091520');
+  grad.addColorStop(1, '#060e18');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 264, 240);
+  
+  // Effetto glow verde dietro la figura
+  const glow = ctx.createRadialGradient(132, 160, 10, 132, 140, 130);
+  glow.addColorStop(0, 'rgba(20,100,60,0.35)');
+  glow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, 264, 240);
+  
+  // Disegna la foto con rimozione sfondo
+  ctx.drawImage(tmpCanvas, 0, 0);
+  
+  // Testo maton11 in watermark
+  ctx.font = 'bold 26px monospace';
+  ctx.fillStyle = 'rgba(80,200,130,0.08)';
+  ctx.textAlign = 'center';
+  ctx.fillText('maton11', 132, 200);
+};
+img.src = 'data:image/jpeg;base64,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';
+
+// ===== 3D CARD =====
+const wrapper = document.getElementById('cardWrapper');
+const shimmer  = document.getElementById('shimmer');
+const THICKNESS = 5;
+let rotX = -8, rotY = 22;
+let isFlipped=false, isDragging=false;
+let lastX=0, lastY=0, autoRotate=false, raf;
+
+function applyTransform(){
+  const f = isFlipped ? 180 : 0;
+  wrapper.style.transform = `translateZ(${THICKNESS/2}px) rotateX(${rotX}deg) rotateY(${rotY+f}deg)`;
+  if(shimmer){
+    shimmer.style.background=`linear-gradient(${108+rotY*0.4}deg,
+      transparent 30%, rgba(255,255,255,0.03) 43%,
+      rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.03) 57%, transparent 68%)`;
+  }
+}
+function toggleFlip(){
+  isFlipped=!isFlipped;
+  wrapper.style.transition='transform 0.65s cubic-bezier(0.4,0,0.2,1)';
+  applyTransform();
+  setTimeout(()=>{ wrapper.style.transition='transform 0.08s ease-out'; },700);
+}
+function toggleAuto(){
+  autoRotate=!autoRotate;
+  document.getElementById('btnAuto').classList.toggle('active',autoRotate);
+  if(autoRotate) loop(); else cancelAnimationFrame(raf);
+}
+function resetCard(){
+  rotX=-8; rotY=22; isFlipped=false; autoRotate=false;
+  document.getElementById('btnAuto').classList.remove('active');
+  cancelAnimationFrame(raf);
+  wrapper.style.transition='transform 0.5s ease';
+  applyTransform();
+  setTimeout(()=>{ wrapper.style.transition='transform 0.08s ease-out'; },550);
+}
+function loop(){
+  if(!autoRotate) return;
+  rotY+=0.4; rotX=Math.sin(rotY*0.017)*9-5;
+  applyTransform(); raf=requestAnimationFrame(loop);
+}
+wrapper.addEventListener('mousedown',e=>{ isDragging=true; lastX=e.clientX; lastY=e.clientY; autoRotate=false; cancelAnimationFrame(raf); document.getElementById('btnAuto').classList.remove('active'); });
+document.addEventListener('mousemove',e=>{ if(!isDragging) return; rotY+=(e.clientX-lastX)*0.55; rotX-=(e.clientY-lastY)*0.55; rotX=Math.max(-35,Math.min(35,rotX)); lastX=e.clientX; lastY=e.clientY; applyTransform(); });
+document.addEventListener('mouseup',()=>{ isDragging=false; });
+wrapper.addEventListener('touchstart',e=>{ isDragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; autoRotate=false; cancelAnimationFrame(raf); },{passive:true});
+document.addEventListener('touchmove',e=>{ if(!isDragging) return; rotY+=(e.touches[0].clientX-lastX)*0.55; rotX-=(e.touches[0].clientY-lastY)*0.55; rotX=Math.max(-35,Math.min(35,rotX)); lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; applyTransform(); },{passive:true});
+document.addEventListener('touchend',()=>{ isDragging=false; });
+applyTransform();
+</script>
+</body>
+</html>

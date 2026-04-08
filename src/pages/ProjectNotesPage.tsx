@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import GlitchTransition from '../components/GlitchTransition'
+import OpcmProfileCard from '../components/OpcmProfileCard'
 import {getProjectNotesBySlug, projectCards} from '../data/projectsContent'
 import opcmHubImage from '../assets/opcm_hub.png'
 import './ProjectNotesPage.css'
@@ -131,7 +132,9 @@ function ProjectNotesPage({ forcedSlug }: ProjectNotesPageProps) {
               </article>
             </div>
 
-            <div className="project-notes-top-right-placeholder" aria-hidden="true" />
+            <div className="project-notes-top-right-placeholder">
+              <OpcmProfileCard name="Mattia Archinà" title="Full Stack Developer" handle="maton11" status="Available" />
+            </div>
           </section>
         ) : (
           <section className="project-notes-grid" aria-label="Project notes details">

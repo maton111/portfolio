@@ -112,6 +112,10 @@
 }
 
 .project-notes-top-right-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
   min-height: 100%;
   border: 1px dashed color-mix(in oklab, var(--outline) 55%, transparent);
   background: color-mix(in oklab, var(--panel) 28%, transparent);
