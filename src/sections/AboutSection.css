@@ -32,7 +32,7 @@
     font-size: 0.66rem;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: #42e09c;
+    color: var(--accent-mint);
 }
 
 .about-header h2 {
@@ -83,11 +83,11 @@
 .about-btn.primary {
     background: var(--accent-green);
     color: #003919;
-    box-shadow: 0 0 18px rgba(0, 255, 136, 0.18);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--accent-green) 18%, transparent);
 }
 
 .about-btn.primary:hover {
-    box-shadow: 0 0 24px rgba(0, 255, 136, 0.36);
+    box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 36%, transparent);
 }
 
 .about-btn.secondary {
@@ -188,7 +188,7 @@
 .about-origin-card h4 {
     margin-bottom: 10px;
     font-size: 0.72rem;
-    color: #42e09c;
+    color: var(--accent-mint);
 }
 
 .about-origin-card p {
@@ -233,7 +233,7 @@
 }
 
 .glow-primary {
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+    box-shadow: 0 0 20px color-mix(in oklab, var(--accent-green) 15%, transparent);
 }
 
 .about-hud-card,
@@ -289,7 +289,7 @@
 
 
 .about-avatar:hover {
-    box-shadow: 0 0 24px rgba(0, 255, 136, 0.36);
+    box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 36%, transparent);
 }
 
 .about-avatar:focus-visible {
@@ -302,7 +302,7 @@
 }
 
 .about-avatar.is-flipped {
-    box-shadow: 0 0 16px rgba(0, 255, 136, 0.3);
+    box-shadow: 0 0 16px color-mix(in oklab, var(--accent-green) 30%, transparent);
 }
 
 .about-avatar-stack {
@@ -376,7 +376,7 @@
 }
 
 .about-stat-head strong.mint {
-    color: #42e09c;
+    color: var(--accent-mint);
 }
 
 .about-stat-head strong.orange {
@@ -399,7 +399,7 @@
 }
 
 .about-segment-bar span.is-active.mint {
-    background: #42e09c;
+    background: var(--accent-mint);
 }
 
 .about-segment-bar span.is-active.orange {
@@ -514,7 +514,7 @@
     height: 6px;
     border-radius: 50%;
     background: var(--accent-green);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 50%, transparent);
     margin-right: 8px;
 }
 

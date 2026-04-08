@@ -1,4 +1,5 @@
 .project-notes-page {
+  position: relative;
   min-height: 100vh;
   padding: 96px 24px 96px;
   background-color: #0b0f0c;
@@ -6,7 +7,10 @@
   background-size: 24px 24px;
 }
 
+
 .project-notes-shell {
+  position: relative;
+  z-index: 1;
   max-width: 1220px;
   margin: 0 auto;
   display: grid;
@@ -28,7 +32,7 @@
 .project-notes-hero-copy small {
   display: block;
   margin-bottom: 8px;
-  color: #42e09c;
+  color: var(--accent-mint);
   font-family: var(--font-headline), sans-serif;
   font-size: 0.58rem;
   letter-spacing: 0.18em;
@@ -57,9 +61,9 @@
 
 .project-notes-hero-meta span {
   padding: 5px 8px;
-  border-left: 2px solid #42e09c;
+  border-left: 2px solid var(--accent-mint);
   background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
-  color: #42e09c;
+  color: var(--accent-mint);
   font-family: var(--font-headline), sans-serif;
   font-size: 0.54rem;
   letter-spacing: 0.12em;
@@ -75,7 +79,7 @@
 .project-notes-actions button {
   border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
   background: transparent;
-  color: #42e09c;
+  color: var(--accent-mint);
   font-family: var(--font-headline), sans-serif;
   font-size: 0.58rem;
   letter-spacing: 0.12em;
@@ -142,7 +146,7 @@
   font-size: 0.76rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .project-notes-panel p,
@@ -166,9 +170,9 @@
 
 .project-notes-tags span {
   padding: 5px 8px;
-  border-left: 2px solid #42e09c;
+  border-left: 2px solid var(--accent-mint);
   background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
-  color: #42e09c;
+  color: var(--accent-mint);
   font-family: var(--font-headline), sans-serif;
   font-size: 0.54rem;
   letter-spacing: 0.12em;

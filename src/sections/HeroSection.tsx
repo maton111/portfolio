@@ -1,4 +1,4 @@
-import HeroHudCard from '../components/HeroHudCard'
+import HeroHudCard from '../components/ui/HeroHudCard'
 import {heroContent} from '../data/heroContent'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'

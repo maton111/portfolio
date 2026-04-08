@@ -19,20 +19,20 @@
 
 .boot-grid {
   background-image:
-    linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 .boot-scanlines {
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 136, 0.02) 50%);
+  background: linear-gradient(to bottom, transparent 50%, color-mix(in oklab, var(--accent-green) 2%, transparent) 50%);
   background-size: 100% 4px;
   mix-blend-mode: screen;
 }
 
 .boot-vignette {
   background:
-    radial-gradient(circle at 20% 15%, rgba(0, 255, 136, 0.09), transparent 40%),
+    radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--accent-green) 9%, transparent), transparent 40%),
     radial-gradient(circle at 86% 78%, rgba(255, 122, 0, 0.08), transparent 42%),
     radial-gradient(circle at 50% 45%, transparent 35%, rgba(11, 15, 12, 0.9) 90%);
 }
@@ -62,7 +62,7 @@
 .boot-header > div span {
   width: 48px;
   height: 1px;
-  background: rgba(66, 224, 156, 0.35);
+  background: color-mix(in oklab, var(--accent-mint) 35%, transparent);
 }
 
 .boot-header small {
@@ -70,7 +70,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .boot-header h1 {
@@ -80,7 +80,7 @@
   line-height: 0.95;
   letter-spacing: -0.045em;
   color: var(--text-strong);
-  text-shadow: 0 0 18px rgba(0, 255, 136, 0.24);
+  text-shadow: 0 0 18px color-mix(in oklab, var(--accent-green) 24%, transparent);
 }
 
 .boot-module {
@@ -110,7 +110,7 @@
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.63rem;
-  color: rgba(0, 255, 136, 0.75);
+  color: color-mix(in oklab, var(--accent-green) 75%, transparent);
 }
 
 .boot-module-head strong {
@@ -148,7 +148,7 @@
 
 .boot-segments span.filled {
   background: var(--accent-green);
-  box-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent-green) 35%, transparent);
 }
 
 .boot-log {
@@ -162,7 +162,7 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.7rem;
   line-height: 1.45;
-  color: rgba(66, 224, 156, 0.84);
+  color: color-mix(in oklab, var(--accent-mint) 84%, transparent);
 }
 
 .boot-log p {
@@ -199,7 +199,7 @@
   height: 8px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.65);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 65%, transparent);
   animation: pulse 1.2s ease-in-out infinite;
 }
 
@@ -208,12 +208,12 @@
   font-size: 0.6rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .boot-footer .material-symbols-outlined {
   font-size: 1rem;
-  color: rgba(66, 224, 156, 0.74);
+  color: color-mix(in oklab, var(--accent-mint) 74%, transparent);
 }
 
 @keyframes pulse {

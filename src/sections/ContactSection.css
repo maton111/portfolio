@@ -1,7 +1,7 @@
 .contact-page {
   padding: 14px 24px 100px;
   background-color: #0b0f0c;
-  background-image: radial-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 0);
+  background-image: radial-gradient(color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
@@ -24,7 +24,7 @@
   font-size: 0.56rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in oklab, #42e09c 70%, transparent);
+  color: color-mix(in oklab, var(--accent-mint) 70%, transparent);
 }
 
 .contact-grid {
@@ -54,7 +54,7 @@
 }
 
 .contact-main header p span {
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .contact-panel {
@@ -107,7 +107,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .contact-form input,
@@ -153,13 +153,13 @@
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 20px color-mix(in oklab, var(--accent-green) 20%, transparent);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .contact-form button:hover:not(:disabled) {
-  box-shadow: 0 0 24px rgba(0, 255, 136, 0.34);
+  box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 34%, transparent);
 }
 
 .contact-form button:active:not(:disabled) {
@@ -189,9 +189,9 @@
 }
 
 .form-success {
-  background: color-mix(in oklab, #42e09c 20%, transparent);
-  border-left: 3px solid #42e09c;
-  color: #42e09c;
+  background: color-mix(in oklab, var(--accent-mint) 20%, transparent);
+  border-left: 3px solid var(--accent-mint);
+  color: var(--accent-mint);
 }
 
 @keyframes slideIn {
@@ -213,7 +213,7 @@
 .contact-node-panel {
   padding: 18px;
   background: color-mix(in oklab, var(--panel) 65%, transparent);
-  border-left: 2px solid #42e09c;
+  border-left: 2px solid var(--accent-mint);
 }
 
 .contact-node-panel.tone-orange {
@@ -229,7 +229,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .contact-node-panel.tone-orange h3 {
@@ -327,7 +327,7 @@
 .location-map-grid {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+  background: linear-gradient(to right, color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
@@ -371,7 +371,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: color-mix(in oklab, #42e09c 64%, transparent);
+  color: color-mix(in oklab, var(--accent-mint) 64%, transparent);
 }
 
 @keyframes contact-scroll {

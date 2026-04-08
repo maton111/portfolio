@@ -1,20 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap');
 
+/* Breakpoint scale (min-width, mobile-first)
+   sm  640px  — tablet portrait
+   md  900px  — tablet landscape / small desktop
+   lg  1200px — full desktop
+   ------------------------------------------------------------------ */
+
 :root {
+  /* Backgrounds */
   --bg-base: #0b0f0c;
   --bg-elevated: #101411;
+
+  /* Panels */
   --panel: #323632;
   --panel-strong: #272b27;
+
+  /* Accent — two parallel greens intentional: */
+  /* --accent-green  #00ff88  bright neon  (interactive elements, glows) */
+  /* --accent-mint   #42e09c  soft mint    (tags, labels, decorative text) */
   --accent-green: #00ff88;
+  --accent-mint: #42e09c;
   --accent-orange: #ff7a00;
+
+  /* Text */
   --text-main: #e0e3de;
   --text-strong: #f1ffef;
   --text-muted: #b9cbb9;
+
+  /* Borders */
   --outline: #3b4b3d;
-  --border-soft: rgba(39, 43, 39, 0.35);
+  --border-soft: color-mix(in oklab, var(--panel-strong) 35%, transparent);
+
+  /* Typography */
   --font-headline: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Manrope', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Border radius scale */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-panel: 0 4px 24px color-mix(in oklab, var(--bg-base) 60%, transparent);
+
+  /* Layout */
   --section-anchor-offset: 104px;
 }
 
@@ -77,4 +115,65 @@ main[id] {
   display: inline-block;
   white-space: nowrap;
   direction: ltr;
+}
+
+/* ── Terminal background animations (shared by project pages) ── */
+.terminal-bg {
+  position: relative;
+}
+
+.terminal-bg::before {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklab, var(--accent-mint) 2%, transparent) 25%,
+    color-mix(in oklab, var(--accent-mint) 5%, transparent) 50%,
+    color-mix(in oklab, var(--accent-mint) 2%, transparent) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: terminal-scanline 14s linear infinite;
+}
+
+.terminal-bg::after {
+  content: '';
+  position: fixed;
+  width: 900px;
+  height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in oklab, var(--accent-mint) 5%, transparent) 0%,
+    color-mix(in oklab, var(--accent-mint) 2%, transparent) 38%,
+    transparent 68%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: terminal-glow-orbit 28s ease-in-out infinite alternate;
+}
+
+@keyframes terminal-scanline {
+  from { top: -18%; }
+  to   { top: 118%; }
+}
+
+@keyframes terminal-glow-orbit {
+  0%   { top: -22%; left: -26%; }
+  33%  { top: -8%;  left: 58%; }
+  66%  { top: 44%;  left: 66%; }
+  100% { top: 52%;  left: -22%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-bg::before,
+  .terminal-bg::after {
+    animation: none;
+    display: none;
+  }
 }

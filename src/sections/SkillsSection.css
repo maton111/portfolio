@@ -1,7 +1,7 @@
 .skills-page {
   padding: 88px 24px 120px;
   background:
-    radial-gradient(circle at 14% 8%, rgba(0, 255, 136, 0.06), transparent 34%),
+    radial-gradient(circle at 14% 8%, color-mix(in oklab, var(--accent-green) 6%, transparent), transparent 34%),
     radial-gradient(circle at 88% 72%, rgba(255, 122, 0, 0.06), transparent 38%),
     var(--bg-elevated);
 }
@@ -23,7 +23,7 @@
 }
 
 .skills-header > div span {
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .skills-header > div p {
@@ -32,7 +32,7 @@
   font-size: 0.67rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .skills-header h2 {
@@ -187,7 +187,7 @@
 
 .skills-segmented span.is-green {
   background: var(--accent-green);
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.38);
+  box-shadow: 0 0 8px color-mix(in oklab, var(--accent-green) 38%, transparent);
 }
 
 .skills-segmented span.is-orange {
@@ -205,7 +205,7 @@
 .skills-chip {
   border: 0;
   padding: 6px 8px;
-  border-left: 2px solid #42e09c;
+  border-left: 2px solid var(--accent-mint);
   background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
   font-family: var(--font-headline), sans-serif;
   font-size: 0.57rem;
@@ -246,7 +246,7 @@
 .skills-chip.is-locked {
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--accent-green) 34%, transparent) inset,
-    0 0 10px rgba(0, 255, 136, 0.2);
+    0 0 10px color-mix(in oklab, var(--accent-green) 20%, transparent);
 }
 
 .skills-chip.tone-orange.is-locked {
@@ -297,7 +297,7 @@
   font-size: 0.61rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #42e09c;
+  color: var(--accent-mint);
 }
 
 .skills-bottom > div:first-child small {

@@ -3,13 +3,11 @@ import AboutSection from './sections/AboutSection'
 import SkillsSection from './sections/SkillsSection'
 import ProjectsSection from './sections/ProjectsSection'
 import ContactSection from './sections/ContactSection'
-import GlitchTransition from './components/GlitchTransition'
-import InitialHudLoader from './components/InitialHudLoader'
+import GlitchTransition from './components/overlays/GlitchTransition'
+import InitialHudLoader from './components/overlays/InitialHudLoader'
 import {useInitialBoot} from './hooks/useInitialBoot'
 import ProjectNotesPage from './pages/ProjectNotesPage'
-import TeamSystemProjectPage from './pages/TeamSystemProjectPage'
-import LegacyRefactoringProjectPage from './pages/LegacyRefactoringProjectPage'
-import OpcmProjectPage from './pages/OpcmProjectPage'
+import EverydayLifeProjectPage from './pages/EverydayLifeProjectPage'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useEffect} from 'react'
 import {SECTION_IDS, type SectionId} from './data/sectionNavigation'
@@ -52,9 +50,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage isPageGlitching={isPageGlitching} />} />
-      <Route path="/projects/teamsystem-enterprise-backend" element={<TeamSystemProjectPage />} />
-      <Route path="/projects/legacy-refactoring-program" element={<LegacyRefactoringProjectPage />} />
-      <Route path="/projects/opcm" element={<OpcmProjectPage />} />
+      <Route path="/projects/everyday-life-core" element={<EverydayLifeProjectPage />} />
       <Route path="/projects/:slug" element={<ProjectNotesPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

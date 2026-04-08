@@ -1,5 +1,5 @@
 import {type PointerEvent, useMemo, useRef, useState} from 'react'
-import profileImage from '../assets/sfondo_card_opcm.png'
+import profileImage from '../../assets/sfondo_card_opcm.png'
 import './OpcmProfileCard.css'
 
 type OpcmProfileCardProps = {

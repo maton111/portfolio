@@ -409,7 +409,7 @@
 }
 
 .is-mint {
-    background: #42e09c;
+    background: var(--accent-mint);
 }
 
 .is-soft {
@@ -449,7 +449,7 @@
 .hud-tags span {
     padding: 6px 10px;
     background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
-    border-left: 2px solid #42e09c;
+    border-left: 2px solid var(--accent-mint);
     font-family: var(--font-headline), serif;
     font-size: 0.58rem;
     letter-spacing: 0.13em;
@@ -516,7 +516,7 @@
 }
 
 .scanner-track span.highlighted {
-    color: #42e09c;
+    color: var(--accent-mint);
 }
 
 @keyframes ticker {

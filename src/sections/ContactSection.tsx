@@ -1,7 +1,7 @@
 import {useRef} from 'react'
 import {contactHeader, contactSubjectOptions, directChannels, externalNodes, systemHud,} from '../data/contactContent'
 import {useContactForm} from '../hooks/useContactForm'
-import SystemLocationGlobe from '../components/SystemLocationGlobe'
+import SystemLocationGlobe from '../components/ui/SystemLocationGlobe'
 import turinImage from '../assets/turin.png'
 import './ContactSection.css'
 

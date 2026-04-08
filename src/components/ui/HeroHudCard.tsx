@@ -1,4 +1,4 @@
-import type {HeroQuest, HeroStat} from '../data/heroContent'
+import type {HeroQuest, HeroStat} from '../../data/heroContent'
 
 type HeroHudCardProps = {
     name: string

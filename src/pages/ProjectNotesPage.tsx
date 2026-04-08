@@ -1,14 +1,10 @@
 import {useEffect, useMemo, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
-import GlitchTransition from '../components/GlitchTransition'
-import OpcmProfileCard from '../components/OpcmProfileCard'
+import GlitchTransition from '../components/overlays/GlitchTransition'
+import OpcmProfileCard from '../components/ui/OpcmProfileCard'
 import {getProjectNotesBySlug, projectCards} from '../data/projectsContent'
 import opcmHubImage from '../assets/opcm_hub.png'
 import './ProjectNotesPage.css'
-
-type ProjectNotesPageProps = {
-  forcedSlug?: string
-}
 
 function resolveBackgroundImage(backgroundImage?: string | { default: string }) {
   if (!backgroundImage) {
@@ -18,9 +14,8 @@ function resolveBackgroundImage(backgroundImage?: string | { default: string }) 
   return typeof backgroundImage === 'string' ? backgroundImage : backgroundImage.default
 }
 
-function ProjectNotesPage({ forcedSlug }: ProjectNotesPageProps) {
-  const { slug: routeSlug } = useParams()
-  const slug = forcedSlug ?? routeSlug
+function ProjectNotesPage() {
+  const { slug } = useParams()
   const navigate = useNavigate()
   const [isLeaving, setIsLeaving] = useState(false)
 
@@ -47,7 +42,7 @@ function ProjectNotesPage({ forcedSlug }: ProjectNotesPageProps) {
 
   if (!projectCard || !notes) {
     return (
-      <main className="project-notes-page">
+      <main className="project-notes-page terminal-bg">
         <section className="project-notes-shell project-notes-not-found">
           <small>Notes_Not_Found</small>
           <h1>Project notes non disponibili</h1>
@@ -64,7 +59,7 @@ function ProjectNotesPage({ forcedSlug }: ProjectNotesPageProps) {
   const heroImage = projectCard.slug === 'opcm' ? opcmHubImage : resolveBackgroundImage(projectCard.backgroundImage)
 
   return (
-    <main className="project-notes-page" aria-labelledby="project-notes-title">
+    <main className="project-notes-page terminal-bg" aria-labelledby="project-notes-title">
       <section className="project-notes-shell">
         <header className="project-notes-hero">
           <div className="project-notes-hero-copy">

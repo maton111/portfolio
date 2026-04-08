@@ -1,5 +1,5 @@
 import {type ProjectCard, projectCards, projectsHeader, repoStatus, systemLogs,} from '../data/projectsContent'
-import {ElcCompositeVisual} from '../components/ElcCompositeVisual'
+import {ElcCompositeVisual} from '../components/ui/ElcCompositeVisual'
 import { useNavigate } from 'react-router-dom'
 import './ProjectsSection.css'
 
@@ -112,13 +112,13 @@ function ProjectsSection() {
                   </div>
 
                   <div className="project-actions">
-                    <button type="button">
+                    <button type="button" onClick={() => openProjectNotes(featuredCard.slug)}>
                       <span className="material-symbols-outlined" aria-hidden="true">
                         description
                       </span>
                       Architecture Notes
                     </button>
-                    <button className="primary" type="button">
+                    <button className="primary" type="button" onClick={() => openProjectNotes(featuredCard.slug)}>
                       Product Roadmap
                     </button>
                   </div>
