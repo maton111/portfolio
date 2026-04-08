@@ -87,15 +87,6 @@ jobs:
             echo "CORS_ORIGIN=${CORS_ORIGIN}" >> .env
           fi
           
-          echo "🧪 Node version: $(node -v)"
-          echo "🧪 npm version: $(npm -v)"
-          echo "🧪 package-lock version: $(node -p "require('./package-lock.json').lockfileVersion")"
-          echo "🧪 package.json emnapi refs:"
-          grep -n 'emnapi' package.json || true
-          echo "🧪 package-lock emnapi refs:"
-          grep -n '"@emnapi/core"' package-lock.json || true
-          grep -n '"@emnapi/runtime"' package-lock.json || true
-            
           echo "📦 Installing dependencies..."
           npm install
 
