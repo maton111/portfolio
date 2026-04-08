@@ -2,12 +2,10 @@ import HeroHudCard from '../components/HeroHudCard'
 import {heroContent} from '../data/heroContent'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'
+import {scrollToSection} from '../hooks/useSectionScroll'
 import './HeroSection.css'
 
 function HeroSection() {
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
 
   return (
     <div className="hero-page">

@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react'
 import profileFrontImg from '../assets/profilo1.jpeg'
 import profileBackImg from '../assets/profilo2.png'
 import {aboutHeader, aboutMetadata, aboutOriginCards, aboutPhilosophy, aboutQuests, aboutScanner, aboutStats,} from '../data/aboutContent'
+import {scrollToSection} from '../hooks/useSectionScroll'
 import './AboutSection.css'
 
 const SEGMENTS = 10
@@ -91,9 +92,6 @@ function AboutSection() {
         }
     }, [hasStartedStatsAnimation])
 
-    const scrollToSection = (sectionId: string) => {
-        document.getElementById(sectionId)?.scrollIntoView({behavior: 'smooth', block: 'start'})
-    }
 
     return (
         <section className="about-page" id="about" aria-labelledby="about-title">

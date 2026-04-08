@@ -12,6 +12,8 @@ import LegacyRefactoringProjectPage from './pages/LegacyRefactoringProjectPage'
 import OpcmProjectPage from './pages/OpcmProjectPage'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useEffect} from 'react'
+import {SECTION_IDS, type SectionId} from './data/sectionNavigation'
+import {scrollToSection} from './hooks/useSectionScroll'
 
 function HomePage({ isPageGlitching }: { isPageGlitching: boolean }) {
   const location = useLocation()
@@ -22,11 +24,11 @@ function HomePage({ isPageGlitching }: { isPageGlitching: boolean }) {
     }
 
     const sectionId = location.hash.replace('#', '')
-    const target = document.getElementById(sectionId)
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+    if (SECTION_IDS.includes(sectionId as SectionId)) {
+      scrollToSection(sectionId as SectionId)
     }
-  }, [location.hash, location.pathname])
+  }, [location.hash, location.pathname, scrollToSection])
 
   return (
     <>
