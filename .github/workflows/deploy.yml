@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Ensure PM2 is installed
         shell: bash
@@ -86,14 +86,18 @@ jobs:
             echo "NODE_ENV=production" >> .env
             echo "CORS_ORIGIN=${CORS_ORIGIN}" >> .env
           fi
-
-          echo "📦 Installing dependencies..."
-          npm ci
+          
           echo "🧪 Node version: $(node -v)"
           echo "🧪 npm version: $(npm -v)"
           echo "🧪 package-lock version: $(node -p "require('./package-lock.json').lockfileVersion")"
-            grep -n '"@emnapi/core"' package-lock.json || true
-            grep -n '"@emnapi/runtime"' package-lock.json || true
+          echo "🧪 package.json emnapi refs:"
+          grep -n 'emnapi' package.json || true
+          echo "🧪 package-lock emnapi refs:"
+          grep -n '"@emnapi/core"' package-lock.json || true
+          grep -n '"@emnapi/runtime"' package-lock.json || true
+            
+          echo "📦 Installing dependencies..."
+          npm ci
 
           echo "🔨 Building frontend..."
           npm run build
