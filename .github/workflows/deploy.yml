@@ -89,6 +89,11 @@ jobs:
 
           echo "📦 Installing dependencies..."
           npm ci
+          echo "🧪 Node version: $(node -v)"
+          echo "🧪 npm version: $(npm -v)"
+          echo "🧪 package-lock version: $(node -p "require('./package-lock.json').lockfileVersion")"
+            grep -n '"@emnapi/core"' package-lock.json || true
+            grep -n '"@emnapi/runtime"' package-lock.json || true
 
           echo "🔨 Building frontend..."
           npm run build
