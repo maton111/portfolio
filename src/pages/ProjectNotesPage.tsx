@@ -76,9 +76,23 @@ function ProjectNotesPage() {
               <button type="button" onClick={() => navigateWithGlitch('/#projects')}>
                 Back to Projects
               </button>
-              <button className="primary" type="button" onClick={() => navigateWithGlitch('/#contact')}>
-                Contact
-              </button>
+              {projectCard.githubUrl ? (
+                <a href={projectCard.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <span className="material-symbols-outlined" aria-hidden="true">code</span>
+                  GitHub
+                </a>
+              ) : null}
+              {projectCard.demoUrl ? (
+                <a className="primary" href={projectCard.demoUrl} target="_blank" rel="noopener noreferrer">
+                  <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                  Live Demo
+                </a>
+              ) : null}
+              {!projectCard.demoUrl ? (
+                <button className="primary" type="button" onClick={() => navigateWithGlitch('/#contact')}>
+                  Contact
+                </button>
+              ) : null}
             </div>
           </div>
           <div

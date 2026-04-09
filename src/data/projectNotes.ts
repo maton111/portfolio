@@ -155,6 +155,72 @@ export const projectNotes: ProjectNotes[] = [
       'Evoluzione frontend verso stack moderno cross-platform.',
     ],
   },
+  {
+    slug: 'neuro-scope',
+    headline: 'Analisi cognitiva real-time via webcam: face tracking WebAssembly, 6 stati mentali, dashboard metriche live e commentary engine. Tutto client-side, zero upload.',
+    role: 'Solo Developer (Frontend)',
+    context:
+      'Progetto personale sperimentale: esplorare cosa si può fare con computer vision nel browser senza infrastruttura server. MediaPipe processa 468 landmark facciali per frame via WebAssembly direttamente sul dispositivo dell\'utente.',
+    challenge:
+      'Tradurre segnali facciali grezzi (blink rate, gaze drift, micro-movimenti) in metriche cognitive percepite come credibili, con un UX che comunica playfulness senza risultare banale.',
+    timeline: [
+      'Integrazione MediaPipe Face Landmarker con rolling averages per smoothing dei segnali',
+      'State machine a 6 stati con transition logic e anti-flicker debouncing',
+      'Commentary engine: 90 frasi su 18 pool, 3 toni (Roast / Coach / Corporate), anti-ripetizione',
+      'Dashboard Recharts + session summary con badge e timeline stati',
+      'Deploy su Vercel, ottimizzazione bundle WASM e cold start',
+    ],
+    stack: ['Next.js 15', 'TypeScript (strict)', 'Tailwind CSS v4', 'shadcn/ui', 'Framer Motion', 'Recharts', 'MediaPipe Tasks Vision', 'WebAssembly', 'Vercel'],
+    sections: [
+      {
+        title: 'Face tracking e metriche',
+        points: [
+          'MediaPipe Face Landmarker processa 468 landmark facciali per frame via WebAssembly: zero latenza server, zero upload video.',
+          'Rolling average su finestre temporali configurabili per smoothing di Focus Score, Gaze Stability, Motion Level e Fatigue Signal.',
+          'Anti-flicker: transizioni di stato bloccate da un debounce timer per evitare flickering su segnali rumorosi.',
+          'Cleanup esplicito di media track e animation frame al dismount del componente per evitare memory leak.',
+        ],
+      },
+      {
+        title: 'State machine cognitiva',
+        points: [
+          '6 stati: Locked In, Focused, Distracted, Tired, Confused Genius, Calibrating — con logica di transizione basata su soglie combinate delle 4 metriche.',
+          'Stato Calibrating durante il warm-up iniziale: previene classificazioni premature nei primi secondi.',
+          'Ogni stato ha peso diverso nel session summary: il sistema calcola lo stato dominante della sessione per il verdict finale.',
+        ],
+      },
+      {
+        title: 'Commentary engine',
+        points: [
+          '90 frasi scritte a mano distribuite su 18 pool tematici (6 stati × 3 toni).',
+          'Anti-ripetizione: tracking delle ultime N frasi per stato per evitare loop immediati.',
+          'Toni selezionabili dall\'utente: Roast (ironico), Coach (motivazionale), Corporate (formalissimo).',
+          'Rate limiting sul delivery dei commenti per non sovraccaricare l\'utente durante sessioni lunghe.',
+        ],
+      },
+      {
+        title: 'Architettura frontend',
+        points: [
+          'Next.js 15 App Router con componenti React Server dove possibile, client components solo dove necessario (webcam, Recharts, Framer Motion).',
+          'shadcn/ui come base component system: accessibilità e consistenza senza overhead di design custom.',
+          'Framer Motion per transizioni di stato cognitive e feedback visivo sulle metriche.',
+          'Recharts per live chart delle metriche con update real-time senza re-render pesanti.',
+        ],
+      },
+    ],
+    outcomes: [
+      'Tool funzionante end-to-end deployato su Vercel: apertura, calibrazione, sessione, summary.',
+      'Face tracking stabile a 30fps su hardware consumer senza degrado visibile della UI.',
+      'Commentary engine con 90 frasi percepito come vario e non ripetitivo nelle sessioni di test.',
+      'Zero dipendenze server-side per il tracking: privacy by design, nessun dato video lascia il dispositivo.',
+    ],
+    nextSteps: [
+      'Session persistence: salvare localmente lo storico sessioni per trend longitudinali.',
+      'Calibrazione personalizzata: baseline individuale per ridurre falsi negativi su utenti con caratteristiche facciali diverse.',
+      'Export sessione: report PDF o JSON delle metriche aggregate.',
+      'Modalità multi-sessione: confronto focus score tra sessioni diverse.',
+    ],
+  },
 ]
 
 export function getProjectNotesBySlug(slug?: string) {

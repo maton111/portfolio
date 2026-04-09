@@ -1,6 +1,7 @@
 import teamsystemSvg from '../assets/teamsystem_enterprise_backend_hero.svg'
 import legacySvg from '../assets/legacy_refactoring_hero.svg'
 import opcmHeroBannerSvg from '../assets/opcm_hero_banner.svg'
+import neuroscopeSvg from '../assets/neuroscope_svg_image.svg'
 
 export type ProjectCard = {
   id: string
@@ -14,6 +15,8 @@ export type ProjectCard = {
   visual: 'circuit' | 'vault' | 'kernel'
   backgroundImage?: string | { default: string }
   featured?: boolean
+  githubUrl?: string
+  demoUrl?: string
 }
 
 export const projectsHeader = {
@@ -50,17 +53,18 @@ export const projectCards: ProjectCard[] = [
     visual: 'vault',
   },
   {
-    id: 'ELC-CORE-03',
-    slug: 'everyday-life-core',
-    title: 'Everyday Life Core (in sviluppo)',
+    id: 'NS-CV-03',
+    slug: 'neuro-scope',
+    title: 'NeuroScope',
     difficulty: 'Product',
     description:
-      'Progetto personale full stack: backend .NET, frontend React, mobile Flutter e funzionalita realtime per task, gruppi, notifiche e gestione quotidiana.',
-    tags: ['.NET', 'React', 'Flutter', 'PostgreSQL', 'WebSocket'],
-    icon: 'rocket_launch',
-    tone: 'orange',
-    visual: 'kernel',
-    featured: true,
+      'Tool browser-based di analisi cognitiva real-time via webcam. Face tracking WebAssembly (MediaPipe, 468 landmark/frame), 6 stati cognitivi, dashboard metriche live e commentary engine con 90 frasi su 3 toni. Zero upload, tutto client-side.',
+    tags: ['Next.js 15', 'TypeScript', 'MediaPipe', 'WebAssembly', 'Recharts', 'Vercel'],
+    icon: 'psychology',
+    visual: 'circuit',
+    backgroundImage: neuroscopeSvg,
+    githubUrl: 'https://github.com/maton111/neuro-scope',
+    demoUrl: 'https://neuro-scope-fxy1.vercel.app',
   },
   {
     id: 'OPCM-APP-04',
@@ -73,5 +77,18 @@ export const projectCards: ProjectCard[] = [
     icon: 'collections_bookmark',
     backgroundImage: opcmHeroBannerSvg,
     visual: 'circuit',
+  },
+  {
+    id: 'ELC-CORE-05',
+    slug: 'everyday-life-core',
+    title: 'Everyday Life Core (in sviluppo)',
+    difficulty: 'Product',
+    description:
+        'Progetto personale full stack: backend .NET, frontend React, mobile Flutter e funzionalita realtime per task, gruppi, notifiche e gestione quotidiana.',
+    tags: ['.NET', 'React', 'Flutter', 'PostgreSQL', 'WebSocket'],
+    icon: 'rocket_launch',
+    tone: 'orange',
+    visual: 'kernel',
+    featured: true,
   },
 ]

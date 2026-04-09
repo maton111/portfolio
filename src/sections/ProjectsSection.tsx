@@ -1,6 +1,7 @@
 import {type ProjectCard, projectCards, projectsHeader, repoStatus, systemLogs,} from '../data/projectsContent'
 import {ElcCompositeVisual} from '../components/ui/ElcCompositeVisual'
 import { useNavigate } from 'react-router-dom'
+import {scrollToSection} from '../hooks/useSectionScroll'
 import './ProjectsSection.css'
 
 function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string } }) {
@@ -78,12 +79,25 @@ function ProjectsSection() {
                   </div>
 
                   <div className="project-actions">
-                    <button type="button">
-                      <span className="material-symbols-outlined" aria-hidden="true">
-                        description
-                      </span>
-                      Case Study
-                    </button>
+                    <div className="project-actions-left">
+                      {project.githubUrl ? (
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <span className="material-symbols-outlined" aria-hidden="true">code</span>
+                          GitHub
+                        </a>
+                      ) : (
+                        <button type="button" className="repo-private-badge" onClick={() => scrollToSection('contact')}>
+                          <span className="material-symbols-outlined" aria-hidden="true">lock</span>
+                          Repo Privato — contattami
+                        </button>
+                      )}
+                      {project.demoUrl ? (
+                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                          <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+                          Live Demo
+                        </a>
+                      ) : null}
+                    </div>
                     <button className="primary" type="button" onClick={() => openProjectNotes(project.slug)}>
                       Project Notes
                     </button>
@@ -112,12 +126,16 @@ function ProjectsSection() {
                   </div>
 
                   <div className="project-actions">
-                    <button type="button" onClick={() => openProjectNotes(featuredCard.slug)}>
-                      <span className="material-symbols-outlined" aria-hidden="true">
-                        description
+                    <div className="project-actions-left">
+                      <button type="button" className="repo-private-badge" onClick={() => scrollToSection('contact')}>
+                        <span className="material-symbols-outlined" aria-hidden="true">lock</span>
+                        Repo Privato — contattami
+                      </button>
+                      <span className="demo-wip-badge">
+                        <span className="material-symbols-outlined" aria-hidden="true">construction</span>
+                        Live Demo — WIP
                       </span>
-                      Architecture Notes
-                    </button>
+                    </div>
                     <button className="primary" type="button" onClick={() => openProjectNotes(featuredCard.slug)}>
                       Product Roadmap
                     </button>

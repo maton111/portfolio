@@ -9,6 +9,16 @@ export type HeroQuest = {
     text: string
 }
 
+function calcAge(birthDate: Date): number {
+    const today = new Date()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const m = today.getMonth() - birthDate.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--
+    return age
+}
+
+const BIRTH_DATE = new Date(2000, 2, 31) // 31 marzo 2000 (month 0-indexed)
+
 export const heroContent = {
     availability: 'Available for work',
     eyebrow: 'Builder mindset · backend first · full stack direction',
@@ -24,7 +34,7 @@ export const heroContent = {
     hud: {
         name: 'Mattia Archinà',
         role: 'Builder Dev',
-        level: 'LVL 26',
+        level: `LVL ${calcAge(BIRTH_DATE)}`,
         status: 'Leveling up',
         stats: [
             {label: 'Backend_Stability', value: 93, colorClass: 'is-green'},

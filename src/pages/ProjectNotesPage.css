@@ -76,7 +76,8 @@
   gap: 10px;
 }
 
-.project-notes-actions button {
+.project-notes-actions button,
+.project-notes-actions a {
   border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
   background: transparent;
   color: var(--accent-mint);
@@ -86,9 +87,14 @@
   text-transform: uppercase;
   padding: 8px 12px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.project-notes-actions button.primary {
+.project-notes-actions button.primary,
+.project-notes-actions a.primary {
   border-color: transparent;
   background: var(--accent-green);
   color: #00210c;

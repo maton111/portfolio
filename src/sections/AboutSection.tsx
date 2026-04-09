@@ -162,7 +162,7 @@ function AboutSection() {
                             <div className="about-level-row">
                                 <div>
                                     <span>MATON11</span>
-                                    <strong>LVL 26</strong>
+                                    <strong>LVL {new Date().getFullYear() - 2000 - (new Date() < new Date(new Date().getFullYear(), 2, 31) ? 1 : 0)}</strong>
                                 </div>
                                 <button
                                     className={`about-avatar ${isProfileFlipped ? 'is-flipped' : ''}`}

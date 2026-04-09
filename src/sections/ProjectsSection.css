@@ -269,7 +269,14 @@
   border-top: 1px solid color-mix(in oklab, var(--outline) 34%, transparent);
 }
 
-.project-actions button {
+.project-actions-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.project-actions button,
+.project-actions a {
   border: none;
   background: transparent;
   color: var(--accent-mint);
@@ -281,6 +288,45 @@
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.project-actions .repo-private-badge {
+  background: none;
+  font-family: inherit;
+  color: color-mix(in oklab, var(--text-muted) 70%, transparent);
+  border: 1px dashed color-mix(in oklab, var(--outline) 50%, transparent);
+  padding: 4px 8px;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.project-actions .repo-private-badge:hover {
+  color: var(--accent-mint);
+  border-color: color-mix(in oklab, var(--accent-mint) 40%, transparent);
+}
+
+.project-actions .repo-private-badge .material-symbols-outlined {
+  font-size: 0.9rem;
+}
+
+.project-actions .demo-wip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: color-mix(in oklab, var(--accent-orange) 65%, transparent);
+  border: 1px dashed color-mix(in oklab, var(--accent-orange) 35%, transparent);
+  padding: 4px 8px;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-actions .demo-wip-badge .material-symbols-outlined {
+  font-size: 0.9rem;
 }
 
 .project-actions button.primary {
