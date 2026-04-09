@@ -244,12 +244,14 @@
 }
 
 .skills-chip.is-locked {
+  background: color-mix(in oklab, var(--accent-green) 16%, var(--panel-strong));
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--accent-green) 34%, transparent) inset,
     0 0 10px color-mix(in oklab, var(--accent-green) 20%, transparent);
 }
 
 .skills-chip.tone-orange.is-locked {
+  background: color-mix(in oklab, var(--accent-orange) 16%, var(--panel-strong));
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--accent-orange) 36%, transparent) inset,
     0 0 10px rgba(255, 122, 0, 0.22);

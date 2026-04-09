@@ -28,8 +28,6 @@ function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visua
 
 function ProjectsSection() {
   const navigate = useNavigate()
-  const standardCards = projectCards.filter((card) => !card.featured)
-  const featuredCard = projectCards.find((card) => card.featured)
 
   const openProjectNotes = (slug: string) => {
     navigate(`/projects/${slug}`)
@@ -54,7 +52,7 @@ function ProjectsSection() {
         <div className="projects-layout">
           <div>
             <div className="projects-grid-two">
-              {standardCards.map((project) => (
+              {projectCards.map((project) => (
                 <article key={project.id} className="project-card">
                   <div className="project-icon" aria-hidden="true">
                     <span className="material-symbols-outlined">{project.icon}</span>
@@ -97,53 +95,20 @@ function ProjectsSection() {
                           Live Demo
                         </a>
                       ) : null}
+                      {project.featured ? (
+                        <span className="demo-wip-badge">
+                          <span className="material-symbols-outlined" aria-hidden="true">construction</span>
+                          Live Demo — WIP
+                        </span>
+                      ) : null}
                     </div>
                     <button className="primary" type="button" onClick={() => openProjectNotes(project.slug)}>
-                      Project Notes
+                      {project.featured ? 'Product Roadmap' : 'Project Notes'}
                     </button>
                   </div>
                 </article>
               ))}
             </div>
-
-            {featuredCard ? (
-              <article className="project-card featured-card">
-                <div className="featured-copy">
-                  <div className="project-head">
-                    <div>
-                      <small>ID: {featuredCard.id}</small>
-                      <h3>{featuredCard.title}</h3>
-                    </div>
-                    <span className="tone-orange">Scope: {featuredCard.difficulty}</span>
-                  </div>
-
-                  <p>{featuredCard.description}</p>
-
-                  <div className="project-tags">
-                    {featuredCard.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-
-                  <div className="project-actions">
-                    <div className="project-actions-left">
-                      <button type="button" className="repo-private-badge" onClick={() => scrollToSection('contact')}>
-                        <span className="material-symbols-outlined" aria-hidden="true">lock</span>
-                        Repo Privato — contattami
-                      </button>
-                      <span className="demo-wip-badge">
-                        <span className="material-symbols-outlined" aria-hidden="true">construction</span>
-                        Live Demo — WIP
-                      </span>
-                    </div>
-                    <button className="primary" type="button" onClick={() => openProjectNotes(featuredCard.slug)}>
-                      Product Roadmap
-                    </button>
-                  </div>
-                </div>
-                <ProjectVisual visual={featuredCard.visual} backgroundImage={featuredCard.backgroundImage} />
-              </article>
-            ) : null}
           </div>
 
           <aside className="projects-sidebar">

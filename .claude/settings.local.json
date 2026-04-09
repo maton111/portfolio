@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(mv ElcCompositeVisual.tsx HeroHudCard.tsx SystemLocationGlobe.tsx ProjectLanyardCard.tsx ProjectLanyardCard.css OpcmProfileCard.tsx OpcmProfileCard.css ui/)",
+      "Bash(mv GlitchTransition.tsx GlitchTransition.css InitialHudLoader.tsx InitialHudLoader.css overlays/)",
+      "Bash(sed -i 's|from '\\\\''../components/GlitchTransition'\\\\''|from '\\\\''../components/overlays/GlitchTransition'\\\\''|g' src/pages/EverydayLifeProjectPage.tsx src/pages/ProjectNotesPage.tsx)",
+      "Bash(sed -i 's|from '\\\\''../components/OpcmProfileCard'\\\\''|from '\\\\''../components/ui/OpcmProfileCard'\\\\''|g' src/pages/ProjectNotesPage.tsx)",
+      "Bash(sed -i 's|from '\\\\''../components/SystemLocationGlobe'\\\\''|from '\\\\''../components/ui/SystemLocationGlobe'\\\\''|g' src/sections/ContactSection.tsx)",
+      "Bash(sed -i 's|from '\\\\''../components/HeroHudCard'\\\\''|from '\\\\''../components/ui/HeroHudCard'\\\\''|g' src/sections/HeroSection.tsx)",
+      "Bash(sed -i 's|from '\\\\''../components/ElcCompositeVisual'\\\\''|from '\\\\''../components/ui/ElcCompositeVisual'\\\\''|g' src/sections/ProjectsSection.tsx)",
+      "Bash(npm run:*)",
+      "Read(//f/Repos/React/portfolio/**)",
+      "Read(//f/Repos/React/portfolio/=== Dati separati in data/**)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
