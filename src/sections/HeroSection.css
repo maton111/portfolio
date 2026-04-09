@@ -93,20 +93,53 @@
     gap: 10px;
 }
 
-.topbar-actions > span {
+.availability-chip {
     border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 999px;
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent-green);
     background: color-mix(in oklab, var(--accent-green) 10%, transparent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    transition: gap 0.25s ease;
+}
+
+.availability-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px color-mix(in oklab, var(--accent-green) 70%, transparent);
+    animation: pulse 1.8s infinite ease-in-out;
+}
+
+.availability-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    font-family: var(--font-headline), serif;
+    transition: max-width 0.25s ease, opacity 0.2s ease;
+}
+
+.availability-chip:hover {
+    gap: 7px;
+}
+
+.availability-chip:hover .availability-label {
+    max-width: 10rem;
+    opacity: 1;
 }
 
 .lang-chip {
     border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 999px;
     font-size: 0.65rem;
     font-family: var(--font-headline), serif;
@@ -117,17 +150,35 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    gap: 0;
+    overflow: hidden;
+    transition: background 0.2s ease, box-shadow 0.2s ease, gap 0.25s ease;
 }
 
 .lang-chip .material-symbols-outlined {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.lang-chip-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+    margin-left: 0;
 }
 
 .lang-chip:hover {
     background: color-mix(in oklab, var(--accent-green) 18%, transparent);
     box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 25%, transparent);
+    gap: 5px;
+}
+
+.lang-chip:hover .lang-chip-label {
+    max-width: 2rem;
+    opacity: 1;
+    margin-left: 0;
 }
 
 .cv-btn {
@@ -638,7 +689,7 @@
         padding: 5px 9px;
     }
 
-    .topbar-actions > span {
+    .availability-chip {
         display: none;
     }
 

@@ -66,11 +66,14 @@ function HeroSection() {
             <li><button type="button" onClick={() => scrollToSection('contact')}>{t('navbar.contact')}</button></li>
           </ul>
           <div className="topbar-actions">
+            <span className="availability-chip">
+              <span className="availability-dot" aria-hidden="true" />
+              <span className="availability-label">{t('hero.availability')}</span>
+            </span>
             <button className="lang-chip" type="button" onClick={toggleLang} aria-label="Switch language">
               <span className="material-symbols-outlined" aria-hidden="true">translate</span>
-              {t('navbar.langSwitch')}
+              <span className="lang-chip-label">{t('navbar.langSwitch')}</span>
             </button>
-            <span>{t('hero.availability')}</span>
             <a
               className="cv-btn"
               href={cvFile}
