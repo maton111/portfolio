@@ -1,47 +1,85 @@
+import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
-import {heroContent} from '../data/heroContent'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'
 import {scrollToSection} from '../hooks/useSectionScroll'
 import './HeroSection.css'
 
+function calcAge(birthDate: Date): number {
+  const today = new Date()
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const m = today.getMonth() - birthDate.getMonth()
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--
+  return age
+}
+
+const BIRTH_DATE = new Date(2000, 2, 31)
+
 function HeroSection() {
+  const { t, i18n } = useTranslation()
+
+  const toggleLang = () => {
+    void i18n.changeLanguage(i18n.language === 'it' ? 'en' : 'it')
+  }
+
+  const stats = [
+    { label: 'Backend_Stability', value: 93, colorClass: 'is-green' },
+    { label: 'Frontend_Polish', value: 67, colorClass: 'is-mint' },
+    { label: 'Discipline_Stat', value: 82, colorClass: 'is-soft' },
+    { label: 'Curiosity_Engine', value: 98, colorClass: 'is-orange' },
+  ]
+
+  const quests = [
+    { icon: 'rocket_launch', text: t('hero.hudQuestBuild') },
+    { icon: 'task_alt', text: t('hero.hudQuestMain') },
+  ]
+
+  const tags = [t('hero.hudTag1'), t('hero.hudTag2'), t('hero.hudTag3')]
+
+  const scannerItems = [
+    { icon: 'radar', text: t('hero.scannerAvailable'), highlighted: true },
+    { icon: 'memory', text: t('hero.scannerLoad'), highlighted: false },
+    { icon: 'hub', text: t('hero.scannerNetwork'), highlighted: true },
+    { icon: 'bolt', text: t('hero.scannerEnergy'), highlighted: false },
+    { icon: 'shield', text: t('hero.scannerSecurity'), highlighted: true },
+    { icon: 'update', text: t('hero.scannerUpdates'), highlighted: false },
+    { icon: 'code', text: t('hero.scannerMode'), highlighted: true },
+    { icon: 'terminal', text: t('hero.scannerConsole'), highlighted: false },
+    { icon: 'cloud', text: t('hero.scannerCloud'), highlighted: true },
+    { icon: 'bug_report', text: t('hero.scannerBugs'), highlighted: false },
+    { icon: 'speed', text: t('hero.scannerPerf'), highlighted: true },
+    { icon: 'schedule', text: t('hero.scannerResponse'), highlighted: false },
+  ]
 
   return (
     <div className="hero-page">
       <header className="topbar">
         <nav>
-          <button className="logo" type="button" aria-label="Torna all'inizio" onClick={() => scrollToSection('home')}>
+          <button className="logo" type="button" aria-label={t('navbar.logoAriaLabel')} onClick={() => scrollToSection('home')}>
             <img src={logoFile} alt="Logo Mattia Archina" />
           </button>
           <ul>
-            <li>
-              <button type="button" onClick={() => scrollToSection('home')}>Home</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => scrollToSection('about')}>About</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => scrollToSection('skills')}>Skills</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => scrollToSection('projects')}>Projects</button>
-            </li>
-            <li>
-              <button type="button" onClick={() => scrollToSection('contact')}>Contact</button>
-            </li>
+            <li><button type="button" onClick={() => scrollToSection('home')}>{t('navbar.home')}</button></li>
+            <li><button type="button" onClick={() => scrollToSection('about')}>{t('navbar.about')}</button></li>
+            <li><button type="button" onClick={() => scrollToSection('skills')}>{t('navbar.skills')}</button></li>
+            <li><button type="button" onClick={() => scrollToSection('projects')}>{t('navbar.projects')}</button></li>
+            <li><button type="button" onClick={() => scrollToSection('contact')}>{t('navbar.contact')}</button></li>
           </ul>
           <div className="topbar-actions">
-            <span>{heroContent.availability}</span>
+            <button className="lang-chip" type="button" onClick={toggleLang} aria-label="Switch language">
+              <span className="material-symbols-outlined" aria-hidden="true">translate</span>
+              {t('navbar.langSwitch')}
+            </button>
+            <span>{t('hero.availability')}</span>
             <a
               className="cv-btn"
               href={cvFile}
               download="Mattia-Archina-CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Download CV in a new tab"
+              aria-label={t('navbar.downloadCvAriaLabel')}
             >
-              Download CV
+              {t('navbar.downloadCv')}
             </a>
           </div>
         </nav>
@@ -53,39 +91,39 @@ function HeroSection() {
 
         <section className="hero-grid">
           <div className="hero-copy">
-            <p>{heroContent.eyebrow}</p>
+            <p>{t('hero.eyebrow')}</p>
             <h1>
-              {heroContent.title} <br />
-              <span>{heroContent.subtitle}</span>
+              {t('hero.title')} <br />
+              <span>{t('hero.subtitle')}</span>
             </h1>
-            <p className="hero-intro">{heroContent.intro}</p>
+            <p className="hero-intro">{t('hero.intro')}</p>
             <div className="hero-ctas">
               <button className="btn btn-primary" type="button" onClick={() => scrollToSection('projects')}>
-                {heroContent.ctas.primary}
+                {t('hero.ctaPrimary')}
                 <span className="material-symbols-outlined" aria-hidden="true">
                   north_east
                 </span>
               </button>
               <button className="btn btn-secondary" type="button" onClick={() => scrollToSection('contact')}>
-                {heroContent.ctas.secondary}
+                {t('hero.ctaSecondary')}
               </button>
             </div>
             <div className="hero-trust">
               <span className="material-symbols-outlined" aria-hidden="true">
                 terminal
               </span>
-              {heroContent.trust}
+              {t('hero.trust')}
             </div>
           </div>
 
           <HeroHudCard
-            name={heroContent.hud.name}
-            role={heroContent.hud.role}
-            level={heroContent.hud.level}
-            status={heroContent.hud.status}
-            stats={heroContent.hud.stats}
-            quests={heroContent.hud.quests}
-            tags={heroContent.hud.tags}
+            name="Mattia Archinà"
+            role="Builder Dev"
+            level={`LVL ${calcAge(BIRTH_DATE)}`}
+            status={t('hero.hudStatus')}
+            stats={stats}
+            quests={quests}
+            tags={tags}
           />
         </section>
       </main>
@@ -93,7 +131,7 @@ function HeroSection() {
       <div className="status-scanner" aria-label="Status scanner">
         <div className="scanner-track">
           <div className="scanner-group">
-            {heroContent.scannerItems.map((item) => (
+            {scannerItems.map((item) => (
               <span className={item.highlighted ? 'highlighted' : ''} key={item.text}>
                 <span className="material-symbols-outlined" aria-hidden="true">
                   {item.icon}
@@ -103,7 +141,7 @@ function HeroSection() {
             ))}
           </div>
           <div className="scanner-group" aria-hidden="true">
-            {heroContent.scannerItems.map((item, index) => (
+            {scannerItems.map((item, index) => (
               <span className={item.highlighted ? 'highlighted' : ''} key={`${item.text}-${index}`}>
                 <span className="material-symbols-outlined" aria-hidden="true">
                   {item.icon}

@@ -1,6 +1,7 @@
-import {useEffect, useState} from 'react'
-import {type SkillMetric, type SkillModule, skillsBottomPanel, skillsHeader, skillsModules} from '../data/skillsContent'
-import {fetchRepoInfo} from '../utils/api'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { type SkillMetric, type SkillModule, skillsModules } from '../data/skillsContent'
+import { fetchRepoInfo } from '../utils/api'
 import './SkillsSection.css'
 
 const SEGMENTS = 20
@@ -42,7 +43,6 @@ function getSkillTone(module: SkillModule, value: number): 'green' | 'orange' {
   if (module.title === 'AI-ASSISTED FULL STACK') {
     return 'orange'
   }
-
   return value < 70 ? 'orange' : 'green'
 }
 
@@ -50,7 +50,6 @@ function getAnimationDurationMs(targetValue: number): number {
   const safeTarget = Math.min(100, Math.max(0, targetValue))
   const minDuration = 260
   const maxDuration = 700
-
   return Math.round(minDuration + ((maxDuration - minDuration) * safeTarget) / 100)
 }
 
@@ -60,9 +59,7 @@ function SkillActiveMetric({ label, targetValue, tone }: { label: string; target
   const [animatedValue, setAnimatedValue] = useState(() => (reducedMotion ? safeTarget : 0))
 
   useEffect(() => {
-    if (reducedMotion) {
-      return
-    }
+    if (reducedMotion) return
 
     const durationMs = getAnimationDurationMs(safeTarget)
     const animationStart = performance.now()
@@ -82,10 +79,7 @@ function SkillActiveMetric({ label, targetValue, tone }: { label: string; target
     }
 
     rafId = window.requestAnimationFrame(tick)
-
-    return () => {
-      window.cancelAnimationFrame(rafId)
-    }
+    return () => { window.cancelAnimationFrame(rafId) }
   }, [label, reducedMotion, safeTarget, targetValue])
 
   return (
@@ -100,9 +94,10 @@ function SkillActiveMetric({ label, targetValue, tone }: { label: string; target
 }
 
 function SkillsSection() {
+  const { t } = useTranslation()
   const [lockedSkillByModule, setLockedSkillByModule] = useState<Record<string, string>>({})
   const [hoveredSkillByModule, setHoveredSkillByModule] = useState<Record<string, string | undefined>>({})
-  const [lastUpdate, setLastUpdate] = useState('Loading...')
+  const [lastUpdate, setLastUpdate] = useState(t('skills.loading'))
 
   useEffect(() => {
     let isMounted = true
@@ -110,30 +105,25 @@ function SkillsSection() {
     const loadRepoInfo = async () => {
       try {
         const repoInfo = await fetchRepoInfo()
-
         if (isMounted) {
-          setLastUpdate(repoInfo.lastCommitDate || 'Unavailable')
+          setLastUpdate(repoInfo.lastCommitDate || t('skills.unavailable'))
         }
       } catch {
         if (isMounted) {
-          setLastUpdate('Unavailable')
+          setLastUpdate(t('skills.unavailable'))
         }
       }
     }
 
     void loadRepoInfo()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+    return () => { isMounted = false }
+  }, [t])
 
   const handleSkillHover = (moduleId: string, skillId: string) => {
     setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: skillId }))
   }
 
   const handleSkillLeave = (moduleId: string) => {
-    // Opzione A: senza lock si torna sempre alla skill iniziale della card.
     setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: undefined }))
   }
 
@@ -147,13 +137,11 @@ function SkillsSection() {
       <div className="skills-content">
         <header className="skills-header">
           <div>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              terminal
-            </span>
-            <p>{skillsHeader.eyebrow}</p>
+            <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
+            <p>{t('skills.eyebrow')}</p>
           </div>
           <h2 id="skills-title">
-            {skillsHeader.titleStart} <span>{skillsHeader.titleAccent}</span> {skillsHeader.titleEnd}
+            {t('skills.titleStart')} <span>{t('skills.titleAccent')}</span> {t('skills.titleEnd')}
           </h2>
         </header>
 
@@ -162,9 +150,7 @@ function SkillsSection() {
             const chips = buildSkillChips(module)
             const defaultSkill = chips[0]
 
-            if (!defaultSkill) {
-              return null
-            }
+            if (!defaultSkill) return null
 
             const lockedSkillId = lockedSkillByModule[module.moduleId]
             const hoveredSkillId = hoveredSkillByModule[module.moduleId]
@@ -173,63 +159,63 @@ function SkillsSection() {
             const tone = getSkillTone(module, activeSkill.value)
 
             return (
-            <article
-              key={module.moduleId}
-              className={`skills-card col-${module.columns} tone-${module.borderTone ?? 'green'}`}
-              onMouseLeave={() => handleSkillLeave(module.moduleId)}
-            >
-              {module.icon ? (
-                <div className="skills-card-icon" aria-hidden="true">
-                  <span className="material-symbols-outlined">{module.icon}</span>
+              <article
+                key={module.moduleId}
+                className={`skills-card col-${module.columns} tone-${module.borderTone ?? 'green'}`}
+                onMouseLeave={() => handleSkillLeave(module.moduleId)}
+              >
+                {module.icon ? (
+                  <div className="skills-card-icon" aria-hidden="true">
+                    <span className="material-symbols-outlined">{module.icon}</span>
+                  </div>
+                ) : null}
+
+                <div className="skills-card-head">
+                  <div>
+                    <h3>{module.title}</h3>
+                    <p>Module_ID: {module.moduleId}</p>
+                  </div>
+                  <span className={`skills-status tone-${module.statusTone ?? 'green'}`}>{module.status}</span>
                 </div>
-              ) : null}
 
-              <div className="skills-card-head">
-                <div>
-                  <h3>{module.title}</h3>
-                  <p>Module_ID: {module.moduleId}</p>
+                <div className="skills-metrics">
+                  <SkillActiveMetric
+                    key={`${module.moduleId}-${activeSkill.id}`}
+                    label={activeSkill.label}
+                    targetValue={activeSkill.value}
+                    tone={tone}
+                  />
                 </div>
-                <span className={`skills-status tone-${module.statusTone ?? 'green'}`}>{module.status}</span>
-              </div>
 
-              <div className="skills-metrics">
-                <SkillActiveMetric
-                  key={`${module.moduleId}-${activeSkill.id}`}
-                  label={activeSkill.label}
-                  targetValue={activeSkill.value}
-                  tone={tone}
-                />
-              </div>
+                <div className="skills-tags">
+                  {chips.map((chip) => {
+                    const chipTone = getSkillTone(module, chip.value)
+                    const isActive = chip.id === activeSkill.id
+                    const isLockedChip = chip.id === lockedSkillId
 
-              <div className="skills-tags">
-                {chips.map((chip) => {
-                  const chipTone = getSkillTone(module, chip.value)
-                  const isActive = chip.id === activeSkill.id
-                  const isLockedChip = chip.id === lockedSkillId
-
-                  return (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    className={[
-                      'skills-chip',
-                      chipTone === 'orange' ? 'tone-orange' : '',
-                      isActive ? 'is-active' : '',
-                      isLockedChip ? 'is-locked' : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    aria-pressed={isLockedChip}
-                    onMouseEnter={() => handleSkillHover(module.moduleId, chip.id)}
-                    onFocus={() => handleSkillHover(module.moduleId, chip.id)}
-                    onClick={() => handleSkillSelect(module.moduleId, chip.id)}
-                  >
-                    <span>{chip.label}</span>
-                  </button>
-                  )
-                })}
-              </div>
-            </article>
+                    return (
+                      <button
+                        key={chip.id}
+                        type="button"
+                        className={[
+                          'skills-chip',
+                          chipTone === 'orange' ? 'tone-orange' : '',
+                          isActive ? 'is-active' : '',
+                          isLockedChip ? 'is-locked' : '',
+                        ]
+                          .filter(Boolean)
+                          .join(' ')}
+                        aria-pressed={isLockedChip}
+                        onMouseEnter={() => handleSkillHover(module.moduleId, chip.id)}
+                        onFocus={() => handleSkillHover(module.moduleId, chip.id)}
+                        onClick={() => handleSkillSelect(module.moduleId, chip.id)}
+                      >
+                        <span>{chip.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </article>
             )
           })}
         </div>
@@ -237,24 +223,22 @@ function SkillsSection() {
         <section className="skills-bottom" aria-label="Neural link panel">
           <div>
             <div>
-              <span className="material-symbols-outlined" aria-hidden="true">
-                psychology
-              </span>
+              <span className="material-symbols-outlined" aria-hidden="true">psychology</span>
             </div>
             <div>
-              <p>{skillsBottomPanel.title}</p>
-              <small>{skillsBottomPanel.description}</small>
+              <p>{t('skills.bottomTitle')}</p>
+              <small>{t('skills.bottomDesc')}</small>
             </div>
           </div>
           <div>
             <div>
-              <p>Last Update</p>
+              <p>{t('skills.lastUpdate')}</p>
               <strong>{lastUpdate}</strong>
             </div>
             <i aria-hidden="true" />
             <div>
-              <p>Global Uptime</p>
-              <strong>{skillsBottomPanel.uptime}</strong>
+              <p>{t('skills.globalUptime')}</p>
+              <strong>{t('skills.uptime')}</strong>
             </div>
           </div>
         </section>
@@ -264,4 +248,3 @@ function SkillsSection() {
 }
 
 export default SkillsSection
-

@@ -21,12 +21,7 @@ export type SkillModule = {
   icon?: string
 }
 
-export const skillsHeader = {
-  eyebrow: 'CV Snapshot // Skills Matrix',
-  titleStart: 'ENGINEERING',
-  titleAccent: 'SKILLS',
-  titleEnd: 'OVERVIEW',
-}
+// skillsHeader strings moved to i18n (skills.eyebrow / titleStart / titleAccent / titleEnd)
 
 export const skillsModules: SkillModule[] = [
   {
@@ -170,10 +165,5 @@ export const skillsModules: SkillModule[] = [
   },
 ]
 
-export const skillsBottomPanel = {
-  title: 'Career_Link: ACTIVE',
-  description:
-    'Backend engineer focused on scalable systems, software quality and continuous growth across enterprise and personal products.',
-  uptime: 'Always Learning',
-}
+// skillsBottomPanel strings moved to i18n (skills.bottomTitle / bottomDesc / uptime)
 

@@ -1,39 +1,53 @@
-import {useRef} from 'react'
-import {contactHeader, contactSubjectOptions, directChannels, externalNodes, systemHud,} from '../data/contactContent'
-import {useContactForm} from '../hooks/useContactForm'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { directChannels, externalNodes } from '../data/contactContent'
+import { useContactForm } from '../hooks/useContactForm'
 import SystemLocationGlobe from '../components/ui/SystemLocationGlobe'
 import turinImage from '../assets/turin.png'
 import './ContactSection.css'
 
 function ContactSection() {
+  const { t } = useTranslation()
   const { isLoading, error, success, message, submitForm } = useContactForm()
   const formRef = useRef<HTMLFormElement>(null)
   const isExternalLink = (href: string) => href.startsWith('http')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     if (!formRef.current) return
 
     const formData = new FormData(formRef.current)
     const name = formData.get('name') as string
     const email = formData.get('email') as string
     const subject = formData.get('subject') as string
-    const message = formData.get('message') as string
+    const msg = formData.get('message') as string
     const honeypot = formData.get('website') as string
 
-    await submitForm({ name, email, subject, message, honeypot })
+    await submitForm({ name, email, subject, message: msg, honeypot })
 
     if (!error) {
       formRef.current.reset()
     }
   }
 
+  const statusLines = [
+    t('contact.statusLine1'),
+    t('contact.statusLine2'),
+    t('contact.statusLine3'),
+  ]
+
+  const subjectOptions = [
+    t('contact.subject1'),
+    t('contact.subject2'),
+    t('contact.subject3'),
+    t('contact.subject4'),
+  ]
+
   return (
     <section className="contact-page" id="contact" aria-labelledby="contact-title">
       <div className="contact-content">
         <div className="contact-hud-meta" aria-hidden="true">
-          {systemHud.statusLines.map((line) => (
+          {statusLines.map((line) => (
             <p key={line}>{line}</p>
           ))}
         </div>
@@ -42,12 +56,12 @@ function ContactSection() {
           <div className="contact-main">
             <header>
               <h2 id="contact-title">
-                {contactHeader.titleTop}
+                {t('contact.titleTop')}
                 <br />
-                <span>{contactHeader.titleAccent}</span>
+                <span>{t('contact.titleAccent')}</span>
               </h2>
               <p>
-                {contactHeader.description.replace('< 24h', '')}
+                {t('contact.description').replace('< 24h', '')}
                 <span>&lt; 24h</span>.
               </p>
             </header>
@@ -59,23 +73,23 @@ function ContactSection() {
               <form className="contact-form" ref={formRef} onSubmit={handleSubmit}>
                 <div className="contact-form-grid">
                   <label>
-                    <span>&gt; NAME:</span>
-                    <input placeholder="USER_IDENTIFIER" type="text" name="name" autoComplete="name" required />
+                    <span>{t('contact.fieldName')}</span>
+                    <input placeholder={t('contact.placeholderName')} type="text" name="name" autoComplete="name" required />
                   </label>
 
                   <label>
-                    <span>&gt; EMAIL:</span>
-                    <input placeholder="COMMS_ADDRESS" type="email" name="email" autoComplete="email" required />
+                    <span>{t('contact.fieldEmail')}</span>
+                    <input placeholder={t('contact.placeholderEmail')} type="email" name="email" autoComplete="email" required />
                   </label>
                 </div>
 
                 <label>
-                  <span>&gt; SUBJECT:</span>
+                  <span>{t('contact.fieldSubject')}</span>
                   <select defaultValue="" name="subject" required>
                     <option value="" disabled hidden>
-                      SELECT_SUBJECT
+                      {t('contact.placeholderSubject')}
                     </option>
-                    {contactSubjectOptions.map((option) => (
+                    {subjectOptions.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -84,14 +98,13 @@ function ContactSection() {
                 </label>
 
                 <label>
-                  <span>&gt; MESSAGE_DATA:</span>
-                  <textarea placeholder="ENTER_DATA_PACKET..." rows={5} name="message" required />
+                  <span>{t('contact.fieldMessage')}</span>
+                  <textarea placeholder={t('contact.placeholderMessage')} rows={5} name="message" required />
                 </label>
 
                 {/* Honeypot field for anti-spam */}
                 <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
-                {/* Status messages */}
                 {error && (
                   <div className="form-error" role="alert">
                     ❌ {error}
@@ -105,7 +118,7 @@ function ContactSection() {
                 )}
 
                 <button type="submit" disabled={isLoading}>
-                  {isLoading ? 'TRANSMITTING...' : 'INITIALIZE TRANSMISSION'}
+                  {isLoading ? t('contact.submitLoading') : t('contact.submitIdle')}
                   <span className="material-symbols-outlined" aria-hidden="true">
                     {isLoading ? 'hourglass_empty' : 'sensors'}
                   </span>
@@ -118,7 +131,7 @@ function ContactSection() {
             <section className="contact-node-panel tone-green">
               <h3>
                 <span aria-hidden="true" />
-                Direct Channel
+                {t('contact.directChannel')}
               </h3>
               <div>
                 {directChannels.map((channel) => (
@@ -130,14 +143,10 @@ function ContactSection() {
                     aria-label={`Open ${channel.label}`}
                   >
                     <span>
-                      <i className="material-symbols-outlined" aria-hidden="true">
-                        {channel.icon}
-                      </i>
+                      <i className="material-symbols-outlined" aria-hidden="true">{channel.icon}</i>
                       {channel.label}
                     </span>
-                    <i className="material-symbols-outlined" aria-hidden="true">
-                      arrow_forward_ios
-                    </i>
+                    <i className="material-symbols-outlined" aria-hidden="true">arrow_forward_ios</i>
                   </a>
                 ))}
               </div>
@@ -146,7 +155,7 @@ function ContactSection() {
             <section className="contact-node-panel tone-orange">
               <h3>
                 <span aria-hidden="true" />
-                External Nodes
+                {t('contact.externalNodes')}
               </h3>
               <div>
                 {externalNodes.map((node) => (
@@ -158,14 +167,10 @@ function ContactSection() {
                     aria-label={`Open ${node.label} in a new tab`}
                   >
                     <span>
-                      <i className="material-symbols-outlined" aria-hidden="true">
-                        {node.icon}
-                      </i>
+                      <i className="material-symbols-outlined" aria-hidden="true">{node.icon}</i>
                       {node.label}
                     </span>
-                    <i className="material-symbols-outlined" aria-hidden="true">
-                      arrow_forward_ios
-                    </i>
+                    <i className="material-symbols-outlined" aria-hidden="true">arrow_forward_ios</i>
                   </a>
                 ))}
               </div>
@@ -174,20 +179,20 @@ function ContactSection() {
             <section className="contact-node-panel tone-green">
               <h3>
                 <span aria-hidden="true" />
-                System Location
+                {t('contact.systemLocation')}
               </h3>
-              <SystemLocationGlobe locationLabel={systemHud.locationLabel} fallbackImage={turinImage} />
+              <SystemLocationGlobe locationLabel={t('contact.locationLabel')} fallbackImage={turinImage} />
             </section>
 
             <section className="contact-scanner" aria-label="System scanner">
               <div className="contact-scanner-track">
                 <div className="contact-scanner-group">
-                  <span>{systemHud.scanner}</span>
-                  <span>{systemHud.scanner}</span>
+                  <span>{t('contact.scanner')}</span>
+                  <span>{t('contact.scanner')}</span>
                 </div>
                 <div className="contact-scanner-group" aria-hidden="true">
-                  <span>{systemHud.scanner}</span>
-                  <span>{systemHud.scanner}</span>
+                  <span>{t('contact.scanner')}</span>
+                  <span>{t('contact.scanner')}</span>
                 </div>
               </div>
             </section>
@@ -199,4 +204,3 @@ function ContactSection() {
 }
 
 export default ContactSection
-

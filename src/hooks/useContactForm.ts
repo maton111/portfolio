@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { ContactFormData } from '../utils/api'
 import { submitContactForm } from '../utils/api'
+import i18n from '../i18n'
 
 export interface ContactFormState {
   isLoading: boolean
@@ -18,12 +19,7 @@ export function useContactForm() {
   })
 
   const resetForm = () => {
-    setFormState({
-      isLoading: false,
-      error: null,
-      success: false,
-      message: null,
-    })
+    setFormState({ isLoading: false, error: null, success: false, message: null })
   }
 
   const submitForm = async (data: ContactFormData) => {
@@ -37,32 +33,18 @@ export function useContactForm() {
           isLoading: false,
           error: null,
           success: true,
-          message: response.message || 'Message sent successfully!',
+          message: response.message || i18n.t('contact.successMessage'),
         })
 
-        // Auto reset after 5 seconds
-        setTimeout(() => {
-          resetForm()
-        }, 5000)
+        setTimeout(() => { resetForm() }, 5000)
       } else {
-        throw new Error(response.error || 'Failed to send message')
+        throw new Error(response.error || i18n.t('contact.errorGeneric'))
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
-      setFormState({
-        isLoading: false,
-        error: errorMessage,
-        success: false,
-        message: null,
-      })
+      const errorMessage = error instanceof Error ? error.message : i18n.t('contact.errorUnknown')
+      setFormState({ isLoading: false, error: errorMessage, success: false, message: null })
     }
   }
 
-  return {
-    ...formState,
-    submitForm,
-    resetForm,
-  }
+  return { ...formState, submitForm, resetForm }
 }
-
-

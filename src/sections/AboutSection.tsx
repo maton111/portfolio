@@ -1,261 +1,264 @@
-import {useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import profileFrontImg from '../assets/profilo1.jpeg'
 import profileBackImg from '../assets/profilo2.png'
-import {aboutHeader, aboutMetadata, aboutOriginCards, aboutPhilosophy, aboutQuests, aboutScanner, aboutStats,} from '../data/aboutContent'
-import {scrollToSection} from '../hooks/useSectionScroll'
+import { scrollToSection } from '../hooks/useSectionScroll'
 import './AboutSection.css'
 
 const SEGMENTS = 10
 const STAT_ANIMATION_DURATION_MS = 1300
 const STAT_TRIGGER_THRESHOLD = 0.35
 
-function AboutSegmentBar({value, tone}: { value: number; tone: 'green' | 'mint' | 'orange' }) {
-    const activeSegments = Math.max(0, Math.round((value / 100) * SEGMENTS))
+const aboutStats = [
+  { key: 'statBackend', value: 96, tone: 'green' as const },
+  { key: 'statArch', value: 94, tone: 'mint' as const },
+  { key: 'statTesting', value: 88, tone: 'orange' as const },
+]
 
-    return (
-        <div className="about-segment-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}>
-            {Array.from({length: SEGMENTS}).map((_, index) => (
-                <span key={`${tone}-${index}`} className={index < activeSegments ? `is-active ${tone}` : ''}/>
-            ))}
-        </div>
-    )
+function AboutSegmentBar({ value, tone }: { value: number; tone: 'green' | 'mint' | 'orange' }) {
+  const activeSegments = Math.max(0, Math.round((value / 100) * SEGMENTS))
+
+  return (
+    <div className="about-segment-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value}>
+      {Array.from({ length: SEGMENTS }).map((_, index) => (
+        <span key={`${tone}-${index}`} className={index < activeSegments ? `is-active ${tone}` : ''} />
+      ))}
+    </div>
+  )
 }
 
 function AboutSection() {
-    const [isProfileFlipped, setIsProfileFlipped] = useState(false)
-    const statsCardRef = useRef<HTMLDivElement | null>(null)
-    const [hasStartedStatsAnimation, setHasStartedStatsAnimation] = useState(false)
-    const [displayedStats, setDisplayedStats] = useState<number[]>(() => aboutStats.map(() => 0))
+  const { t } = useTranslation()
+  const [isProfileFlipped, setIsProfileFlipped] = useState(false)
+  const statsCardRef = useRef<HTMLDivElement | null>(null)
+  const [hasStartedStatsAnimation, setHasStartedStatsAnimation] = useState(false)
+  const [displayedStats, setDisplayedStats] = useState<number[]>(() => aboutStats.map(() => 0))
 
-    useEffect(() => {
-        const cardNode = statsCardRef.current
+  useEffect(() => {
+    const cardNode = statsCardRef.current
+    if (!cardNode || hasStartedStatsAnimation) return
 
-        if (!cardNode || hasStartedStatsAnimation) {
-            return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStartedStatsAnimation(true)
+          observer.disconnect()
         }
+      },
+      { threshold: STAT_TRIGGER_THRESHOLD },
+    )
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setHasStartedStatsAnimation(true)
-                    observer.disconnect()
-                }
-            },
-            {threshold: STAT_TRIGGER_THRESHOLD},
-        )
+    observer.observe(cardNode)
+    return () => { observer.disconnect() }
+  }, [hasStartedStatsAnimation])
 
-        observer.observe(cardNode)
+  useEffect(() => {
+    if (!hasStartedStatsAnimation) return
 
-        return () => {
-            observer.disconnect()
-        }
-    }, [hasStartedStatsAnimation])
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    useEffect(() => {
-        if (!hasStartedStatsAnimation) {
-            return
-        }
+    if (prefersReducedMotion) {
+      setDisplayedStats(aboutStats.map((stat) => stat.value))
+      return
+    }
 
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let animationFrameId = 0
+    let startTime: number | null = null
 
-        if (prefersReducedMotion) {
-            setDisplayedStats(aboutStats.map((stat) => stat.value))
-            return
-        }
+    const animate = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp
+      const elapsed = timestamp - startTime
+      const progress = Math.min(1, elapsed / STAT_ANIMATION_DURATION_MS)
+      const easedProgress = 1 - Math.pow(1 - progress, 3)
 
-        let animationFrameId = 0
-        let startTime: number | null = null
+      setDisplayedStats(aboutStats.map((stat) => Math.round(stat.value * easedProgress)))
 
-        const animate = (timestamp: number) => {
-            if (startTime === null) {
-                startTime = timestamp
-            }
-
-            const elapsed = timestamp - startTime
-            const progress = Math.min(1, elapsed / STAT_ANIMATION_DURATION_MS)
-            const easedProgress = 1 - Math.pow(1 - progress, 3)
-
-            setDisplayedStats(aboutStats.map((stat) => Math.round(stat.value * easedProgress)))
-
-            if (progress < 1) {
-                animationFrameId = window.requestAnimationFrame(animate)
-                return
-            }
-
-            setDisplayedStats(aboutStats.map((stat) => stat.value))
-        }
-
+      if (progress < 1) {
         animationFrameId = window.requestAnimationFrame(animate)
+        return
+      }
+      setDisplayedStats(aboutStats.map((stat) => stat.value))
+    }
 
-        return () => {
-            window.cancelAnimationFrame(animationFrameId)
-        }
-    }, [hasStartedStatsAnimation])
+    animationFrameId = window.requestAnimationFrame(animate)
+    return () => { window.cancelAnimationFrame(animationFrameId) }
+  }, [hasStartedStatsAnimation])
 
+  const originCards = [
+    { index: '01', titleKey: 'about.card1Title', descKey: 'about.card1Desc' },
+    { index: '02', titleKey: 'about.card2Title', descKey: 'about.card2Desc' },
+    { index: '03', titleKey: 'about.card3Title', descKey: 'about.card3Desc' },
+  ]
 
-    return (
-        <section className="about-page" id="about" aria-labelledby="about-title">
-            <div className="about-content">
-                <header className="about-header">
-                    <div className="about-eyebrow">
-                        <div/>
-                        <span>{aboutHeader.eyebrow}</span>
+  const quests = [
+    { statusKey: 'about.quest1Status', titleKey: 'about.quest1Title', descKey: 'about.quest1Desc', active: true },
+    { statusKey: 'about.quest2Status', titleKey: 'about.quest2Title', descKey: 'about.quest2Desc', active: false },
+  ]
+
+  const metadata = [
+    { labelKey: 'about.meta1Label', valueKey: 'about.meta1Value' },
+    { labelKey: 'about.meta2Label', valueKey: 'about.meta2Value' },
+    { labelKey: 'about.meta3Label', valueKey: 'about.meta3Value' },
+    { labelKey: 'about.meta4Label', valueKey: 'about.meta4Value' },
+  ]
+
+  const scannerItems = [
+    t('about.scanner1'), t('about.scanner2'), t('about.scanner3'),
+    t('about.scanner4'), t('about.scanner5'), t('about.scanner6'),
+  ]
+
+  return (
+    <section className="about-page" id="about" aria-labelledby="about-title">
+      <div className="about-content">
+        <header className="about-header">
+          <div className="about-eyebrow">
+            <div />
+            <span>{t('about.eyebrow')}</span>
+          </div>
+          <h2 id="about-title">
+            MATTIA ARCHINÀ <br />
+            <span>{t('about.titleAccent')}</span>
+          </h2>
+          <p>{t('about.intro')}</p>
+          <div className="about-ctas">
+            <button className="about-btn primary" type="button" onClick={() => scrollToSection('projects')}>
+              {t('about.ctaPrimary')}
+            </button>
+            <button className="about-btn secondary" type="button" onClick={() => scrollToSection('contact')}>
+              {t('about.ctaSecondary')}
+            </button>
+          </div>
+        </header>
+
+        <div className="about-layout">
+          <div className="about-narrative">
+            <section>
+              <div className="about-section-head">
+                <span>ENV</span>
+                <div />
+                <h3>{t('about.careerSnapshotLabel')}</h3>
+              </div>
+              <div className="about-copy">
+                <p>{t('about.careerP1')}</p>
+                <p dangerouslySetInnerHTML={{ __html: t('about.careerP2') }} />
+              </div>
+            </section>
+
+            <section className="about-origin-grid">
+              {originCards.map((card) => (
+                <article key={card.index} className="about-origin-card">
+                  <strong>{card.index}</strong>
+                  <h4>{t(card.titleKey)}</h4>
+                  <p>{t(card.descKey)}</p>
+                </article>
+              ))}
+            </section>
+
+            <section className="about-philosophy">
+              <div className="about-terminal-icon" aria-hidden="true">
+                <span className="material-symbols-outlined">terminal</span>
+              </div>
+              <h3>{t('about.philosophyTitle')}</h3>
+              <blockquote>{t('about.philosophy')}</blockquote>
+            </section>
+          </div>
+
+          <div className="about-hud">
+            <div ref={statsCardRef} className="about-hud-card glow-primary">
+              <div className="about-level-row">
+                <div>
+                  <span>MATON11</span>
+                  <strong>LVL {new Date().getFullYear() - 2000 - (new Date() < new Date(new Date().getFullYear(), 2, 31) ? 1 : 0)}</strong>
+                </div>
+                <button
+                  className={`about-avatar ${isProfileFlipped ? 'is-flipped' : ''}`}
+                  type="button"
+                  onClick={() => setIsProfileFlipped((prev) => !prev)}
+                  aria-pressed={isProfileFlipped}
+                  aria-label={isProfileFlipped ? t('about.profileAriaFlip1') : t('about.profileAriaFlip2')}
+                  title={isProfileFlipped ? t('about.profileAriaFlip1') : t('about.profileAriaFlip2')}
+                >
+                  <span className="about-avatar-stack" aria-hidden="true">
+                    <img className="about-avatar-face about-avatar-front" alt={t('about.profileAlt1')} src={profileFrontImg} />
+                    <img className="about-avatar-face about-avatar-back" alt={t('about.profileAlt2')} src={profileBackImg} />
+                  </span>
+                </button>
+              </div>
+
+              <div className="about-stats">
+                {aboutStats.map((stat, index) => {
+                  const displayedValue = displayedStats[index] ?? 0
+
+                  return (
+                    <div key={stat.key}>
+                      <div className="about-stat-head">
+                        <span>{t(`about.${stat.key}`)}</span>
+                        <strong className={stat.tone}>{displayedValue}%</strong>
+                      </div>
+                      <AboutSegmentBar value={displayedValue} tone={stat.tone} />
                     </div>
-                    <h2 id="about-title">
-                        {aboutHeader.titleTop} <br/>
-                        <span>{aboutHeader.titleAccent}</span>
-                    </h2>
-                    <p>{aboutHeader.intro}</p>
-                    <div className="about-ctas">
-                        <button className="about-btn primary" type="button" onClick={() => scrollToSection('projects')}>
-                            Entra nel mio mondo
-                        </button>
-                        <button className="about-btn secondary" type="button" onClick={() => scrollToSection('contact')}>
-                            Contattami
-                        </button>
-                    </div>
-                </header>
+                  )
+                })}
+              </div>
+            </div>
 
-                <div className="about-layout">
-                    <div className="about-narrative">
-                        <section>
-                            <div className="about-section-head">
-                                <span>ENV</span>
-                                <div/>
-                                <h3>Career Snapshot</h3>
-                            </div>
-                            <div className="about-copy">
-                                <p>
-                                    Lavoro su backend enterprise in .NET presso TeamSystem, dove sviluppo, mantengo e
-                                    rifattorizzo sistemi complessi con API REST e logiche di business pensate per restare
-                                    stabili, manutenibili e scalabili nel tempo.
-                                </p>
-                                <p>
-                                    Accanto al lavoro porto avanti <strong>Everyday Life Core</strong>, un progetto personale full
-                                    stack con React, Flutter e .NET che mi permette di esplorare realtime, notifiche,
-                                    architetture moderne e AI-assisted development.
-                                </p>
-                            </div>
-                        </section>
-
-                        <section className="about-origin-grid">
-                            {aboutOriginCards.map((card) => (
-                                <article key={card.index} className="about-origin-card">
-                                    <strong>{card.index}</strong>
-                                    <h4>{card.title}</h4>
-                                    <p>{card.description}</p>
-                                </article>
-                            ))}
-                        </section>
-
-                        <section className="about-philosophy">
-                            <div className="about-terminal-icon" aria-hidden="true">
-                                <span className="material-symbols-outlined">terminal</span>
-                            </div>
-                            <h3>MANUAL_OVERRIDE: PHILOSOPHY</h3>
-                            <blockquote>{aboutPhilosophy}</blockquote>
-                        </section>
-                    </div>
-
-                    <div className="about-hud">
-                        <div ref={statsCardRef} className="about-hud-card glow-primary">
-                            <div className="about-level-row">
-                                <div>
-                                    <span>MATON11</span>
-                                    <strong>LVL {new Date().getFullYear() - 2000 - (new Date() < new Date(new Date().getFullYear(), 2, 31) ? 1 : 0)}</strong>
-                                </div>
-                                <button
-                                    className={`about-avatar ${isProfileFlipped ? 'is-flipped' : ''}`}
-                                    type="button"
-                                    onClick={() => setIsProfileFlipped((prev) => !prev)}
-                                    aria-pressed={isProfileFlipped}
-                                    aria-label={isProfileFlipped ? 'Mostra profilo 1' : 'Mostra profilo 2'}
-                                    title={isProfileFlipped ? 'Mostra profilo 1' : 'Mostra profilo 2'}
-                                >
-                                    <span className="about-avatar-stack" aria-hidden="true">
-                                        <img className="about-avatar-face about-avatar-front" alt="Profilo frontale" src={profileFrontImg}/>
-                                        <img className="about-avatar-face about-avatar-back" alt="Profilo secondario" src={profileBackImg}/>
-                                    </span>
-                                </button>
-                            </div>
-
-                            <div className="about-stats">
-                                {aboutStats.map((stat, index) => {
-                                    const displayedValue = displayedStats[index] ?? 0
-
-                                    return (
-                                    <div key={stat.label}>
-                                        <div className="about-stat-head">
-                                            <span>{stat.label}</span>
-                                            <strong className={stat.tone}>{displayedValue}%</strong>
-                                        </div>
-                                        <AboutSegmentBar value={displayedValue} tone={stat.tone}/>
-                                    </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-
-                        <div className="about-quests-card">
-                            <h3>
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  military_tech
-                </span>
-                                MISSION_LOG: LIFE_QUESTS
-                            </h3>
-                            <ul>
-                                {aboutQuests.map((quest) => (
-                                    <li key={quest.title} className={quest.active ? 'is-active' : 'is-inactive'}>
-                                        <div>
+            <div className="about-quests-card">
+              <h3>
+                <span className="material-symbols-outlined" aria-hidden="true">military_tech</span>
+                {t('about.questsTitle')}
+              </h3>
+              <ul>
+                {quests.map((quest) => (
+                  <li key={quest.titleKey} className={quest.active ? 'is-active' : 'is-inactive'}>
+                    <div>
                       <span className="material-symbols-outlined" aria-hidden="true">
                         {quest.active ? 'radio_button_checked' : 'radio_button_unchecked'}
                       </span>
-                                        </div>
-                                        <div>
-                                            <small>{quest.status}</small>
-                                            <strong>{quest.title}</strong>
-                                            <p>{quest.description}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="about-meta-card">
-                            {aboutMetadata.map((item) => (
-                                <div key={item.label}>
-                                    <small>{item.label}</small>
-                                    <strong>{item.value}</strong>
-                                </div>
-                            ))}
-                        </div>
                     </div>
-                </div>
-
-                <div className="about-scanner" aria-label="Status Scanner">
-                    <div className="about-scanner-track">
-                        <div className="about-scanner-group">
-                            {aboutScanner.map((item, index) => (
-                                <span key={`a-${index}`}>
-                  <span className="dot" aria-hidden="true"/>
-                                    {item}
-                </span>
-                            ))}
-                        </div>
-                        <div className="about-scanner-group" aria-hidden="true">
-                            {aboutScanner.map((item, index) => (
-                                <span key={`b-${index}`}>
-                  <span className="dot" aria-hidden="true"/>
-                                    {item}
-                </span>
-                            ))}
-                        </div>
+                    <div>
+                      <small>{t(quest.statusKey)}</small>
+                      <strong>{t(quest.titleKey)}</strong>
+                      <p>{t(quest.descKey)}</p>
                     </div>
-                </div>
+                  </li>
+                ))}
+              </ul>
             </div>
-        </section>
-    )
+
+            <div className="about-meta-card">
+              {metadata.map((item) => (
+                <div key={item.labelKey}>
+                  <small>{t(item.labelKey)}</small>
+                  <strong>{t(item.valueKey)}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="about-scanner" aria-label="Status Scanner">
+          <div className="about-scanner-track">
+            <div className="about-scanner-group">
+              {scannerItems.map((item, index) => (
+                <span key={`a-${index}`}>
+                  <span className="dot" aria-hidden="true" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            <div className="about-scanner-group" aria-hidden="true">
+              {scannerItems.map((item, index) => (
+                <span key={`b-${index}`}>
+                  <span className="dot" aria-hidden="true" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default AboutSection
-

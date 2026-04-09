@@ -19,22 +19,14 @@ export type ProjectCard = {
   demoUrl?: string
 }
 
-export const projectsHeader = {
-  eyebrow: 'CV Snapshot // Projects',
-  titleTop: 'PROJECT',
-  titleBottom: 'EXPERIENCE',
-  intro:
-    'Una selezione di esperienze e progetti che raccontano il mio lavoro su backend enterprise .NET, modernizzazione legacy e sviluppo full stack.',
-}
-
+// Structural data only — strings (title, description) are resolved via i18n in ProjectsSection/ProjectNotesPage
 export const projectCards: ProjectCard[] = [
   {
     id: 'TS-API-01',
     slug: 'teamsystem-enterprise-backend',
     title: 'TeamSystem Enterprise Backend',
     difficulty: 'Enterprise',
-    description:
-      'Sviluppo e manutenzione di backend .NET in ambito enterprise con centinaia di API, logiche business critical e attenzione a stabilita e manutenibilita.',
+    description: '',
     tags: ['.NET', 'C#', 'REST API', 'SQL Server'],
     icon: 'hub',
     backgroundImage: teamsystemSvg,
@@ -45,8 +37,7 @@ export const projectCards: ProjectCard[] = [
     slug: 'legacy-refactoring-program',
     title: 'Legacy Refactoring Program',
     difficulty: 'Modernization',
-    description:
-      'Refactoring progressivo di sistemi storici verso Clean Architecture con introduzione di standard condivisi, unit test e integration test.',
+    description: '',
     tags: ['Clean Architecture', 'xUnit/NUnit', 'Integration Test'],
     icon: 'sync_alt',
     backgroundImage: legacySvg,
@@ -57,8 +48,7 @@ export const projectCards: ProjectCard[] = [
     slug: 'neuro-scope',
     title: 'NeuroScope',
     difficulty: 'Product',
-    description:
-      'Tool browser-based di analisi cognitiva real-time via webcam. Face tracking WebAssembly (MediaPipe, 468 landmark/frame), 6 stati cognitivi, dashboard metriche live e commentary engine con 90 frasi su 3 toni. Zero upload, tutto client-side.',
+    description: '',
     tags: ['Next.js 15', 'TypeScript', 'MediaPipe', 'WebAssembly', 'Recharts', 'Vercel'],
     icon: 'psychology',
     visual: 'circuit',
@@ -71,8 +61,7 @@ export const projectCards: ProjectCard[] = [
     slug: 'opcm',
     title: 'One Piece Card Market (OPCM)',
     difficulty: 'Product',
-    description:
-      'Applicazione desktop client-server per la gestione della collezione One Piece TCG, con backend ASP.NET Core 8, persistenza PostgreSQL e workflow CardMarket-ready.',
+    description: '',
     tags: ['ASP.NET Core 8', 'Windows Forms', 'PostgreSQL', 'EF Core', 'REST API'],
     icon: 'collections_bookmark',
     backgroundImage: opcmHeroBannerSvg,
@@ -81,10 +70,9 @@ export const projectCards: ProjectCard[] = [
   {
     id: 'ELC-CORE-05',
     slug: 'everyday-life-core',
-    title: 'Everyday Life Core (in sviluppo)',
+    title: 'Everyday Life Core',
     difficulty: 'Product',
-    description:
-        'Progetto personale full stack: backend .NET, frontend React, mobile Flutter e funzionalita realtime per task, gruppi, notifiche e gestione quotidiana.',
+    description: '',
     tags: ['.NET', 'React', 'Flutter', 'PostgreSQL', 'WebSocket'],
     icon: 'rocket_launch',
     tone: 'orange',

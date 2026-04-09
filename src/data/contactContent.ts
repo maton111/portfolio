@@ -1,16 +1,4 @@
-export const contactHeader = {
-  titleTop: 'OPEN CONTACT',
-  titleAccent: 'MAIN CHANNEL',
-  description:
-    'Secure comms channel established. Input your parameters to sync with the main node. Response latency: < 24h',
-}
-
-export const contactSubjectOptions = [
-  'JOB_OPPORTUNITY',
-  'PROJECT_DISCOVERY',
-  'COLLABORATION',
-  'GENERAL_MESSAGE',
-]
+// Structural data only — strings are resolved via i18n in ContactSection
 
 export type ExternalNode = {
   label: string
@@ -33,14 +21,3 @@ export const externalNodes: ExternalNode[] = [
   { label: 'LINKEDIN', icon: 'lan', href: 'https://www.linkedin.com/in/mattia-archin%C3%A0/' },
   { label: 'INSTAGRAM', icon: 'photo_camera', href: 'https://www.instagram.com/maton11' },
 ]
-
-export const systemHud = {
-  statusLines: [
-    'System_Status: Open to work',
-    'Primary_Role: Backend Developer (.NET)',
-    'Node_ID: TORINO_10139',
-  ],
-  locationLabel: 'Torino_Core // ITA',
-  scanner:
-    'SYSTEM LOAD: OPTIMAL • RESPONSE SLA: < 24H • STACK: .NET / REACT / FLUTTER • CONNECTION: STABLE •',
-}

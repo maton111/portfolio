@@ -104,6 +104,32 @@
     background: color-mix(in oklab, var(--accent-green) 10%, transparent);
 }
 
+.lang-chip {
+    border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-family: var(--font-headline), serif;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    background: color-mix(in oklab, var(--accent-green) 10%, transparent);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lang-chip .material-symbols-outlined {
+    font-size: 0.9rem;
+}
+
+.lang-chip:hover {
+    background: color-mix(in oklab, var(--accent-green) 18%, transparent);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 25%, transparent);
+}
+
 .cv-btn {
     text-decoration: none;
     padding: 7px 12px;
