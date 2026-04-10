@@ -1,4 +1,5 @@
 import {type PointerEvent, useMemo, useRef, useState} from 'react'
+import { useTranslation } from 'react-i18next'
 import profileImage from '../../assets/sfondo_card_opcm.png'
 import './OpcmProfileCard.css'
 
@@ -10,6 +11,7 @@ type OpcmProfileCardProps = {
 }
 
 function OpcmProfileCard({ name, title, handle, status }: OpcmProfileCardProps) {
+  const { t } = useTranslation()
   const cardRef = useRef<HTMLButtonElement | null>(null)
   const [isFlipped, setIsFlipped] = useState(false)
 
@@ -55,7 +57,7 @@ function OpcmProfileCard({ name, title, handle, status }: OpcmProfileCardProps) 
         onPointerMove={updateTilt}
         onPointerLeave={resetTilt}
         onClick={() => setIsFlipped((value) => !value)}
-        aria-label="OPCM profile card"
+        aria-label={t('projects.opcmCardAriaLabel')}
       >
         <span className="opcm-card-edge edge-top" aria-hidden="true" />
         <span className="opcm-card-edge edge-bottom" aria-hidden="true" />

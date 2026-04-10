@@ -236,7 +236,7 @@ function AboutSection() {
           </div>
         </div>
 
-        <div className="about-scanner" aria-label="Status Scanner">
+        <div className="about-scanner" aria-label={t('about.statusScannerAriaLabel')}>
           <div className="about-scanner-track">
             <div className="about-scanner-group">
               {scannerItems.map((item, index) => (

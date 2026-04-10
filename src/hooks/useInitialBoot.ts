@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BOOT_STORAGE_KEY, bootTasks } from '../data/bootSequence'
 
 type UseInitialBootResult = {
@@ -28,6 +29,7 @@ const formatLog = (template: string) =>
     .replace('{ms}', String(randomBetween(14, 79)))
 
 export function useInitialBoot(): UseInitialBootResult {
+  const { t } = useTranslation()
   const initialVisible =
     typeof window !== 'undefined' && !window.sessionStorage.getItem(BOOT_STORAGE_KEY)
 
@@ -142,7 +144,9 @@ export function useInitialBoot(): UseInitialBootResult {
     isBootVisible,
     isPageGlitching,
     progress: Math.round(progress),
-    activeLabel: progress >= 100 ? 'Initialization complete' : bootTasks[Math.min(taskIndex, bootTasks.length - 1)]?.label ?? 'Initializing',
+    activeLabel: progress >= 100
+      ? t('boot.initComplete')
+      : t(`boot.${bootTasks[Math.min(taskIndex, bootTasks.length - 1)]?.id ?? ''}`, { defaultValue: t('boot.initFallback') }),
     logs,
   }
 }

@@ -116,7 +116,7 @@ function ProjectsSection() {
                       <h3>{project.title}</h3>
                     </div>
                     <span className={project.tone === 'orange' ? 'tone-orange' : ''}>
-                      {t('projects.scopeLabel')}: {project.difficulty}
+                      {t('projects.scopeLabel')}: {t(`projects.difficulty${project.difficulty}`)}
                     </span>
                   </div>
 
@@ -134,7 +134,7 @@ function ProjectsSection() {
                       {project.githubUrl ? (
                         <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                           <span className="material-symbols-outlined" aria-hidden="true">code</span>
-                          GitHub
+                          {t('projects.githubLabel')}
                         </a>
                       ) : (
                         <button type="button" className="repo-private-badge" onClick={() => scrollToSection('contact')}>
@@ -183,7 +183,7 @@ function ProjectsSection() {
 
               <div className="repo-status">
                 <div>
-                  <small>Repo_Status</small>
+                  <small>{t('projects.repoStatusLabel')}</small>
                   <small>{repoStatus.efficiency}</small>
                 </div>
                 <div>

@@ -140,7 +140,7 @@ function ContactSection() {
                     key={channel.label}
                     target={isExternalLink(channel.href) ? '_blank' : undefined}
                     rel={isExternalLink(channel.href) ? 'noopener noreferrer' : undefined}
-                    aria-label={`Open ${channel.label}`}
+                    aria-label={t('contact.openLinkAriaLabel', { label: channel.label })}
                   >
                     <span>
                       <i className="material-symbols-outlined" aria-hidden="true">{channel.icon}</i>
@@ -164,7 +164,7 @@ function ContactSection() {
                     key={node.label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Open ${node.label} in a new tab`}
+                    aria-label={t('contact.openExternalAriaLabel', { label: node.label })}
                   >
                     <span>
                       <i className="material-symbols-outlined" aria-hidden="true">{node.icon}</i>
@@ -184,7 +184,7 @@ function ContactSection() {
               <SystemLocationGlobe locationLabel={t('contact.locationLabel')} fallbackImage={turinImage} />
             </section>
 
-            <section className="contact-scanner" aria-label="System scanner">
+            <section className="contact-scanner" aria-label={t('contact.scannerAriaLabel')}>
               <div className="contact-scanner-track">
                 <div className="contact-scanner-group">
                   <span>{t('contact.scanner')}</span>

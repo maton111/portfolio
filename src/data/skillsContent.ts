@@ -10,9 +10,9 @@ export type SkillTag = {
 }
 
 export type SkillModule = {
-  title: string
+  titleKey: string
   moduleId: string
-  status: string
+  statusKey: string
   statusTone?: 'green' | 'orange'
   borderTone?: 'green' | 'orange'
   columns: number
@@ -25,9 +25,9 @@ export type SkillModule = {
 
 export const skillsModules: SkillModule[] = [
   {
-    title: 'ENTERPRISE BACKEND',
+    titleKey: 'skills.be2026Title',
     moduleId: 'BE-2026',
-    status: 'PRODUCTION_READY',
+    statusKey: 'skills.be2026Status',
     columns: 7,
     metrics: [
       { label: 'ASP.NET Core / Web API', value: 96 },
@@ -54,9 +54,9 @@ export const skillsModules: SkillModule[] = [
     ],
   },
   {
-    title: 'ARCHITECTURE & APIS',
+    titleKey: 'skills.ar1102Title',
     moduleId: 'AR-1102',
-    status: 'SCALABLE_DESIGN',
+    statusKey: 'skills.ar1102Status',
     columns: 5,
     metrics: [
       { label: 'Clean Architecture', value: 94 },
@@ -74,9 +74,9 @@ export const skillsModules: SkillModule[] = [
     ],
   },
   {
-    title: 'TESTING & CODE QUALITY',
+    titleKey: 'skills.qa4401Title',
     moduleId: 'QA-4401',
-    status: 'ACTIVE_PRACTICE',
+    statusKey: 'skills.qa4401Status',
     columns: 5,
     metrics: [
       { label: 'Unit Test (xUnit/NUnit)', value: 90 },
@@ -93,9 +93,9 @@ export const skillsModules: SkillModule[] = [
     ],
   },
   {
-    title: 'DATA LAYER & SEARCH',
+    titleKey: 'skills.db7300Title',
     moduleId: 'DB-7300',
-    status: 'MULTI_DB_READY',
+    statusKey: 'skills.db7300Status',
     columns: 7,
     metrics: [
       { label: 'PostgreSQL', value: 97 },
@@ -116,9 +116,9 @@ export const skillsModules: SkillModule[] = [
     ],
   },
   {
-    title: 'DEVOPS & DELIVERY',
+    titleKey: 'skills.dx9901Title',
     moduleId: 'DX-9901',
-    status: 'CONTINUOUS_IMPROVEMENT',
+    statusKey: 'skills.dx9901Status',
     columns: 7,
     metrics: [
       { label: 'Docker & Containerization', value: 86 },
@@ -144,9 +144,9 @@ export const skillsModules: SkillModule[] = [
     ],
   },
   {
-    title: 'AI-ASSISTED FULL STACK',
+    titleKey: 'skills.fs2088Title',
     moduleId: 'FS-2088',
-    status: 'LEVELING_UP',
+    statusKey: 'skills.fs2088Status',
     statusTone: 'orange',
     borderTone: 'orange',
     columns: 5,

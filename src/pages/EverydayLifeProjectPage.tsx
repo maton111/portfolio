@@ -143,15 +143,15 @@ function EverydayLifeProjectPage() {
             </div>
             <div className="edlc-hero-divider" />
             <div className="edlc-hero-infra">
-              <span className="edlc-infra-label">INFRA</span>
-              <span>VPS Ubuntu · Cloudflare Tunnel</span>
+              <span className="edlc-infra-label">{el('infraLabel')}</span>
+              <span>{el('infraStack')}</span>
               <span>everydaylifecore.com</span>
             </div>
           </div>
         </header>
 
         {/* CONTEXT + CHALLENGE */}
-        <section className="project-notes-grid" aria-label="Overview">
+        <section className="project-notes-grid" aria-label={el('overviewAriaLabel')}>
           <article className="project-notes-panel">
             <h2>{el('contextTitle')}</h2>
             <p>{el('contextP1')}</p>
@@ -186,7 +186,7 @@ function EverydayLifeProjectPage() {
             </div>
 
             <div className="edlc-arch-arrow">
-              <span>HTTPS / WSS</span>
+              <span>{el('archProto')}</span>
               <span className="edlc-arch-arrow-line">→</span>
               <span>Cloudflare Tunnel</span>
             </div>
@@ -195,11 +195,11 @@ function EverydayLifeProjectPage() {
               <h3 className="edlc-arch-col-title">{el('archBackendLayer')}</h3>
               <div className="edlc-arch-node edlc-arch-node--primary">
                 ASP.NET Core 8
-                <span>REST API · WebSocket Presence · Health · Metrics</span>
+                <span>{el('archApiDesc')}</span>
               </div>
               <div className="edlc-arch-node">
                 PostgreSQL 16
-                <span>Docker containerizzato</span>
+                <span>{el('archDbDesc')}</span>
               </div>
             </div>
 
@@ -213,15 +213,15 @@ function EverydayLifeProjectPage() {
               <h3 className="edlc-arch-col-title">{el('archServicesLayer')}</h3>
               <div className="edlc-arch-node">
                 Firebase Auth + FCM
-                <span>Autenticazione · Push Notifications</span>
+                <span>{el('archFirebaseDesc')}</span>
               </div>
               <div className="edlc-arch-node">
                 Gmail SMTP
-                <span>Email transazionali</span>
+                <span>{el('archGmailDesc')}</span>
               </div>
               <div className="edlc-arch-node">
                 GitHub API
-                <span>Releases APK per OTA update</span>
+                <span>{el('archGithubDesc')}</span>
               </div>
             </div>
           </div>
@@ -243,7 +243,7 @@ function EverydayLifeProjectPage() {
               <article key={mod.nameKey} className="edlc-module-card">
                 <header className="edlc-module-header">
                   <span className="edlc-module-name">{el(mod.nameKey)}</span>
-                  <span className="edlc-module-status-pair" aria-label="stato backend / mobile">
+                  <span className="edlc-module-status-pair" aria-label={el('moduleStatusAriaLabel')}>
                     <StatusDot status={mod.backendStatus} labels={statusLabels} />
                     <StatusDot status={mod.mobileStatus} labels={statusLabels} />
                   </span>
@@ -258,7 +258,7 @@ function EverydayLifeProjectPage() {
         </section>
 
         {/* IMPLEMENTATION STATUS */}
-        <section className="project-notes-grid" aria-label="Stato implementazione">
+        <section className="project-notes-grid" aria-label={el('implStatusAriaLabel')}>
           <article className="project-notes-panel">
             <h2>{el('backendStatusTitle')}</h2>
             <div className="edlc-status-list">
@@ -285,7 +285,7 @@ function EverydayLifeProjectPage() {
         </section>
 
         {/* ENGINEERING DECISIONS */}
-        <section className="project-notes-sections" aria-label="Decisioni ingegneristiche">
+        <section className="project-notes-sections" aria-label={el('engDecisionsAriaLabel')}>
           {engSections.map((section) => (
             <article key={section.titleKey} className="project-notes-panel">
               <h2>{el(section.titleKey)}</h2>
@@ -299,7 +299,7 @@ function EverydayLifeProjectPage() {
         </section>
 
         {/* STACK */}
-        <section className="project-notes-grid" aria-label="Stack tecnologico">
+        <section className="project-notes-grid" aria-label={el('techStackAriaLabel')}>
           <article className="project-notes-panel">
             <h2>{el('stackBackendTitle')}</h2>
             <div className="project-notes-tags">
@@ -315,7 +315,7 @@ function EverydayLifeProjectPage() {
         </section>
 
         {/* ROADMAP + OUTCOMES */}
-        <section className="project-notes-grid" aria-label="Roadmap e risultati">
+        <section className="project-notes-grid" aria-label={el('roadmapOutcomesAriaLabel')}>
           <article className="project-notes-panel">
             <h2>{el('roadmapTitle')}</h2>
             <div className="edlc-backlog">

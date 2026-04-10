@@ -36,7 +36,9 @@
     "scannerCloud": "Cloud Sync: Enabled",
     "scannerBugs": "Bugs: None Detected",
     "scannerPerf": "Performance: High",
-    "scannerResponse": "Response Time: Instant"
+    "scannerResponse": "Response Time: Instant",
+    "langSwitchAriaLabel": "Switch language",
+    "statusScannerAriaLabel": "Status scanner"
   },
   "about": {
     "eyebrow": "CV Snapshot // About",
@@ -82,7 +84,8 @@
     "scanner6": "Continuous learning & growth mindset",
     "statBackend": "BACKEND_DEPTH",
     "statArch": "ARCHITECTURE_FOCUS",
-    "statTesting": "TESTING_MINDSET"
+    "statTesting": "TESTING_MINDSET",
+    "statusScannerAriaLabel": "Status scanner"
   },
   "skills": {
     "eyebrow": "CV Snapshot // Skills Matrix",
@@ -95,7 +98,20 @@
     "unavailable": "Unavailable",
     "bottomTitle": "Career_Link: ACTIVE",
     "bottomDesc": "Backend engineer focused on scalable systems, software quality and continuous growth across enterprise and personal products.",
-    "uptime": "Always Learning"
+    "uptime": "Always Learning",
+    "neuralLinkAriaLabel": "Neural link panel",
+    "be2026Title": "ENTERPRISE BACKEND",
+    "be2026Status": "PRODUCTION_READY",
+    "ar1102Title": "ARCHITECTURE & APIS",
+    "ar1102Status": "SCALABLE_DESIGN",
+    "qa4401Title": "TESTING & CODE QUALITY",
+    "qa4401Status": "ACTIVE_PRACTICE",
+    "db7300Title": "DATA LAYER & SEARCH",
+    "db7300Status": "MULTI_DB_READY",
+    "dx9901Title": "DEVOPS & DELIVERY",
+    "dx9901Status": "CONTINUOUS_IMPROVEMENT",
+    "fs2088Title": "AI-ASSISTED FULL STACK",
+    "fs2088Status": "LEVELING_UP"
   },
   "projects": {
     "eyebrow": "CV Snapshot // Projects",
@@ -132,7 +148,16 @@
     "log4Date": "2021-2023 // SINCON",
     "log4Title": "Multi-stack software projects",
     "log4Note": "Backend with C#, Python and PHP on portals and data systems.",
-    "repoEfficiency": "Backend first / Full stack direction"
+    "repoEfficiency": "Backend first / Full stack direction",
+    "githubLabel": "GitHub",
+    "repoStatusLabel": "Repo_Status",
+    "difficultyEnterprise": "Enterprise",
+    "difficultyProduct": "Product",
+    "difficultyModernization": "Modernization",
+    "opcmCardAriaLabel": "OPCM profile card",
+    "elcAlt1": "ELC Component 1",
+    "elcAlt2": "ELC Component 2",
+    "elcAlt3": "ELC Component 3"
   },
   "contact": {
     "titleTop": "OPEN CONTACT",
@@ -162,7 +187,10 @@
     "scanner": "SYSTEM LOAD: OPTIMAL • RESPONSE SLA: < 24H • STACK: .NET / REACT / FLUTTER • CONNECTION: STABLE •",
     "successMessage": "Message sent successfully!",
     "errorGeneric": "Failed to send message. Please try again.",
-    "errorUnknown": "An unknown error occurred"
+    "errorUnknown": "An unknown error occurred",
+    "scannerAriaLabel": "System scanner",
+    "openLinkAriaLabel": "Open {{label}}",
+    "openExternalAriaLabel": "Open {{label}} in a new tab"
   },
   "projectNotes": {
     "notFound": "Project notes not available",
@@ -171,6 +199,12 @@
     "backBtn": "Back to Projects",
     "roleLabel": "Role:",
     "stackFocusLabel": "Stack focus:",
+    "roleBackend": "Backend Developer",
+    "roleFullStackBackend": "Full Stack Developer (Backend-first)",
+    "roleFrontend": "Solo Developer (Frontend)",
+    "detailsAriaLabel": "Project notes details",
+    "engineeringAriaLabel": "Engineering notes",
+    "outcomesAriaLabel": "Outcomes and next steps",
     "context": "Context",
     "challenge": "Challenge",
     "timeline": "Timeline",
@@ -286,6 +320,20 @@
     "ns_n4": "Multi-session mode: compare focus scores across different sessions."
   },
   "everydayLife": {
+    "infraLabel": "INFRA",
+    "infraStack": "VPS Ubuntu · Cloudflare Tunnel",
+    "archProto": "HTTPS / WSS",
+    "archApiDesc": "REST API · WebSocket Presence · Health · Metrics",
+    "archDbDesc": "Docker containerized",
+    "archFirebaseDesc": "Authentication · Push Notifications",
+    "archGmailDesc": "Transactional emails",
+    "archGithubDesc": "APK Releases for OTA update",
+    "overviewAriaLabel": "Overview",
+    "moduleStatusAriaLabel": "Backend / mobile status",
+    "implStatusAriaLabel": "Implementation status",
+    "engDecisionsAriaLabel": "Engineering decisions",
+    "techStackAriaLabel": "Technology stack",
+    "roadmapOutcomesAriaLabel": "Roadmap and outcomes",
     "heroBadge": "ELC-CORE-03 // Product · Actively in development",
     "heroTitle": "Everyday Life Core",
     "heroDesc": "ASP.NET Core 8 backend + Flutter app for collaborative daily life management. Tasks, shared expenses, lists, push notifications, real-time presence and more — all on self-hosted infrastructure.",
@@ -457,6 +505,23 @@
     "classLabel": "Class",
     "levelLabel": "Level",
     "statusLabel": "Status",
-    "questLog": "Current Quest Log"
+    "questLog": "Current Quest Log",
+    "tagsAriaLabel": "Identity tags",
+    "personalDashboardAriaLabel": "Personal dashboard"
+  },
+  "boot": {
+    "screenAriaLabel": "System initialization screen",
+    "logsAriaLabel": "Generated startup code",
+    "statusLabel": "Status: Initializing",
+    "progressComplete": "complete",
+    "initComplete": "Initialization complete",
+    "initFallback": "Initializing",
+    "core": "Bootstrapping core modules",
+    "cipher": "Applying identity cipher",
+    "ui": "Hydrating HUD renderer",
+    "assets": "Loading visual assets",
+    "network": "Verifying network channels",
+    "integrity": "Running integrity checks",
+    "finalize": "Finalizing startup sequence"
   }
 }

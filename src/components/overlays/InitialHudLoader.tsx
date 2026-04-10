@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import './InitialHudLoader.css'
 
 type InitialHudLoaderProps = {
@@ -9,10 +10,11 @@ type InitialHudLoaderProps = {
 const SEGMENTS = 12
 
 function InitialHudLoader({ progress, activeLabel, logs }: InitialHudLoaderProps) {
+  const { t } = useTranslation()
   const filledSegments = Math.round((progress / 100) * SEGMENTS)
 
   return (
-    <div className="boot-screen" role="status" aria-live="polite" aria-label="System initialization screen">
+    <div className="boot-screen" role="status" aria-live="polite" aria-label={t('boot.screenAriaLabel')}>
       <div className="boot-grid" aria-hidden="true" />
       <div className="boot-scanlines" aria-hidden="true" />
       <div className="boot-vignette" aria-hidden="true" />
@@ -30,7 +32,7 @@ function InitialHudLoader({ progress, activeLabel, logs }: InitialHudLoaderProps
         <section className="boot-module">
           <div className="boot-module-head">
             <div>
-              <p>Status: Initializing</p>
+              <p>{t('boot.statusLabel')}</p>
               <strong>{activeLabel}</strong>
             </div>
             <b>{progress}%</b>
@@ -42,14 +44,14 @@ function InitialHudLoader({ progress, activeLabel, logs }: InitialHudLoaderProps
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={progress}
-            aria-valuetext={`${progress}% complete`}
+            aria-valuetext={`${progress}% ${t('boot.progressComplete')}`}
           >
             {Array.from({ length: SEGMENTS }).map((_, index) => (
               <span className={index < filledSegments ? 'filled' : ''} key={index} />
             ))}
           </div>
 
-          <div className="boot-log" aria-label="Generated startup code">
+          <div className="boot-log" aria-label={t('boot.logsAriaLabel')}>
             {logs.map((line, index) => (
               <p key={`${line}-${index}`}>{line}</p>
             ))}

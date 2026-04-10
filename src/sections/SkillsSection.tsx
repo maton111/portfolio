@@ -40,7 +40,7 @@ function buildSkillChips(module: SkillModule): SkillChip[] {
 }
 
 function getSkillTone(module: SkillModule, value: number): 'green' | 'orange' {
-  if (module.title === 'AI-ASSISTED FULL STACK') {
+  if (module.moduleId === 'FS-2088') {
     return 'orange'
   }
   return value < 70 ? 'orange' : 'green'
@@ -172,10 +172,10 @@ function SkillsSection() {
 
                 <div className="skills-card-head">
                   <div>
-                    <h3>{module.title}</h3>
+                    <h3>{t(module.titleKey)}</h3>
                     <p>Module_ID: {module.moduleId}</p>
                   </div>
-                  <span className={`skills-status tone-${module.statusTone ?? 'green'}`}>{module.status}</span>
+                  <span className={`skills-status tone-${module.statusTone ?? 'green'}`}>{t(module.statusKey)}</span>
                 </div>
 
                 <div className="skills-metrics">
@@ -220,7 +220,7 @@ function SkillsSection() {
           })}
         </div>
 
-        <section className="skills-bottom" aria-label="Neural link panel">
+        <section className="skills-bottom" aria-label={t('skills.neuralLinkAriaLabel')}>
           <div>
             <div>
               <span className="material-symbols-outlined" aria-hidden="true">psychology</span>

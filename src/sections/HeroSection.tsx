@@ -70,7 +70,7 @@ function HeroSection() {
               <span className="availability-dot" aria-hidden="true" />
               <span className="availability-label">{t('hero.availability')}</span>
             </span>
-            <button className="lang-chip" type="button" onClick={toggleLang} aria-label="Switch language">
+            <button className="lang-chip" type="button" onClick={toggleLang} aria-label={t('hero.langSwitchAriaLabel')}>
               <span className="material-symbols-outlined" aria-hidden="true">translate</span>
               <span className="lang-chip-label">{t('navbar.langSwitch')}</span>
             </button>
@@ -131,7 +131,7 @@ function HeroSection() {
         </section>
       </main>
 
-      <div className="status-scanner" aria-label="Status scanner">
+      <div className="status-scanner" aria-label={t('hero.statusScannerAriaLabel')}>
         <div className="scanner-track">
           <div className="scanner-group">
             {scannerItems.map((item) => (

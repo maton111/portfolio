@@ -26,7 +26,7 @@ function HeroHudCard({ name, role, level, status, stats, quests, tags }: HeroHud
 
   return (
     <div className="hud-wrap">
-      <article className="hud-card" aria-label="Personal dashboard">
+      <article className="hud-card" aria-label={t('hud.personalDashboardAriaLabel')}>
         <div className="hud-head">
           <div>
             <h2>{name}</h2>
@@ -82,7 +82,7 @@ function HeroHudCard({ name, role, level, status, stats, quests, tags }: HeroHud
               </p>
             ))}
           </div>
-          <div className="hud-tags" aria-label="Identity tags">
+          <div className="hud-tags" aria-label={t('hud.tagsAriaLabel')}>
             {tags.map((tag) => (
               <span key={tag}>{tag}</span>
             ))}

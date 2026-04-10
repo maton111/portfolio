@@ -58,7 +58,7 @@ function useProjectNotes(slug: string | undefined) {
   return {
     slug,
     headline: t(`${p}headline`),
-    role: slug === 'opcm' ? 'Full Stack Developer (Backend-first)' : slug === 'neuro-scope' ? 'Solo Developer (Frontend)' : 'Backend Developer',
+    role: slug === 'opcm' ? t('projectNotes.roleFullStackBackend') : slug === 'neuro-scope' ? t('projectNotes.roleFrontend') : t('projectNotes.roleBackend'),
     context: t(`${p}context`),
     challenge: t(`${p}challenge`),
     timeline: tlKeys.map((k) => t(`${p}${k}`)),
@@ -132,7 +132,7 @@ function ProjectNotesPage() {
         <header className="project-notes-hero">
           <div className="project-notes-hero-copy">
             <small>
-              {projectCard.id} // {projectCard.difficulty}
+              {projectCard.id} // {t(`projects.difficulty${projectCard.difficulty}`)}
             </small>
             <h1 id="project-notes-title">{displayTitle}</h1>
             <p>{notes.headline}</p>
@@ -179,7 +179,7 @@ function ProjectNotesPage() {
         </header>
 
         {projectCard.slug === 'opcm' ? (
-          <section className="project-notes-grid project-notes-grid-top" aria-label="Project notes details">
+          <section className="project-notes-grid project-notes-grid-top" aria-label={t('projectNotes.detailsAriaLabel')}>
             <div className="project-notes-top-left">
               <article className="project-notes-panel">
                 <h2>{t('projectNotes.context')}</h2>
@@ -207,7 +207,7 @@ function ProjectNotesPage() {
             </div>
           </section>
         ) : (
-          <section className="project-notes-grid" aria-label="Project notes details">
+          <section className="project-notes-grid" aria-label={t('projectNotes.detailsAriaLabel')}>
             <article className="project-notes-panel">
               <h2>{t('projectNotes.context')}</h2>
               <p>{notes.context}</p>
@@ -231,7 +231,7 @@ function ProjectNotesPage() {
           </section>
         )}
 
-        <section className="project-notes-sections" aria-label="Engineering notes">
+        <section className="project-notes-sections" aria-label={t('projectNotes.engineeringAriaLabel')}>
           {notes.sections.map((section) => (
             <article key={section.title} className="project-notes-panel">
               <h2>{section.title}</h2>
@@ -242,7 +242,7 @@ function ProjectNotesPage() {
           ))}
         </section>
 
-        <section className="project-notes-grid" aria-label="Outcomes and next steps">
+        <section className="project-notes-grid" aria-label={t('projectNotes.outcomesAriaLabel')}>
           <article className="project-notes-panel">
             <h2>{t('projectNotes.outcomes')}</h2>
             <ul>
