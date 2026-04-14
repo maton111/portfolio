@@ -1,5 +1,5 @@
 .hero-page {
-    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-base);
     color: var(--text-main);
 }
@@ -69,11 +69,27 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     transition: color 0.2s ease;
+    position: relative;
 }
 
 .topbar ul a:hover,
 .topbar ul button:hover {
     color: var(--accent-green);
+}
+
+.topbar ul button.nav-active {
+    color: var(--text-strong);
+}
+
+.topbar ul button.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--accent-green);
+    border-radius: 1px;
 }
 
 .topbar nav > span {
@@ -206,7 +222,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding: 96px 24px 84px;
     background-image: radial-gradient(color-mix(in oklab, var(--accent-green) 22%, transparent) 1px, transparent 1px);
     background-size: 24px 24px;
@@ -273,7 +289,7 @@
 .hero-grid {
     max-width: 1280px;
     margin: 0 auto;
-    min-height: calc(100vh - 180px);
+    min-height: calc(100dvh - 180px);
     display: grid;
     grid-template-columns: 1fr;
     gap: 36px;
@@ -302,6 +318,7 @@
     font-size: clamp(2.2rem, 7vw, 4.3rem);
     line-height: 0.96;
     letter-spacing: -0.03em;
+    text-wrap: balance;
 }
 
 .hero-copy h1 span {
@@ -345,6 +362,7 @@
 
 .btn-primary:hover {
     box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 42%, transparent);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -355,6 +373,7 @@
 
 .btn-secondary:hover {
     background: color-mix(in oklab, var(--accent-orange) 16%, transparent);
+    transform: translateY(-2px);
 }
 
 .hero-trust {
@@ -382,7 +401,7 @@
     background: color-mix(in oklab, var(--panel) 70%, transparent);
     backdrop-filter: blur(18px);
     padding: 24px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 20px 60px rgba(0, 6, 2, 0.52), 0 0 0 1px color-mix(in oklab, var(--accent-green) 6%, transparent);
     overflow: hidden;
 }
 

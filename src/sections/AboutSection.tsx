@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import profileFrontImg from '../assets/profilo1.jpeg'
 import profileBackImg from '../assets/profilo2.png'
 import { scrollToSection } from '../hooks/useSectionScroll'
+import { useReveal } from '../hooks/useReveal'
 import './AboutSection.css'
 
 const SEGMENTS = 10
@@ -31,6 +32,8 @@ function AboutSection() {
   const { t } = useTranslation()
   const [isProfileFlipped, setIsProfileFlipped] = useState(false)
   const statsCardRef = useRef<HTMLDivElement | null>(null)
+  const headerRevealRef = useReveal<HTMLElement>()
+  const layoutRevealRef = useReveal<HTMLDivElement>(0.06)
   const [hasStartedStatsAnimation, setHasStartedStatsAnimation] = useState(false)
   const [displayedStats, setDisplayedStats] = useState<number[]>(() => aboutStats.map(() => 0))
 
@@ -110,7 +113,7 @@ function AboutSection() {
   return (
     <section className="about-page" id="about" aria-labelledby="about-title">
       <div className="about-content">
-        <header className="about-header">
+        <header ref={headerRevealRef} className="about-header reveal-target">
           <div className="about-eyebrow">
             <div />
             <span>{t('about.eyebrow')}</span>
@@ -130,7 +133,7 @@ function AboutSection() {
           </div>
         </header>
 
-        <div className="about-layout">
+        <div ref={layoutRevealRef} className="about-layout reveal-target reveal-delay-1">
           <div className="about-narrative">
             <section>
               <div className="about-section-head">

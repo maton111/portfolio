@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
@@ -17,6 +18,28 @@ const BIRTH_DATE = new Date(2000, 2, 31)
 
 function HeroSection() {
   const { t, i18n } = useTranslation()
+  const [activeSection, setActiveSection] = useState('home')
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'skills', 'projects', 'contact']
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY + window.innerHeight * 0.28
+
+      let current = 'home'
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+          current = id
+        }
+      }
+      setActiveSection(current)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const toggleLang = () => {
     void i18n.changeLanguage(i18n.language === 'it' ? 'en' : 'it')
@@ -59,11 +82,11 @@ function HeroSection() {
             <img src={logoFile} alt="Logo Mattia Archina" />
           </button>
           <ul>
-            <li><button type="button" onClick={() => scrollToSection('home')}>{t('navbar.home')}</button></li>
-            <li><button type="button" onClick={() => scrollToSection('about')}>{t('navbar.about')}</button></li>
-            <li><button type="button" onClick={() => scrollToSection('skills')}>{t('navbar.skills')}</button></li>
-            <li><button type="button" onClick={() => scrollToSection('projects')}>{t('navbar.projects')}</button></li>
-            <li><button type="button" onClick={() => scrollToSection('contact')}>{t('navbar.contact')}</button></li>
+            <li><button type="button" className={activeSection === 'home' ? 'nav-active' : ''} onClick={() => scrollToSection('home')}>{t('navbar.home')}</button></li>
+            <li><button type="button" className={activeSection === 'about' ? 'nav-active' : ''} onClick={() => scrollToSection('about')}>{t('navbar.about')}</button></li>
+            <li><button type="button" className={activeSection === 'skills' ? 'nav-active' : ''} onClick={() => scrollToSection('skills')}>{t('navbar.skills')}</button></li>
+            <li><button type="button" className={activeSection === 'projects' ? 'nav-active' : ''} onClick={() => scrollToSection('projects')}>{t('navbar.projects')}</button></li>
+            <li><button type="button" className={activeSection === 'contact' ? 'nav-active' : ''} onClick={() => scrollToSection('contact')}>{t('navbar.contact')}</button></li>
           </ul>
           <div className="topbar-actions">
             <span className="availability-chip">

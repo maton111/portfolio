@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type SkillMetric, type SkillModule, skillsModules } from '../data/skillsContent'
 import { fetchRepoInfo } from '../utils/api'
+import { useReveal } from '../hooks/useReveal'
 import './SkillsSection.css'
 
 const SEGMENTS = 20
@@ -98,6 +99,8 @@ function SkillsSection() {
   const [lockedSkillByModule, setLockedSkillByModule] = useState<Record<string, string>>({})
   const [hoveredSkillByModule, setHoveredSkillByModule] = useState<Record<string, string | undefined>>({})
   const [lastUpdate, setLastUpdate] = useState(t('skills.loading'))
+  const headerRevealRef = useReveal<HTMLElement>()
+  const gridRevealRef = useReveal<HTMLDivElement>(0.05)
 
   useEffect(() => {
     let isMounted = true
@@ -135,7 +138,7 @@ function SkillsSection() {
   return (
     <section className="skills-page" id="skills" aria-labelledby="skills-title">
       <div className="skills-content">
-        <header className="skills-header">
+        <header ref={headerRevealRef} className="skills-header reveal-target">
           <div>
             <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
             <p>{t('skills.eyebrow')}</p>
@@ -145,7 +148,7 @@ function SkillsSection() {
           </h2>
         </header>
 
-        <div className="skills-grid">
+        <div ref={gridRevealRef} className="skills-grid reveal-target reveal-delay-1">
           {skillsModules.map((module) => {
             const chips = buildSkillChips(module)
             const defaultSkill = chips[0]

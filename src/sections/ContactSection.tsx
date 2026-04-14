@@ -4,12 +4,14 @@ import { directChannels, externalNodes } from '../data/contactContent'
 import { useContactForm } from '../hooks/useContactForm'
 import SystemLocationGlobe from '../components/ui/SystemLocationGlobe'
 import turinImage from '../assets/turin.png'
+import { useReveal } from '../hooks/useReveal'
 import './ContactSection.css'
 
 function ContactSection() {
   const { t } = useTranslation()
   const { isLoading, error, success, message, submitForm } = useContactForm()
   const formRef = useRef<HTMLFormElement>(null)
+  const gridRevealRef = useReveal<HTMLDivElement>(0.05)
   const isExternalLink = (href: string) => href.startsWith('http')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +54,7 @@ function ContactSection() {
           ))}
         </div>
 
-        <div className="contact-grid">
+        <div ref={gridRevealRef} className="contact-grid reveal-target">
           <div className="contact-main">
             <header>
               <h2 id="contact-title">

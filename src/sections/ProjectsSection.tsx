@@ -3,6 +3,7 @@ import { type ProjectCard, projectCards } from '../data/projectCards'
 import { ElcCompositeVisual } from '../components/ui/ElcCompositeVisual'
 import { useNavigate } from 'react-router-dom'
 import { scrollToSection } from '../hooks/useSectionScroll'
+import { useReveal } from '../hooks/useReveal'
 import './ProjectsSection.css'
 
 import teamsystemSvg from '../assets/teamsystem_enterprise_backend_hero.svg'
@@ -37,6 +38,8 @@ function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visua
 function ProjectsSection() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const headerRevealRef = useReveal<HTMLElement>()
+  const layoutRevealRef = useReveal<HTMLDivElement>(0.04)
 
   const openProjectNotes = (slug: string) => {
     navigate(`/projects/${slug}`)
@@ -89,7 +92,7 @@ function ProjectsSection() {
   return (
     <section className="projects-page" id="projects" aria-labelledby="projects-title">
       <div className="projects-content">
-        <header className="projects-header">
+        <header ref={headerRevealRef} className="projects-header reveal-target">
           <div>
             <span />
             <p>{t('projects.eyebrow')}</p>
@@ -102,7 +105,7 @@ function ProjectsSection() {
           <p>{t('projects.intro')}</p>
         </header>
 
-        <div className="projects-layout">
+        <div ref={layoutRevealRef} className="projects-layout reveal-target reveal-delay-1">
           <div>
             <div className="projects-grid-two">
               {translatedCards.map((project) => (

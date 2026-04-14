@@ -1,6 +1,6 @@
 .contact-page {
-  padding: 14px 24px 100px;
-  background-color: #0b0f0c;
+  padding: 96px 24px 100px;
+  background-color: var(--bg-base);
   background-image: radial-gradient(color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 0);
   background-size: 24px 24px;
 }
@@ -40,6 +40,7 @@
   line-height: 0.92;
   letter-spacing: -0.04em;
   color: var(--text-strong);
+  text-wrap: balance;
 }
 
 .contact-main header h2 span {

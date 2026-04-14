@@ -1,6 +1,6 @@
 .projects-page {
   padding: 96px 24px 120px;
-  background-color: #0b0f0c;
+  background-color: var(--bg-base);
   background-image: radial-gradient(circle at 2px 2px, rgba(39, 43, 39, 0.15) 1px, transparent 0);
   background-size: 24px 24px;
 }
@@ -43,6 +43,7 @@
   line-height: 0.92;
   letter-spacing: -0.04em;
   color: var(--text-strong);
+  text-wrap: balance;
 }
 
 .projects-header > p {
@@ -73,11 +74,13 @@
   background: color-mix(in oklab, var(--panel) 68%, transparent);
   border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
   border-left-width: 4px;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .project-card:hover {
   background: color-mix(in oklab, var(--panel-strong) 78%, transparent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 6, 2, 0.4);
 }
 
 .project-icon {
@@ -138,7 +141,7 @@
   aspect-ratio: 16 / 8;
   margin-bottom: 14px;
   border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
-  background-color: #101411;
+  background-color: var(--bg-elevated);
   position: relative;
   overflow: hidden;
 }
@@ -383,8 +386,8 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  border: 2px solid #00ff88;
-  background: #0b0f0c;
+  border: 2px solid var(--accent-green);
+  background: var(--bg-base);
 }
 
 .log-item small {
