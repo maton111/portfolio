@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
+import DecryptedText from '../components/ui/DecryptedText'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'
 import {scrollToSection} from '../hooks/useSectionScroll'
@@ -119,8 +120,10 @@ function HeroSection() {
           <div className="hero-copy">
             <p>{t('hero.eyebrow')}</p>
             <h1>
-              {t('hero.title')} <br />
-              <span>{t('hero.subtitle')}</span>
+              <DecryptedText text={t('hero.title')} /> <br />
+              <span>
+                <DecryptedText text={t('hero.subtitle')} />
+              </span>
             </h1>
             <p className="hero-intro">{t('hero.intro')}</p>
             <div className="hero-ctas">

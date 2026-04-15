@@ -321,6 +321,10 @@
     text-wrap: balance;
 }
 
+.hero-copy h1 > span:first-of-type {
+    color: var(--text-strong);
+}
+
 .hero-copy h1 span {
     color: color-mix(in oklab, var(--text-main) 78%, transparent);
 }
