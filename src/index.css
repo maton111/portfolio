@@ -104,8 +104,8 @@ body::after {
 /* Section reveal — elements fade + slide in on scroll entry */
 .reveal-target {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transform: translateY(16px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-target.is-visible {
@@ -114,8 +114,46 @@ body::after {
 }
 
 .reveal-target.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-target.reveal-delay-2 { transition-delay: 0.18s; }
-.reveal-target.reveal-delay-3 { transition-delay: 0.26s; }
+.reveal-target.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-target.reveal-delay-3 { transition-delay: 0.32s; }
+.reveal-target.reveal-delay-4 { transition-delay: 0.46s; }
+.reveal-target.reveal-delay-5 { transition-delay: 0.62s; }
+
+/* ── Staggered children — index-driven by CSS custom prop --stagger-i ── */
+.stagger-child {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--stagger-i, 0) * 110ms),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--stagger-i, 0) * 110ms);
+}
+
+.reveal-target.is-visible .stagger-child,
+.stagger-child.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Heading scan-wipe — left-to-right clip reveal when parent enters view ── */
+.reveal-target.is-visible .reveal-heading {
+  animation: heading-scan-in 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+
+@keyframes heading-scan-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* ── Eyebrow accent bar — grows from left on reveal ── */
+.reveal-target.is-visible .reveal-bar {
+  animation: bar-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  transform-origin: left center;
+}
+
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   body::after {
@@ -126,6 +164,21 @@ body::after {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .stagger-child {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .reveal-target.is-visible .reveal-heading {
+    animation: none;
+    clip-path: none;
+  }
+
+  .reveal-target.is-visible .reveal-bar {
+    animation: none;
   }
 }
 

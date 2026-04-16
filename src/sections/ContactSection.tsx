@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { directChannels, externalNodes } from '../data/contactContent'
 import { useContactForm } from '../hooks/useContactForm'
@@ -57,7 +57,7 @@ function ContactSection() {
         <div ref={gridRevealRef} className="contact-grid reveal-target">
           <div className="contact-main">
             <header>
-              <h2 id="contact-title">
+              <h2 id="contact-title" className="reveal-heading">
                 {t('contact.titleTop')}
                 <br />
                 <span>{t('contact.titleAccent')}</span>
@@ -130,7 +130,7 @@ function ContactSection() {
           </div>
 
           <aside className="contact-sidebar">
-            <section className="contact-node-panel tone-green">
+            <section className="contact-node-panel tone-green stagger-child" style={{ '--stagger-i': 0 } as CSSProperties}>
               <h3>
                 <span aria-hidden="true" />
                 {t('contact.directChannel')}
@@ -154,7 +154,7 @@ function ContactSection() {
               </div>
             </section>
 
-            <section className="contact-node-panel tone-orange">
+            <section className="contact-node-panel tone-orange stagger-child" style={{ '--stagger-i': 1 } as CSSProperties}>
               <h3>
                 <span aria-hidden="true" />
                 {t('contact.externalNodes')}
@@ -178,7 +178,7 @@ function ContactSection() {
               </div>
             </section>
 
-            <section className="contact-node-panel tone-green">
+            <section className="contact-node-panel tone-green stagger-child" style={{ '--stagger-i': 2 } as CSSProperties}>
               <h3>
                 <span aria-hidden="true" />
                 {t('contact.systemLocation')}

@@ -1,3 +1,4 @@
+import { type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type ProjectCard, projectCards } from '../data/projectCards'
 import { ElcCompositeVisual } from '../components/ui/ElcCompositeVisual'
@@ -94,10 +95,10 @@ function ProjectsSection() {
       <div className="projects-content">
         <header ref={headerRevealRef} className="projects-header reveal-target">
           <div>
-            <span />
+            <span className="reveal-bar" />
             <p>{t('projects.eyebrow')}</p>
           </div>
-          <h2 id="projects-title">
+          <h2 id="projects-title" className="reveal-heading">
             {t('projects.titleTop')}
             <br />
             {t('projects.titleBottom')}
@@ -108,8 +109,8 @@ function ProjectsSection() {
         <div ref={layoutRevealRef} className="projects-layout reveal-target reveal-delay-1">
           <div>
             <div className="projects-grid-two">
-              {translatedCards.map((project) => (
-                <article key={project.id} className="project-card">
+              {translatedCards.map((project, index) => (
+                <article key={project.id} className="project-card stagger-child" style={{ '--stagger-i': index } as CSSProperties}>
                   <div className="project-icon" aria-hidden="true">
                     <span className="material-symbols-outlined">{project.icon}</span>
                   </div>
@@ -175,8 +176,8 @@ function ProjectsSection() {
               </div>
 
               <div className="log-list">
-                {systemLogs.map((log) => (
-                  <article key={`${log.date}-${log.title}`} className={`log-item tone-${log.tone ?? 'green'}`}>
+                {systemLogs.map((log, index) => (
+                  <article key={`${log.date}-${log.title}`} className={`log-item tone-${log.tone ?? 'green'} stagger-child`} style={{ '--stagger-i': index } as CSSProperties}>
                     <small>{log.date}</small>
                     <p>{log.title}</p>
                     <span>{log.note}</span>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type SkillMetric, type SkillModule, skillsModules } from '../data/skillsContent'
 import { fetchRepoInfo } from '../utils/api'
@@ -143,13 +143,13 @@ function SkillsSection() {
             <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
             <p>{t('skills.eyebrow')}</p>
           </div>
-          <h2 id="skills-title">
+          <h2 id="skills-title" className="reveal-heading">
             {t('skills.titleStart')} <span>{t('skills.titleAccent')}</span> {t('skills.titleEnd')}
           </h2>
         </header>
 
         <div ref={gridRevealRef} className="skills-grid reveal-target reveal-delay-1">
-          {skillsModules.map((module) => {
+          {skillsModules.map((module, index) => {
             const chips = buildSkillChips(module)
             const defaultSkill = chips[0]
 
@@ -164,7 +164,8 @@ function SkillsSection() {
             return (
               <article
                 key={module.moduleId}
-                className={`skills-card col-${module.columns} tone-${module.borderTone ?? 'green'}`}
+                className={`skills-card col-${module.columns} tone-${module.borderTone ?? 'green'} stagger-child`}
+                style={{ '--stagger-i': index } as CSSProperties}
                 onMouseLeave={() => handleSkillLeave(module.moduleId)}
               >
                 {module.icon ? (

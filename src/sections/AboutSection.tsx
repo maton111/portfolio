@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import profileFrontImg from '../assets/profilo1.jpeg'
 import profileBackImg from '../assets/profilo2.png'
@@ -115,10 +115,10 @@ function AboutSection() {
       <div className="about-content">
         <header ref={headerRevealRef} className="about-header reveal-target">
           <div className="about-eyebrow">
-            <div />
+            <div className="reveal-bar" />
             <span>{t('about.eyebrow')}</span>
           </div>
-          <h2 id="about-title">
+          <h2 id="about-title" className="reveal-heading">
             MATTIA ARCHINÀ <br />
             <span>{t('about.titleAccent')}</span>
           </h2>
@@ -148,8 +148,8 @@ function AboutSection() {
             </section>
 
             <section className="about-origin-grid">
-              {originCards.map((card) => (
-                <article key={card.index} className="about-origin-card">
+              {originCards.map((card, i) => (
+                <article key={card.index} className="about-origin-card stagger-child" style={{ '--stagger-i': i } as CSSProperties}>
                   <strong>{card.index}</strong>
                   <h4>{t(card.titleKey)}</h4>
                   <p>{t(card.descKey)}</p>

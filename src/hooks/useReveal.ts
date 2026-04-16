@@ -36,7 +36,7 @@ export function useReveal<T extends HTMLElement>(threshold = 0.08): RefObject<T 
           observer.disconnect()
         }
       },
-      { threshold, rootMargin: '0px 0px -24px 0px' },
+      { threshold, rootMargin: '0px 0px -48px 0px' },
     )
 
     observer.observe(el)
