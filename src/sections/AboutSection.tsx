@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { useTranslation } from 'react-i18next'
+import {type CSSProperties, useEffect, useRef, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import profileFrontImg from '../assets/profilo1.jpeg'
 import profileBackImg from '../assets/profilo2.png'
-import { scrollToSection } from '../hooks/useSectionScroll'
-import { useReveal } from '../hooks/useReveal'
+import {scrollToSection} from '../hooks/useSectionScroll'
+import {useReveal} from '../hooks/useReveal'
+import MagicBentoCard from '../components/ui/MagicBentoCard'
 import './AboutSection.css'
 
 const SEGMENTS = 10
@@ -149,25 +150,29 @@ function AboutSection() {
 
             <section className="about-origin-grid">
               {originCards.map((card, i) => (
-                <article key={card.index} className="about-origin-card stagger-child" style={{ '--stagger-i': i } as CSSProperties}>
+                <MagicBentoCard
+                  key={card.index}
+                  className="about-origin-card stagger-child"
+                  style={{ '--stagger-i': i } as CSSProperties}
+                >
                   <strong>{card.index}</strong>
                   <h4>{t(card.titleKey)}</h4>
                   <p>{t(card.descKey)}</p>
-                </article>
+                </MagicBentoCard>
               ))}
             </section>
 
-            <section className="about-philosophy">
+            <MagicBentoCard className="about-philosophy stagger-child" style={{ '--stagger-i': 3 } as CSSProperties}>
               <div className="about-terminal-icon" aria-hidden="true">
                 <span className="material-symbols-outlined">terminal</span>
               </div>
               <h3>{t('about.philosophyTitle')}</h3>
               <blockquote>{t('about.philosophy')}</blockquote>
-            </section>
+            </MagicBentoCard>
           </div>
 
           <div className="about-hud">
-            <div ref={statsCardRef} className="about-hud-card glow-primary">
+            <MagicBentoCard ref={statsCardRef} className="about-hud-card glow-primary stagger-child" style={{ '--stagger-i': 4 } as CSSProperties}>
               <div className="about-level-row">
                 <div>
                   <span>MATON11</span>
@@ -203,9 +208,9 @@ function AboutSection() {
                   )
                 })}
               </div>
-            </div>
+            </MagicBentoCard>
 
-            <div className="about-quests-card">
+            <MagicBentoCard className="about-quests-card stagger-child" style={{ '--stagger-i': 5 } as CSSProperties}>
               <h3>
                 <span className="material-symbols-outlined" aria-hidden="true">military_tech</span>
                 {t('about.questsTitle')}
@@ -226,16 +231,16 @@ function AboutSection() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </MagicBentoCard>
 
-            <div className="about-meta-card">
+            <MagicBentoCard className="about-meta-card stagger-child" style={{ '--stagger-i': 6 } as CSSProperties}>
               {metadata.map((item) => (
                 <div key={item.labelKey}>
                   <small>{t(item.labelKey)}</small>
                   <strong>{t(item.valueKey)}</strong>
                 </div>
               ))}
-            </div>
+            </MagicBentoCard>
           </div>
         </div>
 

@@ -6,6 +6,7 @@ import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'
 import {scrollToSection} from '../hooks/useSectionScroll'
 import './HeroSection.css'
+import AnimatedContent from "../components/ui/AnimatedContent.tsx";
 
 function calcAge(birthDate: Date): number {
   const today = new Date()
@@ -145,15 +146,28 @@ function HeroSection() {
             </div>
           </div>
 
-          <HeroHudCard
-            name="Mattia Archinà"
-            role="Builder Dev"
-            level={`LVL ${calcAge(BIRTH_DATE)}`}
-            status={t('hero.hudStatus')}
-            stats={stats}
-            quests={quests}
-            tags={tags}
-          />
+          <AnimatedContent
+              distance={500}
+              direction="horizontal"
+              reverse={false}
+              duration={1.6}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={1}
+              threshold={0.1}
+              delay={0}
+          >
+              <HeroHudCard
+                name="Mattia Archinà"
+                role="Builder Dev"
+                level={`LVL ${calcAge(BIRTH_DATE)}`}
+                status={t('hero.hudStatus')}
+                stats={stats}
+                quests={quests}
+                tags={tags}
+              />
+          </AnimatedContent>
         </section>
       </main>
 
