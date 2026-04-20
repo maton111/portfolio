@@ -26,7 +26,16 @@
       "WebFetch(domain:claude.ai)",
       "Bash(mkdir -p /tmp/design-handoff)",
       "Bash(unzip -o \"C:/Users/maton/Downloads/Maton11 Design System-handoff.zip\" -d /tmp/design-handoff)",
-      "Bash(cygpath *)"
+      "Bash(cygpath *)",
+      "Read(//c/Users/maton/Downloads/**)",
+      "Bash(mkdir -p /tmp/design_handoff)",
+      "Bash(unzip -o \"Maton11 Design System-handoff.zip\" -d /tmp/design_handoff)",
+      "Bash(cp /tmp/design_handoff/maton11-design-system/project/screenshots/01-check.png /tmp/ss1.png)",
+      "Bash(cp /tmp/design_handoff/maton11-design-system/project/screenshots/02-check.png /tmp/ss2.png)",
+      "Bash(cp /tmp/design_handoff/maton11-design-system/project/screenshots/02-hero.png /tmp/ss-hero.png)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:v for k,v in d.items\\(\\) if 'about' in k.lower\\(\\)}, indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(python3 *)",
+      "Bash(curl -s http://localhost:4321)"
     ]
   }
 }

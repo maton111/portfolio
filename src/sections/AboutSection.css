@@ -1,3 +1,4 @@
+/* ── Section shell ───────────────────────────────────────── */
 .about-page {
     padding: 104px 24px 100px;
     background-color: var(--bg-base);
@@ -10,21 +11,23 @@
     margin: 0 auto;
 }
 
+/* ── Header ──────────────────────────────────────────────── */
 .about-header {
-    margin-bottom: 44px;
+    margin-bottom: 56px;
 }
 
 .about-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .about-eyebrow div {
     width: 48px;
     height: 2px;
     background: var(--accent-green);
+    transform-origin: left center;
 }
 
 .about-eyebrow span {
@@ -36,11 +39,11 @@
 }
 
 .about-header h2 {
-    margin: 0 0 14px;
+    margin: 0 0 18px;
     font-family: var(--font-headline), sans-serif;
-    font-size: clamp(2.4rem, 6.8vw, 4.9rem);
-    line-height: 0.9;
-    letter-spacing: -0.045em;
+    font-size: clamp(2.6rem, 7.2vw, 5.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
     color: var(--text-strong);
     text-wrap: balance;
 }
@@ -51,46 +54,43 @@
 
 .about-header > p {
     margin: 0;
-    max-width: 760px;
-    font-size: 1.1rem;
-    line-height: 1.7;
+    max-width: 680px;
+    font-size: 1.05rem;
+    line-height: 1.75;
     color: color-mix(in oklab, var(--text-main) 80%, transparent);
-}
-
-.about-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 24px;
 }
 
 .about-btn {
     text-decoration: none;
     border: none;
-    padding: 13px 18px;
+    padding: 12px 22px;
     cursor: pointer;
     font-family: var(--font-headline), sans-serif;
     font-size: 0.67rem;
     font-weight: 700;
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    border-radius: 999px;
+    transition: transform 0.15s var(--ease-out-emphasized, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.2s ease,
+                background 0.2s ease;
     display: inline-flex;
     align-items: center;
+    gap: 6px;
 }
 
 .about-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 .about-btn.primary {
     background: var(--accent-green);
-    color: #003919;
-    box-shadow: 0 0 18px color-mix(in oklab, var(--accent-green) 18%, transparent);
+    color: var(--on-accent, #00210c);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--accent-green) 22%, transparent);
 }
 
 .about-btn.primary:hover {
-    box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 36%, transparent);
+    box-shadow: 0 0 28px color-mix(in oklab, var(--accent-green) 40%, transparent);
     transform: translateY(-2px);
 }
 
@@ -105,24 +105,24 @@
     transform: translateY(-2px);
 }
 
-
+/* ── Two-column layout ───────────────────────────────────── */
 .about-layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 28px;
 }
 
-.about-narrative,
-.about-hud {
+/* ── Narrative (left) ────────────────────────────────────── */
+.about-narrative {
     display: grid;
-    gap: 16px;
+    gap: 20px;
 }
 
 .about-section-head {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .about-section-head span {
@@ -135,21 +135,15 @@
 .about-section-head div {
     flex: 1;
     height: 1px;
-    background: var(--outline);
-}
-
-.about-section-head h3,
-.about-origin-card h4,
-.about-philosophy h3,
-.about-quests-card h3 {
-    margin: 0;
-    font-family: var(--font-headline), sans-serif;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    background: color-mix(in oklab, var(--outline) 60%, transparent);
 }
 
 .about-section-head h3 {
-    font-size: 0.85rem;
+    margin: 0;
+    font-family: var(--font-headline), sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
     color: var(--text-muted);
 }
 
@@ -160,7 +154,7 @@
 
 .about-copy p {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     line-height: 1.8;
     color: color-mix(in oklab, var(--text-main) 82%, transparent);
 }
@@ -169,31 +163,38 @@
     color: var(--accent-green);
 }
 
+/* ── Origin cards (3-col grid) ───────────────────────────── */
 .about-origin-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
 }
 
 .about-origin-card {
-    padding: 18px;
-    border: 1px solid color-mix(in oklab, var(--outline) 26%, transparent);
-    background: color-mix(in oklab, var(--panel) 62%, transparent);
+    padding: 20px 18px;
+    border-radius: 0 !important;
+    border-left: 4px solid var(--accent-green) !important;
+    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    background: color-mix(in oklab, var(--panel) 68%, transparent) !important;
+    box-shadow: none !important;
 }
 
-.about-origin-card strong {
+.about-origin-icon {
     display: block;
-    margin-bottom: 8px;
-    color: var(--accent-green);
-    font-family: var(--font-headline), sans-serif;
-    font-size: 2rem;
-    line-height: 1;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+    color: var(--accent-mint);
 }
 
 .about-origin-card h4 {
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+    font-family: var(--font-headline), sans-serif;
     font-size: 0.72rem;
-    color: var(--accent-mint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-strong);
 }
 
 .about-origin-card p {
@@ -203,286 +204,160 @@
     color: color-mix(in oklab, var(--text-main) 76%, transparent);
 }
 
+/* ── Philosophy card ─────────────────────────────────────── */
 .about-philosophy {
-    position: relative;
-    overflow: hidden;
-    padding: 26px;
-    background: color-mix(in oklab, var(--panel) 70%, transparent);
-    border: 1px solid color-mix(in oklab, var(--outline) 24%, transparent);
+    padding: 26px !important;
+    border-radius: 0 !important;
+    border-left: 4px solid var(--accent-orange) !important;
+    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
+    background: color-mix(in oklab, var(--panel) 68%, transparent) !important;
+    box-shadow: none !important;
 }
 
-.about-terminal-icon {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    opacity: 0.12;
-}
-
-.about-terminal-icon span {
-    font-size: 6rem;
-}
-
-.about-philosophy h3 {
-    margin-bottom: 20px;
-    font-size: 0.8rem;
-    color: #ff7a00;
+.about-philosophy-eyebrow {
+    display: block;
+    margin-bottom: 16px;
+    font-family: var(--font-headline), sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-orange);
 }
 
 .about-philosophy blockquote {
     margin: 0;
     font-family: var(--font-headline), sans-serif;
-    font-size: clamp(1.5rem, 3vw, 2.4rem);
-    line-height: 1.18;
-    font-style: italic;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    line-height: 1.22;
     color: var(--text-strong);
+    letter-spacing: -0.02em;
 }
 
-.glow-primary {
-    box-shadow: 0 0 20px color-mix(in oklab, var(--accent-green) 15%, transparent);
+/* ── HUD column (right) ──────────────────────────────────── */
+.about-hud {
+    position: relative;
 }
 
-.about-hud-card,
-.about-quests-card,
-.about-meta-card {
+/* Fade-only reveal: nessun translateY sull'ancestor del sticky */
+.about-hud-fade {
+    transform: none !important;
+}
+
+/* ── OS_KERNEL_STABLE card ───────────────────────────────── */
+.about-kernel-card {
+    position: sticky;
+    top: 88px;
+    padding: 24px;
     background: color-mix(in oklab, var(--panel) 40%, transparent);
-    backdrop-filter: blur(20px);
-    border: 1px solid color-mix(in oklab, var(--outline) 26%, transparent);
+    border: 1px solid color-mix(in oklab, var(--outline) 28%, transparent);
+    border-radius: 12px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 60px rgba(0, 6, 2, 0.52),
+                0 0 0 1px color-mix(in oklab, var(--accent-green) 6%, transparent);
 }
 
-.about-hud-card {
-    padding: 22px;
+.about-kernel-header {
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 22%, transparent);
 }
 
-.about-level-row {
+.about-kernel-pretitle {
+    font-family: var(--font-headline), sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+}
+
+.about-kernel-title {
+    font-family: var(--font-headline), sans-serif;
+    margin: 0.4rem 0 0 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.about-kernel-rows {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 22%, transparent);
+}
+
+.about-kernel-row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: baseline;
     gap: 16px;
-    margin-bottom: 22px;
 }
 
-.about-level-row span {
-    display: block;
-    margin-bottom: 6px;
+.about-kernel-row small {
     font-family: var(--font-headline), sans-serif;
     font-size: 0.58rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--accent-mint);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.about-level-row strong {
-    font-family: var(--font-headline), sans-serif;
-    font-size: clamp(2.6rem, 7vw, 4rem);
-    line-height: 1;
+.about-kernel-row strong {
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-strong);
+    text-align: right;
+}
+
+.about-kernel-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.about-kernel-footer .material-symbols-outlined {
+    font-size: 0.95rem;
     color: var(--accent-green);
+    opacity: 0.72;
 }
 
-.about-avatar {
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-    width: 76px;
-    height: 76px;
-    padding: 2px;
-    border-radius: 50%;
-    border: 2px solid var(--accent-green);
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.25s ease;
+.about-kernel-footer > span:last-child {
+    font-family: var(--font-headline), sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--text-muted) 72%, transparent);
 }
 
-
-.about-avatar:hover {
-    box-shadow: 0 0 24px color-mix(in oklab, var(--accent-green) 36%, transparent);
-}
-
-.about-avatar:focus-visible {
-    outline: 2px solid var(--accent-green);
-    outline-offset: 3px;
-}
-
-.about-avatar:active {
-    transform: scale(0.98);
-}
-
-.about-avatar.is-flipped {
-    box-shadow: 0 0 16px color-mix(in oklab, var(--accent-green) 30%, transparent);
-}
-
-.about-avatar-stack {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.about-avatar-face {
+/* ── HUD corner decorators ───────────────────────────────── */
+.about-hud-corner {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 0;
-    filter: brightness(0.8);
-    opacity: 0;
-    transform: scale(0.98);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    width: 14px;
+    height: 14px;
     pointer-events: none;
 }
 
-.about-avatar-front {
-    opacity: 1;
-    transform: scale(1);
+.about-hud-corner-tr {
+    top: -1px;
+    right: -1px;
+    border-right: 2px solid var(--accent-green);
+    border-top: 2px solid var(--accent-green);
 }
 
-.about-avatar.is-flipped .about-avatar-front {
-    opacity: 0;
-    transform: scale(1.03);
+.about-hud-corner-bl {
+    bottom: -1px;
+    left: -1px;
+    border-left: 2px solid var(--accent-green);
+    border-bottom: 2px solid var(--accent-green);
 }
 
-.about-avatar.is-flipped .about-avatar-back {
-    opacity: 1;
-    transform: scale(1.6);
-    object-position: center 10px;
-}
-
-.about-stats {
-    display: grid;
-    gap: 16px;
-}
-
-.about-stat-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-
-.about-stat-head span,
-.about-stat-head strong,
-.about-meta-card small,
-.about-meta-card strong,
-.about-quests-card small {
-    font-family: var(--font-headline), sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-}
-
-.about-stat-head span,
-.about-meta-card small,
-.about-quests-card small {
-    color: var(--text-muted);
-}
-
-.about-stat-head strong.green {
-    color: var(--accent-green);
-}
-
-.about-stat-head strong.mint {
-    color: var(--accent-mint);
-}
-
-.about-stat-head strong.orange {
-    color: var(--accent-orange);
-}
-
-.about-segment-bar {
-    display: flex;
-    gap: 2px;
-}
-
-.about-segment-bar span {
-    flex: 1;
-    height: 8px;
-    background: var(--panel);
-}
-
-.about-segment-bar span.is-active.green {
-    background: var(--accent-green);
-}
-
-.about-segment-bar span.is-active.mint {
-    background: var(--accent-mint);
-}
-
-.about-segment-bar span.is-active.orange {
-    background: var(--accent-orange);
-}
-
-
-.about-quests-card {
-    padding: 22px;
-}
-
-.about-quests-card h3 {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-    font-size: 0.72rem;
-    color: var(--accent-green);
-}
-
-.about-quests-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 18px;
-}
-
-.about-quests-card li {
-    display: flex;
-    gap: 12px;
-}
-
-.about-quests-card li.is-inactive {
-    opacity: 0.6;
-}
-
-.about-quests-card li > div:first-child {
-    margin-top: 3px;
-    color: var(--accent-green);
-}
-
-.about-quests-card li small,
-.about-meta-card strong {
-    display: block;
-    color: var(--text-strong);
-}
-
-.about-quests-card li strong {
-    display: block;
-    margin: 4px 0 4px;
-    font-family: var(--font-headline), sans-serif;
-    font-size: 0.92rem;
-    color: var(--text-strong);
-}
-
-.about-quests-card li p {
-    margin: 0;
-    font-size: 0.76rem;
-    line-height: 1.6;
-    color: color-mix(in oklab, var(--text-main) 72%, transparent);
-}
-
-.about-meta-card {
-    padding: 18px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-}
-
-.about-meta-card strong {
-    margin-top: 4px;
-    font-size: 0.82rem;
-    color: var(--text-strong);
-}
-
+/* ── Scanner ticker ──────────────────────────────────────── */
 .about-scanner {
-    margin-top: 24px;
+    margin-top: 28px;
     overflow: hidden;
     border-top: 1px solid color-mix(in oklab, var(--outline) 28%, transparent);
     padding-top: 10px;
@@ -492,7 +367,7 @@
     display: flex;
     width: max-content;
     white-space: nowrap;
-    animation: about-marquee 30s linear infinite;
+    animation: about-marquee 32s linear infinite;
     will-change: transform;
 }
 
@@ -520,32 +395,30 @@
     border-radius: 50%;
     background: var(--accent-green);
     box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 50%, transparent);
-    margin-right: 8px;
+    flex-shrink: 0;
 }
 
 @keyframes about-marquee {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
 }
 
-@media (min-width: 900px) {
+/* ── Responsive ──────────────────────────────────────────── */
+@media (min-width: 680px) {
     .about-origin-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
     }
 }
 
 @media (min-width: 1100px) {
     .about-layout {
-        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-        gap: 32px;
-        align-items: start;
+        grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+        gap: 36px;
     }
 }
 
+/* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
     .about-scanner-track {
         animation: none;
@@ -554,12 +427,6 @@
     .about-btn,
     .about-btn:hover {
         transition: none;
+        transform: none;
     }
-
-    .about-avatar,
-    .about-avatar-face {
-        transition: none;
-    }
-
 }
-
