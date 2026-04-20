@@ -1,0 +1,240 @@
+.tl-section {
+  position: relative;
+  padding: 104px 24px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.tl-eyebrow {
+  font-family: var(--font-headline);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-mint);
+  margin: 0 0 8px;
+}
+
+.tl-h2 {
+  font-family: var(--font-headline);
+  font-size: clamp(2.2rem, 6.2vw, 4.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--text-strong);
+  text-wrap: balance;
+  margin: 0 0 20px;
+}
+
+.tl-sub {
+  color: color-mix(in oklab, var(--text-main) 82%, transparent);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 56ch;
+  margin: 0 0 56px;
+}
+
+/* ── Track ── */
+.tl-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 20px 0;
+}
+
+.tl-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 2px;
+  background: color-mix(in oklab, var(--accent-green) 25%, transparent);
+  overflow: hidden;
+}
+
+.tl-line-pulse {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, var(--accent-green), transparent);
+  animation: tl-pulse 4s linear infinite;
+}
+
+@keyframes tl-pulse {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+
+/* ── Row ── */
+.tl-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.tl-row--rev {
+  flex-direction: row-reverse;
+}
+
+/* ── Year side ── */
+.tl-year-side {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl-year-side--right {
+  text-align: right;
+  padding-right: 40px;
+}
+
+.tl-year-side--left {
+  text-align: left;
+  padding-left: 40px;
+}
+
+.tl-year {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.tl-kind {
+  font-family: var(--font-headline);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Node ── */
+.tl-node-col {
+  width: 64px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.tl-node {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.3s var(--ease-out-emphasized),
+    box-shadow 0.3s var(--ease-out-emphasized);
+}
+
+/* ── Card side ── */
+.tl-card-side {
+  flex: 1;
+  min-width: 0;
+}
+
+.tl-card-side--left  { padding-left:  40px; }
+.tl-card-side--right { padding-right: 40px; }
+
+.tl-card {
+  padding: 20px 22px;
+  background: color-mix(in oklab, var(--panel) 68%, transparent);
+  border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s var(--ease-out-emphasized), box-shadow 0.3s var(--ease-out-emphasized);
+}
+
+.tl-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tl-card-id, .tl-card-entry {
+  font-family: var(--font-headline);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tl-card-entry { color: var(--text-muted); }
+
+.tl-card-title {
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.tl-card-org {
+  font-family: var(--font-headline);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.tl-card-copy {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--text-main) 82%, transparent);
+  margin: 0 0 12px;
+  max-width: 52ch;
+}
+
+.tl-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tl-chip {
+  font-family: var(--font-headline);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  color: var(--text-muted);
+  border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
+}
+
+/* ── Mobile: stack vertically ── */
+@media (max-width: 820px) {
+  .tl-line { display: none; }
+
+  .tl-row,
+  .tl-row--rev {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tl-year-side--right,
+  .tl-year-side--left {
+    text-align: left;
+    padding: 0;
+  }
+
+  .tl-node-col { display: none; }
+
+  .tl-card-side--left,
+  .tl-card-side--right {
+    padding: 0;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-line-pulse { animation: none; }
+  .tl-node, .tl-card { transition: none; }
+}

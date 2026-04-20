@@ -224,8 +224,19 @@
     overflow: hidden;
     min-height: 100dvh;
     padding: 96px 24px 84px;
-    background-image: radial-gradient(color-mix(in oklab, var(--accent-green) 22%, transparent) 1px, transparent 1px);
-    background-size: 24px 24px;
+}
+
+.hero-canvas-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 70% 50%, transparent 0%, color-mix(in oklab, var(--bg-base) 72%, transparent) 65%);
 }
 
 .profile-img {
@@ -287,6 +298,8 @@
 }
 
 .hero-grid {
+    position: relative;
+    z-index: 1;
     max-width: 1280px;
     margin: 0 auto;
     min-height: calc(100dvh - 180px);
@@ -301,7 +314,7 @@
     min-width: 0;
 }
 
-.hero-copy > p:first-child {
+.hero-eyebrow {
     margin: 0;
     color: var(--accent-green);
     font-family: var(--font-headline), serif;
@@ -309,6 +322,10 @@
     letter-spacing: 0.22em;
     font-size: 0.62rem;
     font-weight: 700;
+}
+
+.hero-title-accent {
+    color: var(--accent-green);
 }
 
 .hero-copy h1 {
@@ -329,10 +346,72 @@
     color: color-mix(in oklab, var(--text-main) 78%, transparent);
 }
 
+.hero-tagline {
+    margin: 2px 0 6px;
+    font-family: var(--font-headline), serif;
+    font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+    color: color-mix(in oklab, var(--text-main) 88%, transparent);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    min-height: 2.2em;
+}
+
+.hero-tag-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.hero-tag-dot {
+    height: 6px;
+    border-radius: 999px;
+    transition: width 0.5s var(--ease-out-emphasized), background 0.5s;
+}
+
+.hero-hint {
+    margin-top: 12px;
+    font-family: var(--font-headline), serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--accent-mint) 80%, transparent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .hero-intro {
     max-width: 620px;
     color: var(--text-muted);
     line-height: 1.7;
+}
+
+/* Theme toggle button */
+.theme-toggle-btn {
+    border: 1px solid color-mix(in oklab, var(--outline) 50%, transparent);
+    background: transparent;
+    color: var(--text-main);
+    width: 36px;
+    height: 34px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    border-color: color-mix(in oklab, var(--accent-green) 45%, transparent);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 20%, transparent);
+}
+
+.theme-toggle-btn .material-symbols-outlined {
+    font-size: 1rem;
 }
 
 .hero-ctas {

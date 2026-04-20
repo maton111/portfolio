@@ -2,6 +2,8 @@ import HeroSection from './sections/HeroSection'
 import AboutSection from './sections/AboutSection'
 import SkillsSection from './sections/SkillsSection'
 import ProjectsSection from './sections/ProjectsSection'
+import TimelineSection from './sections/TimelineSection'
+import BlogSection from './sections/BlogSection'
 import ContactSection from './sections/ContactSection'
 import GlitchTransition from './components/overlays/GlitchTransition'
 import InitialHudLoader from './components/overlays/InitialHudLoader'
@@ -34,6 +36,8 @@ function HomePage({ isPageGlitching }: { isPageGlitching: boolean }) {
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
+      <TimelineSection />
+      <BlogSection />
       <ContactSection />
       {isPageGlitching ? <GlitchTransition /> : null}
     </>

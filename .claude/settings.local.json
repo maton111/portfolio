@@ -13,7 +13,16 @@
       "Bash(npm run:*)",
       "Read(//f/Repos/React/portfolio/**)",
       "Read(//f/Repos/React/portfolio/=== Dati separati in data/**)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(gunzip -c \"C:\\\\Users\\\\maton\\\\.claude\\\\projects\\\\F--Repos-React-portfolio\\\\748dc686-c035-456e-9ddd-8738e9b4bcb9\\\\tool-results\\\\webfetch-1776680357158-3rt91z.bin\")",
+      "Bash(tar -x -C /tmp/design-bundle)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://api.anthropic.com/v1/design/h/qJ1mJOl_XuISdf7ET5JxtA\")",
+      "Bash(gunzip -c)",
+      "Bash(tar -x -C /tmp/design-bundle2/)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(curl -s -L \"https://api.anthropic.com/v1/design/h/qJ1mJOl_XuISdf7ET5JxtA\" -o /tmp/design-raw2.bin)"
     ]
   }
 }
