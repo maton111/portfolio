@@ -22,7 +22,11 @@
       "Bash(gunzip -c)",
       "Bash(tar -x -C /tmp/design-bundle2/)",
       "Bash(echo \"exit: $?\")",
-      "Bash(curl -s -L \"https://api.anthropic.com/v1/design/h/qJ1mJOl_XuISdf7ET5JxtA\" -o /tmp/design-raw2.bin)"
+      "Bash(curl -s -L \"https://api.anthropic.com/v1/design/h/qJ1mJOl_XuISdf7ET5JxtA\" -o /tmp/design-raw2.bin)",
+      "WebFetch(domain:claude.ai)",
+      "Bash(mkdir -p /tmp/design-handoff)",
+      "Bash(unzip -o \"C:/Users/maton/Downloads/Maton11 Design System-handoff.zip\" -d /tmp/design-handoff)",
+      "Bash(cygpath *)"
     ]
   }
 }

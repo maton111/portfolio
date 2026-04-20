@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
 import DecryptedText from '../components/ui/DecryptedText'
 import Hero3D from '../components/ui/Hero3D'
-import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import logoFile from '../assets/logo.png'
 import {scrollToSection} from '../hooks/useSectionScroll'
 import type {SectionId} from '../data/sectionNavigation'
@@ -131,7 +130,19 @@ function HeroSection() {
       <header className="topbar">
         <nav>
           <button className="logo" type="button" aria-label={t('navbar.logoAriaLabel')} onClick={() => scrollToSection('home')}>
-            <img src={logoFile} alt="Logo Mattia Archina" />
+            <img
+              src={logoFile}
+              alt="Logo Mattia Archina"
+              style={{
+                filter: isDark
+                  ? 'drop-shadow(0 0 10px color-mix(in oklab, var(--accent-green) 50%, transparent))'
+                  : 'drop-shadow(0 0 8px color-mix(in oklab, var(--accent-green) 30%, transparent))',
+              }}
+            />
+            <div className="logo-label">
+              <span className="logo-name">maton11</span>
+              <span className="logo-role">Builder Dev</span>
+            </div>
           </button>
           <ul>
             {navItems.map(item => (
@@ -142,6 +153,7 @@ function HeroSection() {
                   onClick={() => scrollToSection(item.id as SectionId)}
                 >
                   {item.label}
+                  <span className="nav-underline" aria-hidden="true" />
                 </button>
               </li>
             ))}
@@ -158,24 +170,14 @@ function HeroSection() {
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               title={isDark ? 'Light mode' : 'Dark mode'}
             >
-              <span className="material-symbols-outlined" aria-hidden="true">
+              <span className="material-symbols-outlined" style={{ color: 'var(--accent-green)' }} aria-hidden="true">
                 {isDark ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
             <button className="lang-chip" type="button" onClick={toggleLang} aria-label={t('hero.langSwitchAriaLabel')}>
-              <span className="material-symbols-outlined" aria-hidden="true">translate</span>
-              <span className="lang-chip-label">{t('navbar.langSwitch')}</span>
+              <span className="material-symbols-outlined" style={{ color: 'var(--accent-mint)', fontSize: '1rem' }} aria-hidden="true">translate</span>
+              <span className="lang-chip-label">{lang === 'it' ? 'IT' : 'EN'}</span>
             </button>
-            <a
-              className="cv-btn"
-              href={cvFile}
-              download="Mattia-Archina-CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t('navbar.downloadCvAriaLabel')}
-            >
-              {t('navbar.downloadCv')}
-            </a>
           </div>
         </nav>
       </header>
@@ -189,6 +191,10 @@ function HeroSection() {
 
         <section className="hero-grid">
           <div className="hero-copy">
+            <span className="hero-avail">
+              <span className="availability-dot" aria-hidden="true" />
+              {t('hero.availability')}
+            </span>
             <p className="hero-eyebrow">{t('hero.eyebrow')}</p>
             <h1>
               <DecryptedText text={lang === 'it' ? 'Ciao, sono' : "Hey, I'm"} />
@@ -223,10 +229,11 @@ function HeroSection() {
               </button>
               <button className="btn btn-secondary" type="button" onClick={() => scrollToSection('contact')}>
                 {t('hero.ctaSecondary')}
+                <span className="material-symbols-outlined" aria-hidden="true">mail</span>
               </button>
             </div>
             <div className="hero-trust">
-              <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
+              <span className="material-symbols-outlined" style={{ color: 'var(--accent-mint)' }} aria-hidden="true">code</span>
               {t('hero.trust')}
             </div>
             <div className="hero-hint" aria-hidden="true">
@@ -236,6 +243,7 @@ function HeroSection() {
           </div>
 
           <AnimatedContent
+            className="hud-slot"
             distance={500}
             direction="horizontal"
             reverse={false}
@@ -250,8 +258,7 @@ function HeroSection() {
             <HeroHudCard
               name="Mattia Archinà"
               role="Builder Dev"
-              level={`LVL ${calcAge(BIRTH_DATE)}`}
-              status={t('hero.hudStatus')}
+              level={calcAge(BIRTH_DATE)}
               stats={stats}
               quests={quests}
               tags={tags}
