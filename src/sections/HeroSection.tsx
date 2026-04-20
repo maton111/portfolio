@@ -4,6 +4,7 @@ import HeroHudCard from '../components/ui/HeroHudCard'
 import DecryptedText from '../components/ui/DecryptedText'
 import Hero3D from '../components/ui/Hero3D'
 import logoFile from '../assets/logo.png'
+import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import {scrollToSection} from '../hooks/useSectionScroll'
 import type {SectionId} from '../data/sectionNavigation'
 import './HeroSection.css'
@@ -223,10 +224,15 @@ function HeroSection() {
 
             <p className="hero-intro">{t('hero.intro')}</p>
             <div className="hero-ctas">
-              <button className="btn btn-primary" type="button" onClick={() => scrollToSection('projects')}>
+              <a
+                className="btn btn-primary"
+                href={cvFile}
+                download="CV-Mattia-Archina.pdf"
+                aria-label={t('navbar.downloadCvAriaLabel')}
+              >
                 {t('hero.ctaPrimary')}
-                <span className="material-symbols-outlined" aria-hidden="true">north_east</span>
-              </button>
+                <span className="material-symbols-outlined" aria-hidden="true">download</span>
+              </a>
               <button className="btn btn-secondary" type="button" onClick={() => scrollToSection('contact')}>
                 {t('hero.ctaSecondary')}
                 <span className="material-symbols-outlined" aria-hidden="true">mail</span>
