@@ -36,7 +36,9 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:v for k,v in d.items\\(\\) if 'about' in k.lower\\(\\)}, indent=2, ensure_ascii=False\\)\\)\")",
       "Bash(python3 *)",
       "Bash(curl -s http://localhost:4321)",
-      "Bash(unzip *)"
+      "Bash(unzip *)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('F:/Repos/React/portfolio/src/i18n/locales/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('F:/Repos/React/portfolio/src/i18n/locales/it.json','utf8'\\)\\); console.log\\('it.json OK'\\)\")"
     ]
   }
 }

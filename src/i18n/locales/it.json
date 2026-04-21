@@ -5,7 +5,7 @@
     "skills": "Skills",
     "projects": "Projects",
     "timeline": "Timeline",
-    "blog": "Log",
+    "blog": "Blog",
     "contact": "Contact",
     "logoAriaLabel": "Torna all'inizio",
     "downloadCv": "Download CV",
@@ -545,5 +545,77 @@
     "network": "Verifica canali di rete",
     "integrity": "Controlli integrità in corso",
     "finalize": "Finalizzazione sequenza di avvio"
+  },
+  "blogPost": {
+    "notFound": "Log entry non trovata",
+    "notFoundDesc": "Nessun post trovato per questo indirizzo. Torna alla sezione blog per continuare la navigazione.",
+    "backBtn": "Torna al blog",
+    "takeawayLabel": "Takeaway",
+    "contentAriaLabel": "Sezioni del post",
+    "navAriaLabel": "Altri log entries",
+
+    "lc_intro": "Il codice legacy in genera ha una pessima reputazione. Alcune volte il codice non è codice cattivo è codice vecchio che ha accumulato decisioni prese da decine e decine di persone che ci hanno messo mani. L'errore non è che esiste. L'errore è trattarlo come un ostacolo quando in realtà è una mappa. Prima di toccare un modulo legacy, mi prendo del tempo per capire come funziona e strutturare una mappa concettuale, cosa che ad oggi con le AI diventa un lavoro molto agevole. Cercando l'intento dietro la struttura, il lavoro di modernizzazione diventa semplice.",
+
+    "lc_s1title": "Leggere il Codice Prima di Giudicarlo",
+    "lc_s1p1": "La prima domanda non è “come lo sistemiamo?”, ma “perché è fatto così?”. Una classe di 2000 righe raramente nasce tale: ci arriva nel tempo, attraverso patch, cambi di direzione e scadenze strette. Dentro quella struttura c’è ancora l’intento progettuale originario spesso sensato ma ormai nascosto sotto strati di codice accumulato. Individuare quell’intento è ciò che distingue un refactoring consapevole da un intervento distruttivo.",
+    "lc_s1p2": "Il mio approccio è pratico: prima di intervenire, mappo i punti di ingresso. Seguo il flusso dei dati attraverso il sistema e individuo i punti in cui sono state introdotte scorciatoie. Non si tratta di fare un elenco di problemi, ma di costruire un modello mentale di come il sistema funziona davvero, confrontandolo con come probabilmente era stato pensato. È in quello scarto che si trovano le decisioni reali.",
+
+    "lc_s2title": "Decidere Cosa Tagliare e Cosa Tenere",
+    "lc_s2p1": "Non tutto in un modulo legacy va sostituito. Parte di esso è genuinamente buono — gestione di edge case battle-tested che un rewrite sbaglierà per sei mesi prima di farlo giusto. Il test è semplice: se cancellare un blocco fa rompere il sistema in modo inatteso, quel blocco sa qualcosa che i test non sanno. Trattarlo con rispetto.",
+    "lc_s2p2": "Il framework decisionale che uso ha tre categorie: estrai e rinomina (la logica è valida, la struttura è confusa), riscrivi in loco (la logica è sbagliata ma il confine è giusto), elimina (niente di downstream dipende da questo e niente dovrebbe). La maggior parte del codice legacy è 70% prima categoria, 20% seconda, 10% terza. I team che entrano pensando che sia 50% da eliminare finiscono per rompere la produzione.",
+
+    "lc_s3title": "Strategie di Migrazione che Non Fanno Saltare i Rilasci",
+    "lc_s3p1": "Strangler Fig è il pattern giusto per la maggior parte degli scenari — avvolgi il vecchio comportamento, instrada il nuovo traffico verso la nuova implementazione, lascia morire il vecchio codice naturalmente. La disciplina chiave è non permettere mai che entrambi i percorsi girino in parallelo per più di un ciclo di rilascio. I percorsi paralleli che durano sei mesi diventano due sistemi legacy invece di uno.",
+    "lc_s3p2": "La tattica che ho trovato più utile è definire la seam prima di scrivere il replacement. Una seam è un punto dove puoi iniettare il nuovo comportamento senza cambiare il chiamante. Se non riesci a trovare una seam pulita, estraila: metti un confine di interfaccia lì anche se l'implementazione attuale è una singola classe. Quel confine è ciò che ti permette di testare e scambiare in isolamento.",
+
+    "lc_takeaway": "La modernizzazione legacy è tanto archeologia quanto ingegneria. Il codice è evidenza di decisioni prese sotto vincoli ai quali non eri presente. Leggilo prima di riscriverlo. Taglia con il bisturi, non con il bulldozer. E definisci le tue seam prima di definire i tuoi replacement — la seam è tutto il gioco.",
+
+    "elc14_intro": "La settimana 14 di Everyday Life Core è stata principalmente incentrata sul far funzionare in modo affidabile la dashboard live tramite WebSocket. Sulla carta: diretto. In pratica: una lezione utile nel gap tra 'connessione stabilita' e 'connessione su cui puoi davvero fare affidamento'. I problemi interessanti erano tutti nel comportamento di riconnessione quando la rete degrada, non nell'happy path.",
+
+    "elc14_s1title": "Implementare il Modello di Sottoscrizione WebSocket",
+    "elc14_s1p1": "Il backend usa sottoscrizioni con scope — un client si iscrive a un insieme di contesti (globale, specifico per gruppo, lista amici) e riceve solo gli eventi rilevanti per quegli scope. Questo significa che il server deve tracciare le connessioni attive con i loro metadati di sottoscrizione e il client deve ri-dichiarare le proprie sottoscrizioni ad ogni riconnessione. Il pattern initial snapshot (stato completo alla connessione, delta sugli aggiornamenti) mantiene pulita la logica di sottoscrizione: non c'è edge case di partial-sync perché si parte sempre da uno stato noto.",
+    "elc14_s1p2": "Sul lato Flutter, uso web_socket_channel avvolto in una classe connection manager che gestisce il lifecycle del canale. Il manager espone uno stream che re-emette eventi indipendentemente da quante volte la connessione sottostante sia stata ricostruita. I chiamanti a monte non sanno né si preoccupano delle riconnessioni — consumano solo lo stream. Questa era l'astrazione giusta: ha mantenuto pulito il codice UI e ha spostato la complessità di riconnessione esattamente dove appartiene.",
+
+    "elc14_s2title": "Logica di Riconnessione che Non Va in Spin",
+    "elc14_s2p1": "La riconnessione naïve — riconnettersi immediatamente ad ogni evento di chiusura — funziona per i glitch brevi ed è catastrofica per tutto il resto. Se il server è down, ottieni un ciclo di retry stretto che scarica la batteria, inonda i log del backend e non aggiunge nulla di utile. La soluzione è l'exponential backoff con jitter: inizia a 1s, raddoppia ad ogni tentativo, aggiungi jitter casuale per prevenire il thundering herd, con un cap a 30s. Il cap conta — senza cap un dispositivo che perde la connessione per un'ora non si riconnetterà per molto tempo dopo che il server torna online.",
+    "elc14_s2p2": "La parte difficile era distinguere tra una chiusura pulita (il server ha intenzionalmente disconnesso il client, ad esempio token scaduto) e una chiusura sporca (rete caduta). Le chiusure pulite non devono triggerare il backoff di riconnessione — devono triggerare un token refresh e un singolo tentativo di riconnessione. Gestisco questo con un motivo di chiusura della connessione che il server imposta esplicitamente prima di chiudere. Sul client, se il codice di chiusura corrisponde a 'auth scaduta', chiamo il flusso di refresh del token prima di riconnettermi.",
+
+    "elc14_s3title": "Stato della Dashboard Durante la Riconnessione",
+    "elc14_s3p1": "La dashboard mostra dati di presenza — chi è online, ultimi orari visualizzati, attività corrente. Durante una finestra di riconnessione, questi dati sono obsoleti. Opzioni: nasconderli (UX negativa, brusca), mostrarli con un indicatore di obsolescenza (quello che ho scelto), o congelare l'ultimo stato noto silenziosamente. L'approccio con indicatore di obsolescenza — un banner 'Riconnessione...' sottile e opacità leggermente ridotta sui dati di presenza — comunica incertezza senza rompere il layout.",
+    "elc14_s3p2": "Alla riconnessione, il server invia uno snapshot completo prima di qualsiasi delta. Il client aspetta lo snapshot prima di aggiornare la UI, il che significa che c'è un breve momento in cui la UI è 'congelata' post-riconnessione. In pratica questo è sotto i 200ms su una connessione normale e completamente impercettibile. La cosa importante è che la UI non mostri mai un mix di dati obsoleti e freschi — è tutto obsoleto (con l'indicatore) o tutto fresco.",
+
+    "elc14_takeaway": "L'affidabilità WebSocket riguarda i modi di fallimento, non l'happy path. L'happy path è sempre diretto. Il lavoro è nel distinguere le chiusure pulite dai crash, nel non martellare un server giù, e nel mantenere la UI onesta su cosa sa e quando lo sa. Definire prima la seam tra gestione della connessione e UI — rende tutto il resto componibile.",
+
+    "int_intro": "I test di integrazione hanno un problema di credibilità. Una test suite che passa dovrebbe significare 'questo funziona'. Ma ho visto molte suite verdi che mascheravano problemi reali — non perché i test fossero sbagliati, ma perché testavano la cosa sbagliata. Stavano asserendo che il codice girava senza lanciare un'eccezione, non che producesse il risultato corretto. È una distinzione sottile ma consequenziale.",
+
+    "int_s1title": "Il Test che Passa per il Motivo Sbagliato",
+    "int_s1p1": "Il pattern anti-test di integrazione più comune che incontro è il test senza asserzioni. Chiama l'endpoint, verifica che lo stato HTTP sia 200, e considera il lavoro fatto. Ma 200 non significa corretto — significa che l'handler non è crashato. Un handler può restituire 200 con una lista vuota quando dovrebbe restituire 12 elementi. Può restituire 200 con dati obsoleti perché il setup del test è girato prima che la transazione database si committasse. Le asserzioni sul codice di stato sono un pavimento, non un soffitto.",
+    "int_s1p2": "Il secondo pattern: test che passano perché non dipendono dal fatto che i dati siano giusti. Un test che crea una risorsa e poi chiama 'get all resources' e asserisce che la lista non è vuota passerà anche se la risorsa creata è stata salvata con dati sbagliati, relazioni sbagliate, o stato sbagliato. Se non stai asserendo le proprietà specifiche che ti interessano, non stai testando quello che pensi di stare testando.",
+
+    "int_s2title": "Come Appaiono le Asserzioni Significative",
+    "int_s2p1": "Un test di integrazione significativo ha uno stato atteso specifico e lo verifica esattamente. Se sto testando che un task viene assegnato a un membro del gruppo, verifico l'ID dell'assegnatario, non solo che un task esista. Se sto testando un soft-delete, verifico che l'elemento non appaia nella lista attiva e appaia nella lista dei cancellati — non solo che l'endpoint delete abbia restituito 204. Le asserzioni extra richiedono cinque minuti per essere scritte e fanno risparmiare ore di debug quando qualcosa si rompe.",
+    "int_s2p2": "Per i test di integrazione .NET, struttura il test attorno a tre fasi: Arrange (configura lo stato del database e i prerequisiti), Act (chiama l'endpoint esattamente come farebbe un client reale — tramite HttpClient, non chiamando direttamente i metodi del servizio), Assert (verifica il corpo della risposta e, quando rilevante, lo stato del database risultante direttamente). La parte 'tramite HttpClient' conta: esercita l'intera pipeline middleware, serializzazione, validazione e routing, non solo la business logic.",
+
+    "int_s3title": "Test che Non Combattono con il Database",
+    "int_s3p1": "Il maggiore onere di manutenzione nelle test suite di integrazione è l'isolamento dei test. I test che condividono lo stato tra i casi producono fallimenti dipendenti dall'ordine — un test passa se eseguito da solo ma fallisce nella suite completa perché un test precedente ha lasciato dati sporchi. La soluzione è uno stato del database pulito per test, non per suite. In xUnit uso una WebApplicationFactory condivisa con una transazione specifica per test che fa rollback dopo ogni test. Nessuna logica di cleanup, nessun mal di testa con i dati di seed.",
+    "int_s3p2": "Per i test che hanno genuinamente bisogno di stato persistente (testare che un background job abbia processato un record, per esempio), isolo a livello di schema — ogni esecuzione di test ottiene un prefisso schema fresco. Lento, ma affidabile. L'overhead è accettabile perché questi test sono rari. La maggior parte dei test di integrazione può e dovrebbe girare in una transazione rollbackata, e se la tua architettura di test rende questo difficile, è un segnale che i tuoi confini di servizio hanno bisogno di attenzione.",
+
+    "int_takeaway": "Un test di integrazione che passa dovrebbe essere evidenza che qualcosa funziona correttamente, non solo evidenza che non ha lanciato eccezioni. Scrivi asserzioni che catcherebbero il bug specifico di cui ti preoccupi. Testa attraverso lo stack HTTP reale. Isola lo stato del database per test. Richiede più setup, ma la suite che ottieni è una che puoi davvero fidare quando è verde — e questo è il punto.",
+
+    "fbs_intro": "Diciotto mesi fa scrivevo quasi esclusivamente C# e SQL. Oggi consegno UI React e schermate mobile Flutter con la stessa naturalezza con cui scrivo endpoint API. La transizione non è stata drammatica — non c'è stato un singolo momento in cui il frontend ha 'cliccato'. È stata graduale, poi accelerante, poi improvvisamente normale. Questo è un racconto onesto di come quella progressione si è sentita dall'interno, incluse le parti meno lusinghiere.",
+
+    "fbs_s1title": "Cosa si è Trasferito Immediatamente",
+    "fbs_s1p1": "I modelli mentali intorno alla progettazione API si sono trasferiti completamente. Quando hai trascorso anni a pensare a contratti, backward compatibility e validazione difensiva sul lato server, arrivi al frontend già capendo cosa il backend sta cercando di comunicare. Leggere risposte API e sapere istintivamente quando qualcosa è un design smell versus quando è un vincolo — richiede anni sul backend e arriva gratis quando si passa dall'altra parte.",
+    "fbs_s1p2": "Anche il debugging si è trasferito. L'abilità di seguire un flusso di dati dall'input all'output, di sapere quale layer è responsabile di quale trasformazione, di leggere log e tracciare lo stato — queste sono agnostiche rispetto a linguaggio e framework. Un componente React con stato misterioso è lo stesso problema di un servizio .NET con side effect misteriosi. Gli strumenti differiscono; il pensiero no.",
+
+    "fbs_s2title": "Cosa Ha Richiesto Più Tempo del Previsto",
+    "fbs_s2p1": "La reattività è stata genuinamente difficile da interiorizzare. Partendo da un modello mentale request-response, l'idea che un cambiamento di stato dovrebbe propagarsi automaticamente attraverso un render tree si è sentita innaturale più a lungo di quanto mi aspettassi. Continuavo a voler triggerare manualmente gli aggiornamenti, a chiamare esplicitamente 'refresh this'. Lo shift è avvenuto gradualmente costruendo Everyday Life Core — vedere il modello funzionare correttamente in abbastanza scenari reali che è diventato l'assunzione predefinita invece dell'eccezione.",
+    "fbs_s2p2": "Il CSS è stato umiliante. Avevo la teoria, ma sviluppare intuizione per il layout — la sensazione reale per quando qualcosa si romperà su mobile, quando un flex container andrà in overflow, quando una grid è la scelta giusta rispetto al posizionamento assoluto — ha richiesto mesi di costruzione di UI reali e di sbagliarle. Gli sviluppatori backend spesso sottovalutano il CSS perché la sintassi è semplice. La complessità è nelle interazioni tra proprietà, e questa è visibile solo attraverso ripetuti fallimenti pratici.",
+
+    "fbs_s3title": "Cosa Ha Davvero Cambiato Come Penso",
+    "fbs_s3p1": "Il cambiamento più grande è stato nel modo in cui penso alla latenza percepita dall'utente. Quando scrivi solo backend, la latenza è una metrica di performance — qualcosa che misuri e ottimizzi a livello infra. Quando scrivi anche la UI, la latenza diventa percepita. Inizi a preoccuparti degli aggiornamenti ottimistici non perché migliorano i numeri dei benchmark ma perché ti sei seduto davanti a una UI che aspetta un round-trip server ad ogni interazione e sembra rotta anche quando è tecnicamente corretta. Quella comprensione incarnata dell'esperienza utente ha cambiato le mie decisioni di progettazione API.",
+    "fbs_s3p2": "Consegnare end-to-end da solo — API backend, UI mobile, UI web, deployment — forza un rapporto diverso con i tradeoff. Quando sei responsabile dell'intero sistema smetti di discutere su quale layer dovrebbe gestire una certa preoccupazione e inizi a chiedere quale sia il confine più semplice che rende entrambi i lati corretti e manutenibili. La separazione mentale frontend-backend si dissolve un po', sostituita da una prospettiva più pragmatica 'di cosa ha davvero bisogno questa funzionalità'.",
+
+    "fbs_takeaway": "Full stack non è un titolo, è un cambio di prospettiva. Le competenze tecniche si accumulano più velocemente di quanto ti aspetti una volta che stai costruendo cose reali. Il cambiamento più profondo è nel modo in cui modelli i sistemi rivolti all'utente — smetti di trattare la latenza come un numero e inizi a trattarla come un'esperienza, e questo cambia sia il modo in cui scrivi i backend sia il modo in cui progetti le UI. I diciotto mesi ne sono valsi la pena."
   }
 }

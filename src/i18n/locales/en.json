@@ -5,7 +5,7 @@
     "skills": "Skills",
     "projects": "Projects",
     "timeline": "Timeline",
-    "blog": "Log",
+    "blog": "Blog",
     "contact": "Contact",
     "logoAriaLabel": "Back to top",
     "downloadCv": "Download CV",
@@ -545,5 +545,77 @@
     "network": "Verifying network channels",
     "integrity": "Running integrity checks",
     "finalize": "Finalizing startup sequence"
+  },
+  "blogPost": {
+    "notFound": "Log entry not found",
+    "notFoundDesc": "No blog post found for this address. Go back to the blog section to continue.",
+    "backBtn": "Back to Blog",
+    "takeawayLabel": "Takeaway",
+    "contentAriaLabel": "Blog post content sections",
+    "navAriaLabel": "More log entries",
+
+    "lc_intro": "Legacy code generally has a bad reputation. Sometimes, though, the code isn’t bad, it’s just old, shaped by decisions made by dozens of different people over time. The mistake isn’t that it exists. The mistake is treating it as an obstacle, when in reality it’s a map.\nBefore touching a legacy module, I take time to understand how it works and build a conceptual map—something that has become much easier today with AI. By looking for the intent behind the structure, the process of modernization becomes much simpler.",
+
+    "lc_s1title": "Reading the Code Before Judging It",
+    "lc_s1p1": "The first question isn’t “how do we fix it?”, but “why is it built this way?”. A 2,000-line class is rarely born that way—it gets there over time, through patches, pivots, and tight deadlines. Within that structure, the original design intent is still there—often reasonable—but now buried under layers of accumulated pragmatism. Finding that intent is what separates thoughtful refactoring from destructive intervention.",
+    "lc_s1p2": "My approach is practical: before making any changes, I map the entry points. I follow the flow of data through the system and identify where shortcuts were introduced. I’m not cataloging problems—I’m building a mental model of how the system actually works, and comparing it to how it was likely intended to work. That gap is where the real decisions live.",
+
+    "lc_s2title": "Deciding What to Cut and What to Keep",
+    "lc_s2p1": "Not everything in a legacy module should be replaced. Some of it is genuinely good — battle-tested edge case handling that a rewrite will get wrong for six months before it gets right. The test is simple: if deleting a block makes the system break in an unexpected way, that block knows something the tests don't. Treat it with respect.",
+    "lc_s2p2": "The decision framework I use has three categories: extract and rename (the logic is valid, the structure is confusing), rewrite in place (the logic is wrong but the boundary is right), and delete (nothing downstream depends on this and nothing should). Most legacy code is 70% first category, 20% second, 10% third. Teams that go in thinking it's 50% delete end up breaking production.",
+
+    "lc_s3title": "Migration Strategies That Don't Blow Up Releases",
+    "lc_s3p1": "Strangler Fig is the right pattern for most scenarios — wrap the old behaviour, route new traffic to the new implementation, let the old code die naturally. The key discipline is never allowing both paths to run in parallel for longer than one release cycle. Parallel paths that last six months become two legacy systems instead of one.",
+    "lc_s3p2": "The tactic I've found most valuable is defining the seam before writing the replacement. A seam is a point where you can inject the new behaviour without changing the caller. If you can't find a clean seam, extract one: put an interface boundary there even if the current implementation is a single class. That boundary is what lets you test and swap in isolation.",
+
+    "lc_takeaway": "Legacy modernization is as much archaeology as engineering. The code is evidence of decisions made under constraints you weren't present for. Read it before you rewrite it. Cut with a scalpel, not a bulldozer. And define your seams before you define your replacements — the seam is the whole game.",
+
+    "elc14_intro": "Week 14 of Everyday Life Core was primarily about getting the live dashboard working reliably over WebSocket. On paper: straightforward. In practice: a useful lesson in the gap between 'connection established' and 'connection you can actually depend on'. The interesting problems were all in reconnection behaviour when the network degrades, not in the happy path.",
+
+    "elc14_s1title": "Implementing the WebSocket Subscription Model",
+    "elc14_s1p1": "The backend uses scoped subscriptions — a client subscribes to a set of contexts (global, group-specific, friends list) and only receives events relevant to those scopes. This means the server needs to track active connections with their subscription metadata and the client needs to re-declare its subscriptions on every reconnect. The initial snapshot pattern (full state on connect, deltas on updates) keeps the subscription logic clean: there's no partial-sync edge case because you always start from a known state.",
+    "elc14_s1p2": "On the Flutter side, I'm using web_socket_channel wrapped in a connection manager class that owns the channel lifecycle. The manager exposes a stream that re-emits events regardless of how many times the underlying connection has been rebuilt. Callers upstream don't know or care about reconnections — they just consume the stream. This was the right abstraction: it kept the UI code clean and moved the reconnection complexity exactly where it belongs.",
+
+    "elc14_s2title": "Reconnection Logic That Doesn't Spin Out",
+    "elc14_s2p1": "Naive reconnection — reconnect immediately on any close event — is fine for brief glitches and catastrophic for everything else. If the server is down, you get a tight retry loop that drains battery, floods your backend logs and adds nothing useful. The fix is exponential backoff with jitter: start at 1s, double each attempt, add random jitter to prevent thundering herd, cap at 30s. The cap matters — uncapped backoff means a device that loses connection for an hour won't reconnect for a very long time after the server comes back.",
+    "elc14_s2p2": "The tricky part was handling the difference between a clean close (server intentionally disconnected the client, e.g. token expired) and an unclean close (network dropped). Clean closes should not trigger backoff reconnection — they should trigger a token refresh and a single reconnect attempt. I track this with a connection close reason that the server sets explicitly before closing. On the client, if the close code maps to 'auth expired', I call the token refresh flow before reconnecting.",
+
+    "elc14_s3title": "Dashboard State During Reconnection",
+    "elc14_s3p1": "The dashboard shows presence data — who is online, last seen times, current activity. During a reconnection window, this data is stale. Options: hide it (bad UX, jarring), show it with a stale indicator (what I chose), or freeze the last known state silently. The stale indicator approach — a subtle 'Reconnecting...' banner and slightly reduced opacity on presence data — communicates uncertainty without breaking the layout.",
+    "elc14_s3p2": "On reconnect, the server sends a full snapshot before any deltas. The client waits for the snapshot before updating the UI, which means there's a brief moment where the UI is 'frozen' post-reconnect. In practice this is under 200ms on a normal connection and completely imperceptible. The important thing is that the UI never shows a mixture of stale and fresh data — it's either all stale (with the indicator) or all fresh.",
+
+    "elc14_takeaway": "WebSocket reliability is about the failure modes, not the happy path. The happy path is always straightforward. The work is in distinguishing clean closes from crashes, in not hammering a downed server, and in keeping the UI honest about what it knows and when it knew it. Get the seam between connection management and UI right first — it makes everything else composable.",
+
+    "int_intro": "Integration tests have a credibility problem. A test suite that passes is supposed to mean 'this works'. But I've seen plenty of green suites that masked real problems — not because the tests were wrong, but because they were testing the wrong thing. They were asserting that the code ran without throwing an exception, not that it produced the correct result. That's a subtle but consequential distinction.",
+
+    "int_s1title": "The Test That Passes for the Wrong Reason",
+    "int_s1p1": "The most common integration test anti-pattern I encounter is the assertion-free test. It calls the endpoint, checks the HTTP status is 200, and considers the job done. But 200 doesn't mean correct — it means the handler didn't crash. A handler can return 200 with an empty list when it should return 12 items. It can return 200 with stale data because the test setup ran before the database transaction committed. Status code assertions are a floor, not a ceiling.",
+    "int_s1p2": "The second pattern: tests that pass because they don't depend on data being right. A test that creates a resource and then calls 'get all resources' and asserts the list is non-empty will pass even if the created resource was saved with wrong data, wrong relationships, or wrong state. If you're not asserting the specific properties you care about, you're not testing what you think you're testing.",
+
+    "int_s2title": "What Meaningful Assertions Look Like",
+    "int_s2p1": "A meaningful integration test has a specific expected state and checks for it exactly. If I'm testing that a task gets assigned to a group member, I check the assignee ID, not just that a task exists. If I'm testing a soft-delete, I check that the item doesn't appear in the active list and does appear in the deleted list — not just that the delete endpoint returned 204. The extra assertions take five minutes to write and save hours of debugging when something breaks.",
+    "int_s2p2": "For .NET integration tests, I structure the test around three phases: Arrange (set up the database state and any prerequisites), Act (call the endpoint exactly as a real client would — through HttpClient, not by calling service methods directly), Assert (check the response body and, when relevant, the resulting database state directly). The 'through HttpClient' part matters: it exercises the full middleware pipeline, serialization, validation and routing, not just business logic.",
+
+    "int_s3title": "Tests That Don't Fight the Database",
+    "int_s3p1": "The biggest maintenance burden in integration test suites is test isolation. Tests that share state across cases produce order-dependent failures — a test passes when run alone but fails in the full suite because a previous test left dirty data. The solution is a clean database state per test, not per suite. In xUnit I use a shared WebApplicationFactory with a test-specific transaction that rolls back after each test. No cleanup logic, no seed data headaches.",
+    "int_s3p2": "For tests that genuinely need persistent state (testing that a background job processed a record, for example), I isolate at the schema level — each test run gets a fresh schema prefix. Slow, but reliable. The overhead is acceptable because these tests are rare. Most integration tests can and should run in a rolled-back transaction, and if your test architecture makes that difficult, that's a signal your service boundaries need attention.",
+
+    "int_takeaway": "An integration test that passes should be evidence that something works correctly, not just evidence that it didn't throw. Write assertions that would catch the specific bug you're worried about. Test through the actual HTTP stack. Isolate database state per test. It takes more setup, but the suite you get is one you can actually trust when it's green — and that's the point.",
+
+    "fbs_intro": "Eighteen months ago I wrote almost exclusively C# and SQL. Today I ship React UIs and Flutter mobile screens as naturally as I write API endpoints. The transition wasn't dramatic — there was no single moment where frontend 'clicked'. It was gradual, then accelerating, then suddenly normal. This is an honest account of what that progression felt like from the inside, including the parts that are less flattering.",
+
+    "fbs_s1title": "What Transferred Immediately",
+    "fbs_s1p1": "The mental models around API design transferred completely. When you've spent years thinking about contracts, backwards compatibility and defensive validation on the server side, you arrive at the frontend already understanding what the backend is trying to communicate. Reading API responses and knowing instinctively when something is a design smell versus when it's a constraint — that takes years on the backend and comes free when you cross over.",
+    "fbs_s1p2": "Debugging also transferred. The skill of following a data flow from input to output, of knowing which layer is responsible for which transformation, of reading logs and tracing state — these are language and framework agnostic. A React component with mysterious state is the same problem as a .NET service with mysterious side effects. The tools differ; the thinking doesn't.",
+
+    "fbs_s2title": "What Took Longer Than Expected",
+    "fbs_s2p1": "Reactivity was genuinely hard to internalize. Coming from a request-response mental model, the idea that a change to state should automatically propagate through a render tree felt unnatural for longer than I expected. I kept wanting to manually trigger updates, to explicitly call 'refresh this'. The shift happened gradually through building Everyday Life Core — seeing the model work correctly in enough real scenarios that it became the default assumption instead of the exception.",
+    "fbs_s2p2": "CSS was humbling. I had the theory, but developing intuition for layout — the actual feel for when something is going to break on mobile, when a flex container is going to overflow, when a grid is the right call versus absolute positioning — took months of building real UIs and getting them wrong. Backend developers often underestimate CSS because the syntax is simple. The complexity is in the interactions between properties, and that's only visible through repeated hands-on failure.",
+
+    "fbs_s3title": "What Actually Changed How I Think",
+    "fbs_s3p1": "The biggest shift was in how I think about user-facing latency. When you only write backends, latency is a performance metric — something you measure and optimize at the infra level. When you also write the UI, latency becomes felt. You start caring about optimistic updates not because they improve benchmark numbers but because you've sat with a UI that waits for a server round-trip on every interaction and it feels broken even when it's technically correct. That embodied understanding of the user experience changed my API design decisions.",
+    "fbs_s3p2": "Shipping end-to-end alone — backend API, mobile UI, web UI, deployment — forces a different relationship with tradeoffs. When you're responsible for the full system you stop arguing about whose layer should handle a given concern and start asking what the simplest boundary is that makes both sides correct and maintainable. The frontend-backend mental separation dissolves a bit, replaced by a more pragmatic 'what does this feature actually need' perspective.",
+
+    "fbs_takeaway": "Full stack isn't a title, it's a perspective shift. The technical skills accumulate faster than you expect once you're building real things. The deeper change is in how you model user-facing systems — you stop treating latency as a number and start treating it as an experience, and that changes both how you write backends and how you design UIs. The eighteen months were worth it."
   }
 }

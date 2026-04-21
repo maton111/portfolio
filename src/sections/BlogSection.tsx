@@ -1,75 +1,28 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
+import { blogPosts, TONE_VAR } from '../data/blogPosts'
+import GlitchTransition from '../components/overlays/GlitchTransition'
 import './BlogSection.css'
-
-const blogPosts = [
-  {
-    id: 'LOG_042',
-    date: '2026.03.14',
-    readEN: '8 min', readIT: '8 min',
-    tagEN: 'ARCHITECTURE', tagIT: 'ARCHITETTURA',
-    tone: 'green' as const,
-    icon: 'architecture',
-    featured: true,
-    titleEN: 'Modernizing legacy code without breaking anyone',
-    titleIT: 'Modernizzare codice legacy senza rompere nessuno',
-    excerptEN: 'A practical framework for knowing where to cut and where to keep. Every 2000-line class has a story — throwing it away without listening costs double.',
-    excerptIT: 'Un framework pratico per capire dove tagliare e dove tenere. Perché ogni classe di 2000 righe ha una storia, e buttarla via senza ascoltarla costa il doppio.',
-  },
-  {
-    id: 'LOG_041',
-    date: '2026.02.28',
-    readEN: '5 min', readIT: '5 min',
-    tagEN: 'DEVLOG', tagIT: 'DEVLOG',
-    tone: 'mint' as const,
-    icon: 'terminal',
-    titleEN: 'Everyday Life Core — week 14',
-    titleIT: 'Everyday Life Core — settimana 14',
-    excerptEN: 'Live dashboard over WebSocket and reconnection logic that doesn\'t explode when the network throws a tantrum.',
-    excerptIT: 'Dashboard live tramite WebSocket e reconnection logic che non esplode quando la rete fa i capricci.',
-  },
-  {
-    id: 'LOG_040',
-    date: '2026.02.11',
-    readEN: '4 min', readIT: '4 min',
-    tagEN: 'TESTING', tagIT: 'TESTING',
-    tone: 'orange' as const,
-    icon: 'science',
-    titleEN: 'Integration tests that actually let you sleep',
-    titleIT: 'Test di integrazione che fanno davvero dormire bene',
-    excerptEN: 'When a test passes, it should mean it works — not just that it didn\'t crash. Subtle differences, concrete consequences.',
-    excerptIT: 'Quando un test passa, deve voler dire che funziona — non solo che non crasha. Differenze sottili, rotture concrete.',
-  },
-  {
-    id: 'LOG_039',
-    date: '2026.01.23',
-    readEN: '6 min', readIT: '6 min',
-    tagEN: 'FULL STACK', tagIT: 'FULL STACK',
-    tone: 'green' as const,
-    icon: 'integration_instructions',
-    titleEN: 'From pure backend to full stack in 18 months',
-    titleIT: 'Da backend puro a full stack in 18 mesi',
-    excerptEN: 'What I learned going from APIs only to React + Flutter. The easy parts, the parts that hurt, the parts that actually rewire how you think.',
-    excerptIT: 'Cosa ho imparato passando da solo API a React + Flutter. Le parti facili, le parti che fanno male, le parti che cambiano davvero il modo di pensare.',
-  },
-]
-
-type ToneName = 'green' | 'orange' | 'mint'
-const TONE_VAR: Record<ToneName, string> = {
-  green:  'var(--accent-green)',
-  orange: 'var(--accent-orange)',
-  mint:   'var(--accent-mint)',
-}
 
 function BlogSection() {
   const { i18n } = useTranslation()
+  const navigate = useNavigate()
   const [hoverIdx, setHoverIdx] = useState<string | number | null>(null)
+  const [isLeaving, setIsLeaving] = useState(false)
   const sectionRef = useReveal<HTMLElement>()
   const isIT = i18n.language === 'it'
 
   const featured = blogPosts.find(p => p.featured)!
   const rest = blogPosts.filter(p => !p.featured)
+
+  const navigateWithGlitch = (targetPath: string) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) { navigate(targetPath); return }
+    setIsLeaving(true)
+    window.setTimeout(() => { navigate(targetPath) }, 180)
+  }
 
   return (
     <section id="blog" ref={sectionRef} className="reveal-target blog-section">
@@ -94,6 +47,11 @@ function BlogSection() {
           style={{ borderLeft: `4px solid ${TONE_VAR[featured.tone]}` }}
           onMouseEnter={() => setHoverIdx('featured')}
           onMouseLeave={() => setHoverIdx(null)}
+          onClick={() => navigateWithGlitch(`/blog/${featured.slug}`)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigateWithGlitch(`/blog/${featured.slug}`) }}
+          aria-label={`Read: ${isIT ? featured.titleIT : featured.titleEN}`}
         >
           <div className="blog-featured-cover">
             <div
@@ -145,6 +103,11 @@ function BlogSection() {
                 style={{ borderLeft: `3px solid ${tone}` }}
                 onMouseEnter={() => setHoverIdx(i)}
                 onMouseLeave={() => setHoverIdx(null)}
+                onClick={() => navigateWithGlitch(`/blog/${p.slug}`)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigateWithGlitch(`/blog/${p.slug}`) }}
+                aria-label={`Read: ${isIT ? p.titleIT : p.titleEN}`}
               >
                 <div className="blog-item-icon">
                   <span className="material-symbols-outlined" style={{ fontSize: 22, color: tone }}>{p.icon}</span>
@@ -171,13 +134,15 @@ function BlogSection() {
             )
           })}
 
-          <button className="blog-archive-btn" type="button">
+          <button className="blog-archive-btn" type="button" onClick={() => navigateWithGlitch('/blog')}>
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>inventory_2</span>
             {isIT ? 'Archivio completo' : 'Full archive'}
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>north_east</span>
           </button>
         </div>
       </div>
+
+      {isLeaving ? <GlitchTransition /> : null}
     </section>
   )
 }

@@ -10,6 +10,8 @@ import InitialHudLoader from './components/overlays/InitialHudLoader'
 import {useInitialBoot} from './hooks/useInitialBoot'
 import ProjectNotesPage from './pages/ProjectNotesPage'
 import EverydayLifeProjectPage from './pages/EverydayLifeProjectPage'
+import BlogPostPage from './pages/BlogPostPage'
+import BlogArchivePage from './pages/BlogArchivePage'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useEffect} from 'react'
 import {SECTION_IDS, type SectionId} from './data/sectionNavigation'
@@ -39,6 +41,9 @@ function HomePage({ isPageGlitching }: { isPageGlitching: boolean }) {
       <TimelineSection />
       <BlogSection />
       <ContactSection />
+      <footer style={{ padding: '40px 24px 70px', textAlign: 'center', fontFamily: 'var(--font-headline)', fontSize: 11, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+        © 2026 · maton11 · Built in Torino · Do. Learn. Level up.
+      </footer>
       {isPageGlitching ? <GlitchTransition /> : null}
     </>
   )
@@ -56,6 +61,8 @@ function App() {
       <Route path="/" element={<HomePage isPageGlitching={isPageGlitching} />} />
       <Route path="/projects/everyday-life-core" element={<EverydayLifeProjectPage />} />
       <Route path="/projects/:slug" element={<ProjectNotesPage />} />
+      <Route path="/blog" element={<BlogArchivePage />} />
+      <Route path="/blog/:slug" element={<BlogPostPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
