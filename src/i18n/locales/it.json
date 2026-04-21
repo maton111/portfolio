@@ -118,7 +118,7 @@
     "db7300Title": "DATA LAYER & RICERCA",
     "db7300Status": "MULTI_DB_READY",
     "dx9901Title": "DEVOPS & DELIVERY",
-    "dx9901Status": "CONTINUOUS_IMPROVEMENT",
+    "dx9901Status": "IMPROVEMENT",
     "fs2088Title": "FULL STACK ASSISTITO DA AI",
     "fs2088Status": "LEVELING_UP"
   },
@@ -157,6 +157,9 @@
     "log4Date": "2021-2023 // SINCON",
     "log4Title": "Progetti software multi-stack",
     "log4Note": "Backend con C#, Python e PHP su portali e sistemi dati.",
+    "log5Date": "2021 // SINCON",
+    "log5Title": "Primo ruolo enterprise",
+    "log5Note": "Prima esperienza backend in produzione presso una software house.",
     "repoEfficiency": "Backend first / Full stack direction",
     "githubLabel": "GitHub",
     "repoStatusLabel": "Repo_Status",
@@ -199,7 +202,17 @@
     "errorUnknown": "Si è verificato un errore sconosciuto",
     "scannerAriaLabel": "Scanner di sistema",
     "openLinkAriaLabel": "Apri {{label}}",
-    "openExternalAriaLabel": "Apri {{label}} in una nuova scheda"
+    "openExternalAriaLabel": "Apri {{label}} in una nuova scheda",
+    "stateIdle": "IN_ATTESA_INPUT",
+    "stateSending": "TRASMISSIONE...",
+    "stateDelivered": "CONSEGNATO",
+    "stateError": "INSERISCI_DATI",
+    "successTitle": "Segnale ricevuto.",
+    "successSub": "Ti rispondo entro 24h.",
+    "successReset": "Nuovo messaggio",
+    "responseSla": "SLA_RISPOSTA: < 24H",
+    "coordinatesLabel": "Coordinate",
+    "coordinatesFooter": "Torino · IT · UTC+1"
   },
   "projectNotes": {
     "notFound": "Project notes non disponibili",

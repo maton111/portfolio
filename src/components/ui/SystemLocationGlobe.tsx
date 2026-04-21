@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import {useEffect, useRef, useState} from 'react'
 import createGlobe from 'cobe'
 
 type SystemLocationGlobeProps = {
-  locationLabel: string
+  locationLabel?: string
   fallbackImage: string
 }
 
 function SystemLocationGlobe({ locationLabel, fallbackImage }: SystemLocationGlobeProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [hasError, setHasError] = useState(false)
 
@@ -17,23 +18,30 @@ function SystemLocationGlobe({ locationLabel, fallbackImage }: SystemLocationGlo
     let phi = 0
     let pulse = 0
     let frameId = 0
+    let resizeObserver: ResizeObserver | undefined
+
+    const getDpr = () => Math.min(window.devicePixelRatio || 1, 2)
 
     const updateSize = () => {
-      const canvas = canvasRef.current
-      if (!canvas) return
+      const container = containerRef.current
+      if (!container) return
 
-      const rect = canvas.getBoundingClientRect()
+      const rect = container.getBoundingClientRect()
       size = Math.max(0, Math.floor(Math.min(rect.width, rect.height)))
     }
 
     updateSize()
     window.addEventListener('resize', updateSize)
+    if (containerRef.current && 'ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(updateSize)
+      resizeObserver.observe(containerRef.current)
+    }
 
     try {
       const globe = createGlobe(canvasRef.current, {
-        devicePixelRatio: Math.min(window.devicePixelRatio, 2),
-        width: size * 2,
-        height: size * 2,
+        devicePixelRatio: getDpr(),
+        width: size * getDpr(),
+        height: size * getDpr(),
         phi: 0,
         theta: 0.3,
         dark: 1,
@@ -51,8 +59,8 @@ function SystemLocationGlobe({ locationLabel, fallbackImage }: SystemLocationGlo
         pulse += 0.03
 
         globe.update({
-          width: size * 2,
-          height: size * 2,
+          width: size * getDpr(),
+          height: size * getDpr(),
           phi,
           theta: 0.3 + Math.sin(pulse) * 0.035,
           scale: 1 + Math.sin(pulse) * 0.01,
@@ -65,26 +73,28 @@ function SystemLocationGlobe({ locationLabel, fallbackImage }: SystemLocationGlo
 
       return () => {
         window.removeEventListener('resize', updateSize)
+        resizeObserver?.disconnect()
         window.cancelAnimationFrame(frameId)
         globe.destroy()
       }
     } catch {
       setHasError(true)
       window.removeEventListener('resize', updateSize)
+      resizeObserver?.disconnect()
     }
 
     return undefined
   }, [])
 
   return (
-    <div className="location-map" aria-hidden="true">
+    <div ref={containerRef} className="location-map" aria-hidden="true">
       {hasError ? (
         <img src={fallbackImage} alt="" className="location-map-fallback" />
       ) : (
         <canvas ref={canvasRef} className="location-globe-canvas" />
       )}
       <div className="location-map-grid" />
-      <p>{locationLabel}</p>
+      {locationLabel ? <p>{locationLabel}</p> : null}
     </div>
   )
 }

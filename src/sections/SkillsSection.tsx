@@ -1,106 +1,16 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type SkillMetric, type SkillModule, skillsModules } from '../data/skillsContent'
+import { skillsModules } from '../data/skillsContent'
 import { fetchRepoInfo } from '../utils/api'
 import { useReveal } from '../hooks/useReveal'
 import './SkillsSection.css'
 
-const SEGMENTS = 20
-
-function SegmentedBar({ label, value, tone = 'green' }: SkillMetric) {
-  const safeValue = Math.min(100, Math.max(0, value))
-  const activeSegments = Math.round((safeValue / 100) * SEGMENTS)
-
-  return (
-    <div
-      className="skills-segmented"
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={Math.round(safeValue)}
-      aria-valuetext={`${label} ${Math.round(safeValue)} percent`}
-    >
-      {Array.from({ length: SEGMENTS }).map((_, index) => (
-        <span key={`${value}-${index}`} className={index < activeSegments ? `is-${tone}` : 'is-off'} />
-      ))}
-    </div>
-  )
-}
-
-type SkillChip = {
-  id: string
-  label: string
-  value: number
-}
-
-function buildSkillChips(module: SkillModule): SkillChip[] {
-  return [
-    ...module.metrics.map((metric) => ({ id: `metric-${metric.label}`, label: metric.label, value: metric.value })),
-    ...module.tags.map((tag) => ({ id: `tag-${tag.label}`, label: tag.label, value: tag.value })),
-  ]
-}
-
-function getSkillTone(module: SkillModule, value: number): 'green' | 'orange' {
-  if (module.moduleId === 'FS-2088') {
-    return 'orange'
-  }
-  return value < 70 ? 'orange' : 'green'
-}
-
-function getAnimationDurationMs(targetValue: number): number {
-  const safeTarget = Math.min(100, Math.max(0, targetValue))
-  const minDuration = 260
-  const maxDuration = 700
-  return Math.round(minDuration + ((maxDuration - minDuration) * safeTarget) / 100)
-}
-
-function SkillActiveMetric({ label, targetValue, tone }: { label: string; targetValue: number; tone: 'green' | 'orange' }) {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const safeTarget = Math.min(100, Math.max(0, targetValue))
-  const [animatedValue, setAnimatedValue] = useState(() => (reducedMotion ? safeTarget : 0))
-
-  useEffect(() => {
-    if (reducedMotion) return
-
-    const durationMs = getAnimationDurationMs(safeTarget)
-    const animationStart = performance.now()
-    let rafId = 0
-
-    const tick = (now: number) => {
-      const elapsed = now - animationStart
-      const progress = Math.min(1, elapsed / durationMs)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setAnimatedValue(safeTarget * eased)
-
-      if (progress < 1) {
-        rafId = window.requestAnimationFrame(tick)
-      } else {
-        setAnimatedValue(safeTarget)
-      }
-    }
-
-    rafId = window.requestAnimationFrame(tick)
-    return () => { window.cancelAnimationFrame(rafId) }
-  }, [label, reducedMotion, safeTarget, targetValue])
-
-  return (
-    <div className="skills-active-metric">
-      <div>
-        <span>{label}</span>
-        <strong className={tone === 'orange' ? 'tone-orange' : ''}>{Math.round(reducedMotion ? safeTarget : animatedValue)}%</strong>
-      </div>
-      <SegmentedBar label={label} value={animatedValue} tone={tone} />
-    </div>
-  )
-}
-
 function SkillsSection() {
   const { t } = useTranslation()
-  const [lockedSkillByModule, setLockedSkillByModule] = useState<Record<string, string>>({})
-  const [hoveredSkillByModule, setHoveredSkillByModule] = useState<Record<string, string | undefined>>({})
+  const [activeModuleId, setActiveModuleId] = useState('BE-2026')
   const [lastUpdate, setLastUpdate] = useState(t('skills.loading'))
   const headerRevealRef = useReveal<HTMLElement>()
-  const gridRevealRef = useReveal<HTMLDivElement>(0.05)
+  const sectionRevealRef = useReveal<HTMLDivElement>(0.05)
 
   useEffect(() => {
     let isMounted = true
@@ -119,21 +29,12 @@ function SkillsSection() {
     }
 
     void loadRepoInfo()
-    return () => { isMounted = false }
+    return () => {
+      isMounted = false
+    }
   }, [t])
 
-  const handleSkillHover = (moduleId: string, skillId: string) => {
-    setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: skillId }))
-  }
-
-  const handleSkillLeave = (moduleId: string) => {
-    setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: undefined }))
-  }
-
-  const handleSkillSelect = (moduleId: string, skillId: string) => {
-    setLockedSkillByModule((prev) => ({ ...prev, [moduleId]: skillId }))
-    setHoveredSkillByModule((prev) => ({ ...prev, [moduleId]: undefined }))
-  }
+  const activeModule = skillsModules.find((m) => m.moduleId === activeModuleId) ?? skillsModules[0]!
 
   return (
     <section className="skills-page" id="skills" aria-labelledby="skills-title">
@@ -148,80 +49,74 @@ function SkillsSection() {
           </h2>
         </header>
 
-        <div ref={gridRevealRef} className="skills-grid reveal-target reveal-delay-1">
-          {skillsModules.map((module, index) => {
-            const chips = buildSkillChips(module)
-            const defaultSkill = chips[0]
-
-            if (!defaultSkill) return null
-
-            const lockedSkillId = lockedSkillByModule[module.moduleId]
-            const hoveredSkillId = hoveredSkillByModule[module.moduleId]
-            const activeSkillId = hoveredSkillId ?? lockedSkillId ?? defaultSkill.id
-            const activeSkill = chips.find((chip) => chip.id === activeSkillId) ?? defaultSkill
-            const tone = getSkillTone(module, activeSkill.value)
-
-            return (
-              <article
-                key={module.moduleId}
-                className={`skills-card col-${module.columns} tone-${module.borderTone ?? 'green'} stagger-child`}
-                style={{ '--stagger-i': index } as CSSProperties}
-                onMouseLeave={() => handleSkillLeave(module.moduleId)}
-              >
-                {module.icon ? (
-                  <div className="skills-card-icon" aria-hidden="true">
-                    <span className="material-symbols-outlined">{module.icon}</span>
-                  </div>
-                ) : null}
-
-                <div className="skills-card-head">
+        <div ref={sectionRevealRef} className="skills-tabbed-layout reveal-target reveal-delay-1">
+          <div className="skills-module-list" role="tablist" aria-label={t('skills.eyebrow')}>
+            {skillsModules.map((module) => {
+              const isActive = module.moduleId === activeModuleId
+              const tone = module.borderTone ?? 'green'
+              return (
+                <button
+                  key={module.moduleId}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`skills-module-btn tone-${tone}${isActive ? ' is-active' : ''}`}
+                  onClick={() => setActiveModuleId(module.moduleId)}
+                >
                   <div>
-                    <h3>{t(module.titleKey)}</h3>
-                    <p>Module_ID: {module.moduleId}</p>
+                    <span className="skills-module-id">{module.moduleId}</span>
+                    <span className="skills-module-title">{t(module.titleKey)}</span>
                   </div>
-                  <span className={`skills-status tone-${module.statusTone ?? 'green'}`}>{t(module.statusKey)}</span>
-                </div>
+                  <span className={`skills-module-status tone-${module.statusTone ?? 'green'}`}>
+                    {t(module.statusKey)}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
 
-                <div className="skills-metrics">
-                  <SkillActiveMetric
-                    key={`${module.moduleId}-${activeSkill.id}`}
-                    label={activeSkill.label}
-                    targetValue={activeSkill.value}
-                    tone={tone}
-                  />
-                </div>
+          <div
+            key={activeModule.moduleId}
+            className={`skills-detail-panel tone-${activeModule.borderTone ?? 'green'}`}
+            role="tabpanel"
+          >
+            <span className="skills-corner-tr" aria-hidden="true" />
+            <span className="skills-corner-bl" aria-hidden="true" />
 
-                <div className="skills-tags">
-                  {chips.map((chip) => {
-                    const chipTone = getSkillTone(module, chip.value)
-                    const isActive = chip.id === activeSkill.id
-                    const isLockedChip = chip.id === lockedSkillId
+            <header className="skills-detail-header">
+              <div>
+                <span className="skills-detail-eyebrow">Module {activeModule.moduleId}</span>
+                <h3>{t(activeModule.titleKey)}</h3>
+              </div>
+              <div className="skills-heartbeat">
+                <span className="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+                <span>Uptime 99.7%</span>
+              </div>
+            </header>
 
-                    return (
-                      <button
-                        key={chip.id}
-                        type="button"
-                        className={[
-                          'skills-chip',
-                          chipTone === 'orange' ? 'tone-orange' : '',
-                          isActive ? 'is-active' : '',
-                          isLockedChip ? 'is-locked' : '',
-                        ]
-                          .filter(Boolean)
-                          .join(' ')}
-                        aria-pressed={isLockedChip}
-                        onMouseEnter={() => handleSkillHover(module.moduleId, chip.id)}
-                        onFocus={() => handleSkillHover(module.moduleId, chip.id)}
-                        onClick={() => handleSkillSelect(module.moduleId, chip.id)}
-                      >
-                        <span>{chip.label}</span>
-                      </button>
-                    )
-                  })}
+            <div className="skills-metrics-grid">
+              {activeModule.metrics.map((metric, i) => (
+                <div key={metric.label} className="skills-metric-row">
+                  <div className="skills-metric-label-row">
+                    <span>{metric.label}</span>
+                    <span className="skills-metric-value">{metric.value}</span>
+                  </div>
+                  <div className="skills-metric-bar-track">
+                    <span
+                      className="skills-metric-bar-fill"
+                      style={{ width: `${metric.value}%`, animationDelay: `${i * 70}ms` } as CSSProperties}
+                    />
+                  </div>
                 </div>
-              </article>
-            )
-          })}
+              ))}
+            </div>
+
+            <div className="skills-tags-row">
+              {activeModule.tags.map((tag) => (
+                <span key={tag.label} className="skills-tag-chip">{tag.label}</span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <section className="skills-bottom" aria-label={t('skills.neuralLinkAriaLabel')}>

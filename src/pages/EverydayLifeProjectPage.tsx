@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import GlitchTransition from '../components/overlays/GlitchTransition'
@@ -35,6 +35,10 @@ function EverydayLifeProjectPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [isLeaving, setIsLeaving] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [])
 
   const navigateWithGlitch = (target: string) => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches

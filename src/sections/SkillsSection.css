@@ -49,214 +49,279 @@
   color: var(--accent-green);
 }
 
-.skills-grid {
+/* ── Tabbed layout ── */
+
+.skills-tabbed-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
+  margin-top: 28px;
 }
 
-.skills-card {
-  position: relative;
-  padding: 24px;
-  border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
-  border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
-  border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
-  border-left: 2px solid var(--accent-green);
-  background: color-mix(in oklab, var(--panel) 68%, transparent);
-  backdrop-filter: blur(14px);
-  transition: background 0.22s ease;
-}
+/* ── Module list (left column) ── */
 
-.skills-card:hover {
-  background: color-mix(in oklab, var(--panel-strong) 74%, transparent);
-}
-
-.skills-card.tone-orange {
-  border-left-color: var(--accent-orange);
-}
-
-.skills-card-icon {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  color: var(--accent-orange);
-}
-
-.skills-card-icon span {
-  animation: pulse 1.8s ease-in-out infinite;
-}
-
-.skills-card-head {
+.skills-module-list {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 26px;
-}
-
-.skills-card-head h3 {
-  margin: 0;
-  font-family: var(--font-headline), sans-serif;
-  color: var(--text-strong);
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  letter-spacing: -0.02em;
-}
-
-.skills-card-head p {
-  margin: 6px 0 0;
-  font-family: var(--font-headline), sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, var(--text-muted) 75%, transparent);
-}
-
-.skills-status {
-  padding: 6px 10px;
-  border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
-  background: color-mix(in oklab, var(--accent-green) 12%, transparent);
-  color: var(--accent-green);
-  font-family: var(--font-headline), sans-serif;
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.skills-status.tone-orange {
-  border-color: color-mix(in oklab, var(--accent-orange) 38%, transparent);
-  background: color-mix(in oklab, var(--accent-orange) 12%, transparent);
-  color: var(--accent-orange);
-}
-
-.skills-metrics {
-  display: grid;
-  gap: 18px;
-}
-
-.skills-active-metric {
-  animation: metric-swap 0.24s ease;
-}
-
-.skills-metrics > div > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  flex-direction: column;
   gap: 8px;
 }
 
-.skills-metrics span {
+.skills-module-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px;
+  border: 1px solid color-mix(in oklab, var(--outline) 20%, transparent);
+  background: color-mix(in oklab, var(--panel) 40%, transparent);
+  color: var(--text-main);
+  cursor: pointer;
+  text-align: left;
+  border-left-width: 4px;
+  border-left-color: transparent;
+  transition:
+    background 0.25s var(--ease-out-emphasized),
+    border-left-color 0.2s ease;
+}
+
+.skills-module-btn:hover {
+  background: color-mix(in oklab, var(--panel) 56%, transparent);
+}
+
+.skills-module-btn.is-active {
+  background: color-mix(in oklab, var(--panel) 74%, transparent);
+  border-left-color: var(--accent-green);
+}
+
+.skills-module-btn.tone-orange.is-active {
+  border-left-color: var(--accent-orange);
+}
+
+.skills-module-btn > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+}
+
+.skills-module-id {
   font-family: var(--font-headline), sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.11em;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--text-main) 88%, transparent);
+  color: var(--accent-mint);
 }
 
-.skills-metrics strong {
+.skills-module-title {
   font-family: var(--font-headline), sans-serif;
-  color: var(--accent-green);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
-.skills-metrics strong.tone-orange {
+.skills-module-btn.is-active .skills-module-title {
+  color: var(--text-strong);
+}
+
+.skills-module-status {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in oklab, var(--accent-green) 40%, transparent);
+  background: color-mix(in oklab, var(--accent-green) 10%, transparent);
+  color: var(--accent-green);
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.skills-module-status.tone-orange {
+  border-color: color-mix(in oklab, var(--accent-orange) 40%, transparent);
+  background: color-mix(in oklab, var(--accent-orange) 10%, transparent);
   color: var(--accent-orange);
 }
 
-.skills-segmented {
+/* ── Detail panel (right column) ── */
+
+.skills-detail-panel {
+  position: relative;
+  padding: 24px;
+  background: color-mix(in oklab, var(--panel) 66%, transparent);
+  border: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 20px 60px rgba(0, 6, 2, 0.52),
+    0 0 0 1px rgba(0, 255, 136, 0.08);
+}
+
+.skills-corner-tr,
+.skills-corner-bl {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+
+.skills-corner-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid var(--accent-green);
+  border-right: 2px solid var(--accent-green);
+}
+
+.skills-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid var(--accent-green);
+  border-left: 2px solid var(--accent-green);
+}
+
+.skills-detail-header {
   display: flex;
-  width: max-content;
-  gap: 2px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.skills-segmented span {
-  width: 5px;
-  height: 11px;
-  border-radius: 1px;
-  transition:
-    background 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    opacity 0.22s ease;
+.skills-detail-eyebrow {
+  display: block;
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-mint);
 }
 
-.skills-segmented span.is-off {
-  background: color-mix(in oklab, var(--outline) 72%, var(--panel));
-  border: 1px solid color-mix(in oklab, var(--text-muted) 28%, transparent);
-  box-sizing: border-box;
+.skills-detail-panel.tone-orange .skills-detail-eyebrow {
+  color: var(--accent-orange);
 }
 
-.skills-segmented span.is-green {
+.skills-detail-header h3 {
+  margin: 6px 0 0;
+  font-family: var(--font-headline), sans-serif;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.skills-heartbeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid color-mix(in oklab, var(--outline) 40%, transparent);
+  background: color-mix(in oklab, var(--panel-strong) 40%, transparent);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.skills-heartbeat .material-symbols-outlined {
+  font-size: 1.1rem;
+  color: var(--accent-green);
+}
+
+.skills-detail-panel.tone-orange .skills-heartbeat .material-symbols-outlined {
+  color: var(--accent-orange);
+}
+
+.skills-heartbeat span:last-child {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Metrics grid ── */
+
+.skills-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.skills-metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skills-metric-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.skills-metric-label-row > span:first-child {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--text-muted) 85%, transparent);
+}
+
+.skills-metric-value {
+  font-family: var(--font-headline), sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-strong);
+  flex-shrink: 0;
+}
+
+.skills-metric-bar-track {
+  height: 6px;
+  width: 100%;
+  background: color-mix(in oklab, var(--outline) 28%, transparent);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.skills-metric-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
   background: var(--accent-green);
-  box-shadow: 0 0 8px color-mix(in oklab, var(--accent-green) 38%, transparent);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+  animation: growbar 700ms var(--ease-out-emphasized) both;
 }
 
-.skills-segmented span.is-orange {
+.skills-detail-panel.tone-orange .skills-metric-bar-fill {
   background: var(--accent-orange);
-  box-shadow: 0 0 8px rgba(255, 122, 0, 0.42);
+  box-shadow: 0 0 8px rgba(255, 122, 0, 0.5);
 }
 
-.skills-tags {
-  margin-top: 24px;
+@keyframes growbar {
+  from {
+    width: 0;
+  }
+}
+
+/* ── Tags row ── */
+
+.skills-tags-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed color-mix(in oklab, var(--outline) 40%, transparent);
 }
 
-.skills-chip {
-  border: 0;
-  padding: 6px 8px;
+.skills-tag-chip {
+  padding: 5px 10px;
+  background: color-mix(in oklab, var(--panel-strong) 60%, transparent);
   border-left: 2px solid var(--accent-mint);
-  background: color-mix(in oklab, var(--panel-strong) 58%, transparent);
   font-family: var(--font-headline), sans-serif;
-  font-size: 0.57rem;
-  letter-spacing: 0.13em;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--text-main) 86%, transparent);
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+  color: color-mix(in oklab, var(--text-main) 84%, transparent);
 }
 
-.skills-chip:hover,
-.skills-chip:focus-visible {
-  background: color-mix(in oklab, var(--accent-green) 6%, var(--panel-strong));
-  outline: none;
-}
-
-.skills-chip.tone-orange {
-  border-left-color: var(--accent-orange);
-}
-
-.skills-chip.is-active {
-  background: color-mix(in oklab, var(--accent-green) 16%, var(--panel-strong));
-  color: var(--accent-green);
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-green) 32%, transparent) inset;
-}
-
-.skills-chip.tone-orange.is-active {
-  background: color-mix(in oklab, var(--accent-orange) 16%, var(--panel-strong));
-  color: var(--accent-orange);
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-orange) 38%, transparent) inset;
-}
-
-.skills-chip.is-locked {
-  background: color-mix(in oklab, var(--accent-green) 16%, var(--panel-strong));
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--accent-green) 34%, transparent) inset,
-    0 0 10px color-mix(in oklab, var(--accent-green) 20%, transparent);
-}
-
-.skills-chip.tone-orange.is-locked {
-  background: color-mix(in oklab, var(--accent-orange) 16%, var(--panel-strong));
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--accent-orange) 36%, transparent) inset,
-    0 0 10px rgba(255, 122, 0, 0.22);
-}
+/* ── Bottom panel ── */
 
 .skills-bottom {
   margin-top: 24px;
@@ -325,41 +390,15 @@
   background: color-mix(in oklab, var(--outline) 36%, transparent);
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+/* ── Responsive ── */
 
-@keyframes metric-swap {
-  from {
-    opacity: 0.35;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (min-width: 720px) {
+  .skills-tabbed-layout {
+    grid-template-columns: 260px 1fr;
   }
 }
 
 @media (min-width: 900px) {
-  .skills-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 22px;
-  }
-
-  .skills-card.col-7 {
-    grid-column: span 7;
-  }
-
-  .skills-card.col-5 {
-    grid-column: span 5;
-  }
-
   .skills-bottom {
     flex-direction: row;
     justify-content: space-between;
@@ -368,13 +407,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skills-card,
-  .skills-card-icon span,
-  .skills-chip,
-  .skills-segmented span,
-  .skills-active-metric {
+  .skills-module-btn,
+  .skills-metric-bar-fill {
     transition: none;
     animation: none;
   }
 }
-

@@ -118,7 +118,7 @@
     "db7300Title": "DATA LAYER & SEARCH",
     "db7300Status": "MULTI_DB_READY",
     "dx9901Title": "DEVOPS & DELIVERY",
-    "dx9901Status": "CONTINUOUS_IMPROVEMENT",
+    "dx9901Status": "IMPROVEMENT",
     "fs2088Title": "AI-ASSISTED FULL STACK",
     "fs2088Status": "LEVELING_UP"
   },
@@ -157,6 +157,9 @@
     "log4Date": "2021-2023 // SINCON",
     "log4Title": "Multi-stack software projects",
     "log4Note": "Backend with C#, Python and PHP on portals and data systems.",
+    "log5Date": "2021 // SINCON",
+    "log5Title": "First enterprise role",
+    "log5Note": "First production backend experience at a software house.",
     "repoEfficiency": "Backend first / Full stack direction",
     "githubLabel": "GitHub",
     "repoStatusLabel": "Repo_Status",
@@ -199,7 +202,17 @@
     "errorUnknown": "An unknown error occurred",
     "scannerAriaLabel": "System scanner",
     "openLinkAriaLabel": "Open {{label}}",
-    "openExternalAriaLabel": "Open {{label}} in a new tab"
+    "openExternalAriaLabel": "Open {{label}} in a new tab",
+    "stateIdle": "AWAITING_INPUT",
+    "stateSending": "TRANSMITTING...",
+    "stateDelivered": "DELIVERED",
+    "stateError": "ENTER_DATA_PACKET",
+    "successTitle": "Signal received.",
+    "successSub": "I'll reply within 24h.",
+    "successReset": "New message",
+    "responseSla": "RESPONSE_SLA: < 24H",
+    "coordinatesLabel": "Coordinates",
+    "coordinatesFooter": "Torino · IT · UTC+1"
   },
   "projectNotes": {
     "notFound": "Project notes not available",

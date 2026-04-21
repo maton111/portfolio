@@ -1,7 +1,6 @@
 import { type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type ProjectCard, projectCards } from '../data/projectCards'
-import { ElcCompositeVisual } from '../components/ui/ElcCompositeVisual'
 import { useNavigate } from 'react-router-dom'
 import { scrollToSection } from '../hooks/useSectionScroll'
 import { useReveal } from '../hooks/useReveal'
@@ -12,11 +11,16 @@ import legacySvg from '../assets/legacy_refactoring_hero.svg'
 import opcmHeroBannerSvg from '../assets/opcm_hero_banner.svg'
 import neuroscopeSvg from '../assets/neuroscope_svg_image.svg'
 
-function ProjectVisual({ visual, backgroundImage }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string } }) {
+function ProjectVisual({ visual, backgroundImage, icon }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string }; icon?: string }) {
   const { t } = useTranslation()
 
   if (visual === 'kernel') {
-    return <ElcCompositeVisual />
+    return (
+      <div className="project-visual project-visual-striped" aria-hidden="true">
+        {icon ? <span className="material-symbols-outlined">{icon}</span> : null}
+        <span className="project-visual-placeholder-label">ELC // In Development</span>
+      </div>
+    )
   }
 
   const style = backgroundImage
@@ -51,6 +55,7 @@ function ProjectsSection() {
     { date: t('projects.log2Date'), title: t('projects.log2Title'), note: t('projects.log2Note'), tone: 'secondary' as const },
     { date: t('projects.log3Date'), title: t('projects.log3Title'), note: t('projects.log3Note'), tone: 'orange' as const },
     { date: t('projects.log4Date'), title: t('projects.log4Title'), note: t('projects.log4Note'), tone: 'muted' as const },
+    { date: t('projects.log5Date'), title: t('projects.log5Title'), note: t('projects.log5Note'), tone: 'muted' as const },
   ]
 
   const repoStatus = {
@@ -124,7 +129,7 @@ function ProjectsSection() {
                     </span>
                   </div>
 
-                  <ProjectVisual visual={project.visual} backgroundImage={project.backgroundImage} />
+                  <ProjectVisual visual={project.visual} backgroundImage={project.backgroundImage} icon={project.icon} />
                   <p>{project.description}</p>
 
                   <div className="project-tags">
