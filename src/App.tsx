@@ -10,6 +10,7 @@ import InitialHudLoader from './components/overlays/InitialHudLoader'
 import {useInitialBoot} from './hooks/useInitialBoot'
 import ProjectNotesPage from './pages/ProjectNotesPage'
 import EverydayLifeProjectPage from './pages/EverydayLifeProjectPage'
+import LifeWrappedProjectPage from './pages/LifeWrappedProjectPage'
 import BlogPostPage from './pages/BlogPostPage'
 import BlogArchivePage from './pages/BlogArchivePage'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
@@ -60,6 +61,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage isPageGlitching={isPageGlitching} />} />
       <Route path="/projects/everyday-life-core" element={<EverydayLifeProjectPage />} />
+      <Route path="/projects/life-wrapped" element={<LifeWrappedProjectPage />} />
       <Route path="/projects/:slug" element={<ProjectNotesPage />} />
       <Route path="/blog" element={<BlogArchivePage />} />
       <Route path="/blog/:slug" element={<BlogPostPage />} />

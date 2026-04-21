@@ -10,6 +10,7 @@ import teamsystemSvg from '../assets/teamsystem_enterprise_backend_hero.svg'
 import legacySvg from '../assets/legacy_refactoring_hero.svg'
 import opcmHeroBannerSvg from '../assets/opcm_hero_banner.svg'
 import neuroscopeSvg from '../assets/neuroscope_svg_image.svg'
+import lifewrappedHeroSvg from '../assets/lifewrapped_hero.svg'
 
 function ProjectVisual({ visual, backgroundImage, icon }: { visual: ProjectCard['visual']; backgroundImage?: string | { default: string }; icon?: string }) {
   const { t } = useTranslation()
@@ -72,6 +73,7 @@ function ProjectsSection() {
       'neuro-scope': t('projects.proj3Title'),
       'opcm': t('projects.proj4Title'),
       'everyday-life-core': t('projects.proj5Title'),
+      'life-wrapped': t('projects.proj6Title'),
     }
     const descMap: Record<string, string> = {
       'teamsystem-enterprise-backend': t('projects.proj1Desc'),
@@ -79,6 +81,7 @@ function ProjectsSection() {
       'neuro-scope': t('projects.proj3Desc'),
       'opcm': t('projects.proj4Desc'),
       'everyday-life-core': t('projects.proj5Desc'),
+      'life-wrapped': t('projects.proj6Desc'),
     }
     const imageMap: Record<string, string | undefined> = {
       'teamsystem-enterprise-backend': teamsystemSvg,
@@ -86,6 +89,7 @@ function ProjectsSection() {
       'neuro-scope': neuroscopeSvg,
       'opcm': opcmHeroBannerSvg,
       'everyday-life-core': undefined,
+      'life-wrapped': lifewrappedHeroSvg,
     }
     return {
       ...project,

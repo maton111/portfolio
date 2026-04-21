@@ -1,0 +1,121 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="480" fill="#080808"/>
+
+  <!-- Subtle dot grid -->
+  <defs>
+    <pattern id="lw-dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1" fill="#ffffff" opacity="0.025"/>
+    </pattern>
+    <radialGradient id="lw-center-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#cc97ff" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#9c48ea" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#9c48ea" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-google-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4285f4" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4285f4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-spotify-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1db954" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1db954" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-netflix-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e50914" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e50914" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-instagram-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e1306c" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e1306c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-steam-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c7d5e0" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c7d5e0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lw-center-fill" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#cc97ff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#9c48ea" stop-opacity="0.08"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#lw-dots)"/>
+
+  <!-- Central glow -->
+  <ellipse cx="400" cy="240" rx="220" ry="190" fill="url(#lw-center-glow)"/>
+
+  <!-- Orbit ring (dashed) -->
+  <circle cx="400" cy="240" r="178" fill="none" stroke="#cc97ff" stroke-width="0.6" stroke-dasharray="5 10" opacity="0.18"/>
+
+  <!-- Connection lines to each platform node -->
+  <!-- Google top-left -->
+  <line x1="400" y1="240" x2="178" y2="120" stroke="#4285f4" stroke-width="1" opacity="0.25"/>
+  <!-- Spotify top-right -->
+  <line x1="400" y1="240" x2="622" y2="120" stroke="#1db954" stroke-width="1" opacity="0.25"/>
+  <!-- Netflix top-center -->
+  <line x1="400" y1="240" x2="400" y2="62" stroke="#e50914" stroke-width="1" opacity="0.25"/>
+  <!-- Instagram bottom-right -->
+  <line x1="400" y1="240" x2="622" y2="360" stroke="#e1306c" stroke-width="1" opacity="0.25"/>
+  <!-- Steam bottom-left -->
+  <line x1="400" y1="240" x2="178" y2="360" stroke="#c7d5e0" stroke-width="1" opacity="0.25"/>
+
+  <!-- ── Google node (top-left) ── -->
+  <circle cx="178" cy="120" r="36" fill="url(#lw-google-glow)"/>
+  <circle cx="178" cy="120" r="18" fill="#4285f4" opacity="0.12"/>
+  <circle cx="178" cy="120" r="11" fill="#4285f4" opacity="0.9"/>
+  <text x="178" y="161" text-anchor="middle" fill="#4285f4" font-size="9.5" font-family="'Courier New', monospace" letter-spacing="0.12em" opacity="0.8">GOOGLE</text>
+
+  <!-- ── Spotify node (top-right) ── -->
+  <circle cx="622" cy="120" r="36" fill="url(#lw-spotify-glow)"/>
+  <circle cx="622" cy="120" r="18" fill="#1db954" opacity="0.12"/>
+  <circle cx="622" cy="120" r="11" fill="#1db954" opacity="0.9"/>
+  <text x="622" y="161" text-anchor="middle" fill="#1db954" font-size="9.5" font-family="'Courier New', monospace" letter-spacing="0.12em" opacity="0.8">SPOTIFY</text>
+
+  <!-- ── Netflix node (top-center) ── -->
+  <circle cx="400" cy="62" r="36" fill="url(#lw-netflix-glow)"/>
+  <circle cx="400" cy="62" r="18" fill="#e50914" opacity="0.12"/>
+  <circle cx="400" cy="62" r="11" fill="#e50914" opacity="0.9"/>
+  <text x="400" y="27" text-anchor="middle" fill="#e50914" font-size="9.5" font-family="'Courier New', monospace" letter-spacing="0.12em" opacity="0.8">NETFLIX</text>
+
+  <!-- ── Instagram node (bottom-right) ── -->
+  <circle cx="622" cy="360" r="36" fill="url(#lw-instagram-glow)"/>
+  <circle cx="622" cy="360" r="18" fill="#e1306c" opacity="0.12"/>
+  <circle cx="622" cy="360" r="11" fill="#e1306c" opacity="0.9"/>
+  <text x="622" y="401" text-anchor="middle" fill="#e1306c" font-size="9.5" font-family="'Courier New', monospace" letter-spacing="0.12em" opacity="0.8">INSTAGRAM</text>
+
+  <!-- ── Steam node (bottom-left) ── -->
+  <circle cx="178" cy="360" r="36" fill="url(#lw-steam-glow)"/>
+  <circle cx="178" cy="360" r="18" fill="#c7d5e0" opacity="0.12"/>
+  <circle cx="178" cy="360" r="11" fill="#c7d5e0" opacity="0.9"/>
+  <text x="178" y="401" text-anchor="middle" fill="#c7d5e0" font-size="9.5" font-family="'Courier New', monospace" letter-spacing="0.12em" opacity="0.8">STEAM</text>
+
+  <!-- ── Central hub ── -->
+  <circle cx="400" cy="240" r="52" fill="#0a0a0a"/>
+  <circle cx="400" cy="240" r="52" fill="url(#lw-center-fill)"/>
+  <circle cx="400" cy="240" r="52" fill="none" stroke="#cc97ff" stroke-width="1" opacity="0.4"/>
+
+  <!-- LW monogram -->
+  <text x="400" y="247" text-anchor="middle" dominant-baseline="middle" fill="#cc97ff" font-size="20" font-family="'Courier New', monospace" font-weight="700" letter-spacing="0.06em" opacity="0.95">LW</text>
+
+  <!-- Corner circuit decorations (top-left) -->
+  <line x1="0" y1="40" x2="60" y2="40" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <line x1="40" y1="0" x2="40" y2="60" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <rect x="36" y="36" width="8" height="8" fill="none" stroke="#cc97ff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Corner circuit decorations (top-right) -->
+  <line x1="800" y1="40" x2="740" y2="40" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <line x1="760" y1="0" x2="760" y2="60" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <rect x="756" y="36" width="8" height="8" fill="none" stroke="#cc97ff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Corner circuit decorations (bottom-left) -->
+  <line x1="0" y1="440" x2="60" y2="440" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <line x1="40" y1="480" x2="40" y2="420" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <rect x="36" y="436" width="8" height="8" fill="none" stroke="#cc97ff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Corner circuit decorations (bottom-right) -->
+  <line x1="800" y1="440" x2="740" y2="440" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <line x1="760" y1="480" x2="760" y2="420" stroke="#cc97ff" stroke-width="0.5" opacity="0.12"/>
+  <rect x="756" y="436" width="8" height="8" fill="none" stroke="#cc97ff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Bottom tagline -->
+  <text x="400" y="456" text-anchor="middle" fill="#cc97ff" font-size="9" font-family="'Courier New', monospace" letter-spacing="0.22em" opacity="0.35">IL TUO ANNO IN DATI</text>
+</svg>

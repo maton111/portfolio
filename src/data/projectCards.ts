@@ -2,6 +2,7 @@ import teamsystemSvg from '../assets/teamsystem_enterprise_backend_hero.svg'
 import legacySvg from '../assets/legacy_refactoring_hero.svg'
 import opcmHeroBannerSvg from '../assets/opcm_hero_banner.svg'
 import neuroscopeSvg from '../assets/neuroscope_svg_image.svg'
+import lifewrappedHeroSvg from '../assets/lifewrapped_hero.svg'
 
 export type ProjectCard = {
   id: string
@@ -78,5 +79,17 @@ export const projectCards: ProjectCard[] = [
     tone: 'orange',
     visual: 'kernel',
     featured: true,
+  },
+  {
+    id: 'LW-WEB-06',
+    slug: 'life-wrapped',
+    title: 'LifeWrapped',
+    difficulty: 'Product',
+    description: '',
+    tags: ['Next.js 16', 'React 19', '.NET 8', 'PostgreSQL', 'Tailwind CSS', 'Framer Motion', 'Vercel', 'Railway'],
+    icon: 'auto_awesome_mosaic',
+    visual: 'circuit',
+    backgroundImage: lifewrappedHeroSvg,
+    githubUrl: 'https://github.com/maton111/lifewrapped',
   },
 ]
