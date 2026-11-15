@@ -1,9 +1,14 @@
+/* Boot intro. Same visual language as the 404 page: a giant outlined counter that
+   fills with solid colour as the sequence advances, glitch slices, terminal log. */
+
 .boot-screen {
+  --boot-progress: 0%;
   position: fixed;
   inset: 0;
   z-index: var(--z-boot);
   display: grid;
   place-items: center;
+  padding: 24px;
   overflow: hidden;
   background: var(--bg-base);
   color: var(--text-main);
@@ -11,7 +16,8 @@
 
 .boot-grid,
 .boot-scanlines,
-.boot-vignette {
+.boot-vignette,
+.boot-sweep {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -19,253 +25,244 @@
 
 .boot-grid {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--accent-green) 5%, transparent) 1px, transparent 1px);
-  background-size: 24px 24px;
+    linear-gradient(to right, color-mix(in oklab, var(--accent-green) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--accent-green) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 10%, transparent 75%);
+  animation: boot-grid-drift 12s linear infinite;
 }
 
 .boot-scanlines {
-  background: linear-gradient(to bottom, transparent 50%, color-mix(in oklab, var(--accent-green) 2%, transparent) 50%);
+  background: linear-gradient(to bottom, transparent 50%, color-mix(in oklab, var(--accent-green) 3%, transparent) 50%);
   background-size: 100% 4px;
-  mix-blend-mode: screen;
 }
 
 .boot-vignette {
   background:
-    radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--accent-green) 9%, transparent), transparent 40%),
-    radial-gradient(circle at 86% 78%, rgba(255, 122, 0, 0.08), transparent 42%),
-    radial-gradient(circle at 50% 45%, transparent 35%, rgba(11, 15, 12, 0.9) 90%);
+    radial-gradient(circle at 18% 22%, color-mix(in oklab, var(--accent-green) 11%, transparent), transparent 42%),
+    radial-gradient(circle at 88% 82%, color-mix(in oklab, var(--accent-orange) 8%, transparent), transparent 40%);
 }
 
-.boot-main {
+/* A light bar that travels down the screen, like a CRT refresh */
+.boot-sweep {
+  inset: auto 0 100% 0;
+  height: 28vh;
+  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--accent-green) 7%, transparent) 70%, color-mix(in oklab, var(--accent-green) 22%, transparent));
+  border-bottom: 1px solid color-mix(in oklab, var(--accent-green) 45%, transparent);
+  animation: boot-sweep 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.boot-shell {
   position: relative;
-  z-index: 2;
-  width: min(920px, calc(100% - 32px));
-  display: grid;
-  gap: 26px;
+  z-index: 1;
+  width: min(760px, 100%);
+  animation: boot-shell-in 0.7s var(--ease-out-emphasized) both;
 }
 
-.boot-header {
-  text-align: center;
-  display: grid;
-  gap: 12px;
-}
-
-.boot-header > div {
-  display: inline-flex;
+.boot-eyebrow {
+  display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
-  opacity: 0.76;
-}
-
-.boot-header > div span {
-  width: 48px;
-  height: 1px;
-  background: color-mix(in oklab, var(--accent-mint) 35%, transparent);
-}
-
-.boot-header small {
-  font-family: var(--font-headline), sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
   color: var(--accent-mint);
 }
 
-.boot-header h1 {
-  margin: 0;
-  font-family: var(--font-headline), sans-serif;
-  font-size: clamp(2rem, 8vw, 4.4rem);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-  color: var(--text-strong);
-  text-shadow: 0 0 18px color-mix(in oklab, var(--accent-green) 24%, transparent);
-}
-
-.boot-module {
-  border: 1px solid rgba(59, 75, 61, 0.45);
-  background: rgba(24, 29, 25, 0.45);
-  backdrop-filter: blur(10px);
-  padding: 20px;
-  display: grid;
-  gap: 14px;
-}
-
-.boot-module-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 16px;
-}
-
-.boot-module-head p,
-.boot-module-head strong,
-.boot-module-head b {
-  margin: 0;
-}
-
-.boot-module-head p {
-  font-family: var(--font-headline), sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.63rem;
-  color: color-mix(in oklab, var(--accent-green) 75%, transparent);
-}
-
-.boot-module-head strong {
-  display: block;
-  margin-top: 4px;
-  font-family: var(--font-headline), sans-serif;
-  text-transform: uppercase;
-  font-size: 0.93rem;
-  color: var(--accent-green);
-  letter-spacing: 0.05em;
-}
-
-.boot-module-head b {
-  font-family: var(--font-headline), sans-serif;
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--accent-green);
-}
-
-.boot-segments {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 6px;
-  min-height: 36px;
-  padding: 4px;
-  border: 1px solid rgba(59, 75, 61, 0.4);
-  background: rgba(39, 43, 39, 0.3);
-}
-
-.boot-segments span {
-  border-radius: 2px;
-  background: rgba(24, 29, 25, 0.7);
-  transition: background 180ms ease, box-shadow 180ms ease;
-}
-
-.boot-segments span.filled {
-  background: var(--accent-green);
-  box-shadow: 0 0 14px color-mix(in oklab, var(--accent-green) 35%, transparent);
-}
-
-.boot-log {
-  position: relative;
-  min-height: 150px;
-  max-height: 180px;
-  overflow: hidden;
-  border: 1px solid rgba(59, 75, 61, 0.35);
-  padding: 10px 12px;
-  background: rgba(16, 20, 17, 0.5);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.7rem;
-  line-height: 1.45;
-  color: color-mix(in oklab, var(--accent-mint) 84%, transparent);
-}
-
-.boot-log p {
-  margin: 0 0 4px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  animation: log-enter 280ms ease;
-}
-
-.boot-log > div {
-  position: absolute;
-  inset: auto 0 0;
-  height: 34px;
-  background: linear-gradient(to top, rgba(16, 20, 17, 1), transparent);
-}
-
-.boot-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  opacity: 0.72;
-}
-
-.boot-footer > div {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.boot-footer i {
+.boot-eyebrow-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--accent-green);
-  box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 65%, transparent);
-  animation: pulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 12px var(--accent-green);
+  animation: boot-blink 0.9s steps(1) infinite;
 }
 
-.boot-footer small {
-  font-family: var(--font-headline), sans-serif;
-  font-size: 0.6rem;
+/* ── Counter ── */
+.boot-counter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(10px, 2vw, 22px);
+}
+
+.boot-counter {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-headline);
+  font-size: clamp(6.5rem, 30vw, 15rem);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: transparent;
+  -webkit-text-stroke: 2px color-mix(in oklab, var(--accent-green) 80%, transparent);
+  user-select: none;
+}
+
+/* Solid layer: rises from the baseline with the real progress value */
+.boot-counter::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--accent-green);
+  -webkit-text-stroke: 0;
+  clip-path: inset(calc(100% - var(--boot-progress)) 0 0 0);
+  text-shadow: 0 0 60px color-mix(in oklab, var(--accent-green) 45%, transparent);
+  transition: clip-path 0.18s linear;
+}
+
+/* Glitch layer: a thin orange slice that jumps around */
+.boot-counter::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--accent-orange);
+  -webkit-text-stroke: 0;
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: boot-glitch 2.1s steps(1) infinite;
+}
+
+.boot-counter-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: clamp(8px, 2.2vw, 22px);
+}
+
+.boot-percent {
+  font-family: var(--font-headline);
+  font-size: clamp(1.6rem, 6vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-strong);
+}
+
+.boot-build {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Status + meter ── */
+.boot-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 1.6em;
+  margin: 22px 0 14px;
+  font-family: var(--font-headline);
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+
+.boot-status-prefix {
+  font-family: var(--font-mono);
+  color: var(--accent-green);
+}
+
+.boot-caret {
+  width: 9px;
+  height: 1.05em;
+  background: var(--accent-green);
+  animation: boot-blink 1s steps(1) infinite;
+}
+
+.boot-meter {
+  position: relative;
+  height: 14px;
+}
+
+.boot-meter-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-mint), var(--accent-green));
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent-green) 70%, transparent);
+  transform: scaleX(var(--boot-ratio, 0));
+  transform-origin: left center;
+  transition: transform 0.18s linear;
+}
+
+.boot-meter-ticks {
+  position: absolute;
+  inset: 5px 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.boot-meter-ticks span {
+  width: 1px;
+  height: 100%;
+  background: color-mix(in oklab, var(--outline) 70%, transparent);
+  transition: background-color 0.2s ease, height 0.2s ease;
+}
+
+.boot-meter-ticks span:nth-child(5n + 1) {
+  width: 2px;
+}
+
+.boot-meter-ticks span.is-on {
+  background: var(--accent-green);
+}
+
+/* ── Log ── */
+.boot-log {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  height: 132px;
+  margin-top: 22px;
+  padding: 14px 16px;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--outline) 50%, transparent);
+  border-left: 3px solid var(--accent-green);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--panel-strong) 45%, transparent);
+}
+
+.boot-log p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: color-mix(in oklab, var(--text-muted) 75%, transparent);
+  animation: boot-log-in 0.25s var(--ease-out-emphasized) both;
+}
+
+.boot-log p.is-ok {
   color: var(--accent-mint);
 }
 
-.boot-footer .material-symbols-outlined {
-  font-size: 1rem;
-  color: color-mix(in oklab, var(--accent-mint) 74%, transparent);
+.boot-log p:last-child {
+  color: var(--text-strong);
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
-  }
+/* ── Footer ── */
+.boot-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
 }
 
-@keyframes log-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.boot-identity {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-
-@media (max-width: 640px) {
-  .boot-main {
-    width: calc(100% - 20px);
-    gap: 18px;
-  }
-
-  .boot-module {
-    padding: 14px;
-  }
-
-  .boot-module-head b {
-    font-size: 1.5rem;
-  }
-
-  .boot-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .boot-log p,
-  .boot-footer i,
-  .boot-segments span {
-    animation: none;
-    transition: none;
-  }
-}
-
 
 .boot-skip {
   display: inline-flex;
@@ -297,4 +294,79 @@
   font-family: inherit;
   font-size: 0.6rem;
   color: var(--text-muted);
+}
+
+/* ── Completion: the counter locks in, flashes, and the shell lifts away ── */
+.boot-screen.is-complete .boot-counter::after {
+  animation: none;
+}
+
+.boot-screen.is-complete .boot-counter {
+  animation: boot-lock 0.38s var(--ease-out-emphasized) both;
+}
+
+.boot-screen.is-complete .boot-sweep {
+  animation: boot-flash 0.38s ease-out both;
+  inset: 0;
+  height: auto;
+  border: none;
+  background: var(--accent-green);
+}
+
+@keyframes boot-shell-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes boot-grid-drift {
+  to { background-position: 48px 48px; }
+}
+
+@keyframes boot-sweep {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(100vh + 28vh)); }
+}
+
+@keyframes boot-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes boot-glitch {
+  0%, 100% { opacity: 0; }
+  38% { opacity: 0.9; clip-path: inset(18% 0 66% 0); transform: translateX(-10px); }
+  41% { opacity: 0.9; clip-path: inset(62% 0 20% 0); transform: translateX(8px); }
+  44% { opacity: 0; }
+  78% { opacity: 0.8; clip-path: inset(40% 0 48% 0); transform: translateX(6px); }
+  80% { opacity: 0; }
+}
+
+@keyframes boot-lock {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+
+@keyframes boot-flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.16; }
+  100% { opacity: 0; }
+}
+
+@keyframes boot-log-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 560px) {
+  .boot-log {
+    height: 112px;
+  }
+
+  .boot-identity {
+    display: none;
+  }
+
+  .boot-footer {
+    justify-content: flex-end;
+  }
 }

@@ -5,7 +5,7 @@ Personal portfolio with a HUD / terminal visual language: [mattiaarchina.com](ht
 ## Stack
 
 - **Frontend:** React 19, TypeScript, Vite, React Router, i18next (IT / EN)
-- **Visuals:** three.js (hero scene, lazy-loaded), cobe (contact globe), plain CSS with design tokens in `src/index.css`
+- **Visuals:** WebGL2 shader (hero background, no 3D library), cobe (contact globe), plain CSS with design tokens in `src/index.css`
 - **Backend:** small Express server (`server.js`) for the contact form (Nodemailer) and repo metadata
 - **Deploy:** GitHub Actions on a self-hosted runner → nginx + PM2 (`.github/workflows/deploy.yml`). Every push to `main` deploys.
 
@@ -30,7 +30,7 @@ src/
   components/
     layout/        Site footer
     overlays/      Boot intro, command palette, glitch transition
-    ui/            Reusable pieces (3D hero, HUD card, globe, …)
+    ui/            Reusable pieces (hero backdrop shader, HUD card, globe, …)
   hooks/           useTheme, useReveal, useInitialBoot, useDocumentMeta, …
   data/            Structural content (projects, blog posts, navigation)
   i18n/locales/    All copy, in it.json and en.json

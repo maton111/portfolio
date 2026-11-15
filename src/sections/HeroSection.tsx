@@ -1,7 +1,8 @@
-import {lazy, Suspense, useEffect, useRef, useState, type CSSProperties} from 'react'
+import {useEffect, useRef, useState, type CSSProperties} from 'react'
 import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
 import DecryptedText from '../components/ui/DecryptedText'
+import HeroBackdrop from '../components/ui/HeroBackdrop'
 import {openCommandPalette} from '../utils/commandPalette'
 import {useTheme} from '../hooks/useTheme'
 import logoFile from '../assets/logo.webp'
@@ -10,11 +11,6 @@ import {scrollToSection} from '../hooks/useSectionScroll'
 import {SECTION_IDS, type SectionId} from '../data/sectionNavigation'
 import './HeroSection.css'
 import './HeroHeader.css'
-
-// three.js is the heaviest dependency: load it in its own chunk, in parallel with first paint.
-const loadHero3D = () => import('../components/ui/Hero3D')
-const Hero3D = lazy(loadHero3D)
-void loadHero3D()
 
 const IS_APPLE = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
@@ -262,11 +258,9 @@ function HeroSection() {
       </div>
 
       <main className="hero-main" id="home" tabIndex={-1}>
-        {/* 3D interactive background */}
+        {/* Interactive topographic background */}
         <div className="hero-canvas-wrap" aria-hidden="true">
-          <Suspense fallback={null}>
-            <Hero3D theme={theme} />
-          </Suspense>
+          <HeroBackdrop theme={theme} />
           <div className="hero-scrim" />
         </div>
 
