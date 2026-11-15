@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import logoFile from '../../assets/logo.png'
+import logoFile from '../../assets/logo.webp'
 
 interface Hero3DProps {
   theme?: string
@@ -284,8 +284,10 @@ export default function Hero3D({ theme = 'dark' }: Hero3DProps) {
     setTimeout(() => { morphTarget = 1 }, 500)
 
     const clock = new THREE.Clock()
-    let raf: number
+    let raf = 0
+    let running = false
     const animate = () => {
+      if (!running) return
       const dt = clock.getDelta(), t = clock.getElapsedTime()
       const api = apiRef.current
 
@@ -321,10 +323,33 @@ export default function Hero3D({ theme = 'dark' }: Hero3DProps) {
       renderer.render(scene, camera)
       raf = requestAnimationFrame(animate)
     }
-    animate()
+
+    // Render only while the hero is on screen and the tab is visible: no GPU work behind the fold.
+    let inView = true
+    const syncLoop = () => {
+      const shouldRun = inView && !document.hidden
+      if (shouldRun === running) return
+      running = shouldRun
+      if (running) {
+        clock.getDelta() // drop the time accumulated while paused
+        animate()
+      } else {
+        cancelAnimationFrame(raf)
+      }
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting
+      syncLoop()
+    })
+    io.observe(mount)
+    document.addEventListener('visibilitychange', syncLoop)
+    syncLoop()
 
     return () => {
+      running = false
       cancelAnimationFrame(raf)
+      io.disconnect()
+      document.removeEventListener('visibilitychange', syncLoop)
       ro.disconnect()
       mount.removeEventListener('pointermove', onMove)
       mount.removeEventListener('pointerenter', onEnter)

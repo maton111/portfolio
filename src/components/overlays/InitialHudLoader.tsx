@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import './InitialHudLoader.css'
 
@@ -5,12 +6,25 @@ type InitialHudLoaderProps = {
   progress: number
   activeLabel: string
   logs: string[]
+  onSkip: () => void
 }
 
 const SEGMENTS = 12
 
-function InitialHudLoader({ progress, activeLabel, logs }: InitialHudLoaderProps) {
+function InitialHudLoader({ progress, activeLabel, logs, onSkip }: InitialHudLoaderProps) {
   const { t } = useTranslation()
+
+  // Never hold a visitor hostage: Esc, Enter or Space skips the intro.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        onSkip()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [onSkip])
   const filledSegments = Math.round((progress / 100) * SEGMENTS)
 
   return (
@@ -64,17 +78,10 @@ function InitialHudLoader({ progress, activeLabel, logs }: InitialHudLoaderProps
             <i />
             <small>BUILD_VERSION: 1.1.0 // STATUS: INITIALIZING</small>
           </div>
-          <div>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              terminal
-            </span>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              memory
-            </span>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              settings_input_component
-            </span>
-          </div>
+          <button type="button" className="boot-skip" onClick={onSkip}>
+            {t('boot.skip')}
+            <kbd>esc</kbd>
+          </button>
         </footer>
       </main>
     </div>

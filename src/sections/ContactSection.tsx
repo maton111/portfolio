@@ -2,7 +2,7 @@ import {useRef} from 'react'
 import {useTranslation} from 'react-i18next'
 import {directChannels, externalNodes} from '../data/contactContent'
 import {useContactForm} from '../hooks/useContactForm'
-import turinImage from '../assets/turin.png'
+import turinImage from '../assets/turin.webp'
 import {useReveal} from '../hooks/useReveal'
 import './ContactSection.css'
 import SystemLocationGlobe from "../components/ui/SystemLocationGlobe.tsx";

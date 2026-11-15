@@ -1,6 +1,6 @@
 import {type PointerEvent, useMemo, useRef, useState} from 'react'
 import { useTranslation } from 'react-i18next'
-import profileImage from '../../assets/sfondo_card_opcm.png'
+import profileImage from '../../assets/sfondo_card_opcm.webp'
 import './OpcmProfileCard.css'
 
 type OpcmProfileCardProps = {

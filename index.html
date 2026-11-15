@@ -1,18 +1,91 @@
 <!doctype html>
-<html lang="en">
+<html lang="it" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' http://localhost:4307 http://127.0.0.1:4307 https://mattiaarchina.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' http://localhost:4307 http://127.0.0.1:4307 https://mattiaarchina.com; object-src 'none'; base-uri 'self'; form-action 'self'"
     />
-    <title>Portfolio | Mattia Archinà</title>
+
+    <title>Mattia Archinà · Backend developer .NET, direzione full stack</title>
+    <meta
+      name="description"
+      content="Portfolio di Mattia Archinà: backend developer .NET con oltre 5 anni in ambito enterprise, in crescita verso il full stack con React e Flutter. Progetti, percorso e contatti."
+    />
+    <meta name="author" content="Mattia Archinà" />
+    <meta name="theme-color" content="#0b0f0c" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="https://mattiaarchina.com/" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mattia Archinà" />
+    <meta property="og:title" content="Mattia Archinà · Backend developer .NET, direzione full stack" />
+    <meta
+      property="og:description"
+      content="Backend .NET enterprise, modernizzazione di codice legacy e prodotti full stack con React e Flutter."
+    />
+    <meta property="og:url" content="https://mattiaarchina.com/" />
+    <meta property="og:image" content="https://mattiaarchina.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mattia Archinà — Backend-first developer" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mattia Archinà · Backend developer .NET, direzione full stack" />
+    <meta
+      name="twitter:description"
+      content="Backend .NET enterprise, modernizzazione di codice legacy e prodotti full stack con React e Flutter."
+    />
+    <meta name="twitter:image" content="https://mattiaarchina.com/og-image.png" />
+
+    <!-- Fonts: preconnect + stylesheet links load in parallel with the bundle (no CSS @import chain) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=block"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mattia Archinà",
+        "alternateName": "maton11",
+        "url": "https://mattiaarchina.com/",
+        "image": "https://mattiaarchina.com/og-image.png",
+        "jobTitle": "Backend Developer",
+        "description": "Backend developer .NET con esperienza enterprise, in crescita verso il full stack con React e Flutter.",
+        "address": { "@type": "PostalAddress", "addressLocality": "Torino", "addressCountry": "IT" },
+        "knowsAbout": [".NET", "C#", "ASP.NET Core", "Clean Architecture", "PostgreSQL", "React", "TypeScript", "Flutter"],
+        "sameAs": [
+          "https://github.com/maton111",
+          "https://www.linkedin.com/in/mattia-archin%C3%A0/",
+          "https://www.instagram.com/maton11"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 32px; color: #e0e3de; background: #0b0f0c">
+        Mattia Archinà — Backend developer (.NET, React, Flutter). Questo sito richiede JavaScript.
+        Contatti: github.com/maton111
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

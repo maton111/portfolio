@@ -1,14 +1,22 @@
-import {useEffect, useState} from 'react'
+import {lazy, Suspense, useEffect, useRef, useState, type CSSProperties} from 'react'
 import {useTranslation} from 'react-i18next'
 import HeroHudCard from '../components/ui/HeroHudCard'
 import DecryptedText from '../components/ui/DecryptedText'
-import Hero3D from '../components/ui/Hero3D'
-import logoFile from '../assets/logo.png'
+import {openCommandPalette} from '../utils/commandPalette'
+import {useTheme} from '../hooks/useTheme'
+import logoFile from '../assets/logo.webp'
 import cvFile from '../assets/CV - Mattia Archinà.pdf'
 import {scrollToSection} from '../hooks/useSectionScroll'
-import type {SectionId} from '../data/sectionNavigation'
+import {SECTION_IDS, type SectionId} from '../data/sectionNavigation'
 import './HeroSection.css'
-import AnimatedContent from '../components/ui/AnimatedContent.tsx'
+import './HeroHeader.css'
+
+// three.js is the heaviest dependency: load it in its own chunk, in parallel with first paint.
+const loadHero3D = () => import('../components/ui/Hero3D')
+const Hero3D = lazy(loadHero3D)
+void loadHero3D()
+
+const IS_APPLE = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
 function calcAge(birthDate: Date): number {
   const today = new Date()
@@ -37,19 +45,13 @@ const TAGLINES: Record<'en' | 'it', string[]> = {
 
 function HeroSection() {
   const { t, i18n } = useTranslation()
-  const [activeSection, setActiveSection] = useState('home')
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    try { return (localStorage.getItem('maton11_theme') ?? 'dark') as 'dark' | 'light' }
-    catch { return 'dark' }
-  })
+  const [activeSection, setActiveSection] = useState<SectionId>('home')
+  const { theme, toggleTheme } = useTheme()
   const [tagIdx, setTagIdx] = useState(0)
   const [tagKey, setTagKey] = useState(0)
-
-  // Apply theme to document
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    try { localStorage.setItem('maton11_theme', theme) } catch {}
-  }, [theme])
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const progressRef = useRef<HTMLSpanElement>(null)
 
   // Rotating taglines
   useEffect(() => {
@@ -62,25 +64,62 @@ function HeroSection() {
     return () => clearInterval(iv)
   }, [])
 
-  // Active section detection
+  // Active section detection + reading progress (one rAF-throttled scroll listener)
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'projects', 'timeline', 'blog', 'contact']
-    const handleScroll = () => {
-      const scrollY = window.scrollY + window.innerHeight * 0.28
-      let current = 'home'
-      for (const id of sectionIds) {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const marker = window.scrollY + window.innerHeight * 0.28
+      let current: SectionId = 'home'
+      for (const id of SECTION_IDS) {
         const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) current = id
+        if (el && el.getBoundingClientRect().top + window.scrollY <= marker) current = id
       }
       setActiveSection(current)
+      setIsScrolled(window.scrollY > 12)
+
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
+  // Mobile menu: lock scroll, close on Escape or when the viewport grows to desktop
+  useEffect(() => {
+    if (!isMenuOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMenuOpen(false)
+    }
+    const desktop = window.matchMedia('(min-width: 900px)')
+    const onChange = () => { if (desktop.matches) setIsMenuOpen(false) }
+    window.addEventListener('keydown', onKeyDown)
+    desktop.addEventListener('change', onChange)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+      desktop.removeEventListener('change', onChange)
+    }
+  }, [isMenuOpen])
+
+  const goTo = (id: SectionId) => {
+    setIsMenuOpen(false)
+    scrollToSection(id)
+  }
+
   const toggleLang = () => { void i18n.changeLanguage(i18n.language === 'it' ? 'en' : 'it') }
-  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
 
   const lang = i18n.language === 'it' ? 'it' : 'en'
   const taglines = TAGLINES[lang]
@@ -114,32 +153,16 @@ function HeroSection() {
     { icon: 'schedule', text: t('hero.scannerResponse'), highlighted: false },
   ]
 
-  const navItems = [
-    { id: 'home',     label: t('navbar.home') },
-    { id: 'about',    label: t('navbar.about') },
-    { id: 'skills',   label: t('navbar.skills') },
-    { id: 'projects', label: t('navbar.projects') },
-    { id: 'timeline', label: t('navbar.timeline') },
-    { id: 'blog',     label: t('navbar.blog') },
-    { id: 'contact',  label: t('navbar.contact') },
-  ]
+  const navItems = SECTION_IDS.map((id) => ({ id, label: t(`navbar.${id}`) }))
 
   const isDark = theme === 'dark'
 
   return (
     <div className="hero-page">
-      <header className="topbar">
-        <nav>
-          <button className="logo" type="button" aria-label={t('navbar.logoAriaLabel')} onClick={() => scrollToSection('home')}>
-            <img
-              src={logoFile}
-              alt="Logo Mattia Archina"
-              style={{
-                filter: isDark
-                  ? 'drop-shadow(0 0 10px color-mix(in oklab, var(--accent-green) 50%, transparent))'
-                  : 'drop-shadow(0 0 8px color-mix(in oklab, var(--accent-green) 30%, transparent))',
-              }}
-            />
+      <header className={`topbar${isScrolled ? ' is-scrolled' : ''}${isMenuOpen ? ' is-menu-open' : ''}`}>
+        <nav aria-label={t('navbar.mainNavAriaLabel')}>
+          <button className="logo" type="button" aria-label={t('navbar.logoAriaLabel')} onClick={() => goTo('home')}>
+            <img src={logoFile} alt="" width={34} height={34} />
             <div className="logo-label">
               <span className="logo-name">maton11</span>
               <span className="logo-role">Builder Dev</span>
@@ -151,7 +174,8 @@ function HeroSection() {
                 <button
                   type="button"
                   className={activeSection === item.id ? 'nav-active' : ''}
-                  onClick={() => scrollToSection(item.id as SectionId)}
+                  aria-current={activeSection === item.id ? 'true' : undefined}
+                  onClick={() => goTo(item.id)}
                 >
                   {item.label}
                   <span className="nav-underline" aria-hidden="true" />
@@ -165,28 +189,84 @@ function HeroSection() {
               <span className="availability-label">{t('hero.availability')}</span>
             </span>
             <button
+              className="palette-trigger"
+              type="button"
+              onClick={openCommandPalette}
+              aria-label={t('palette.open')}
+              title={t('palette.open')}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">search</span>
+              <kbd>{IS_APPLE ? '\u2318' : 'Ctrl'} K</kbd>
+            </button>
+            <button
               className="theme-toggle-btn"
               type="button"
               onClick={toggleTheme}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              title={isDark ? 'Light mode' : 'Dark mode'}
+              aria-label={isDark ? t('navbar.themeToLight') : t('navbar.themeToDark')}
+              title={isDark ? t('navbar.themeToLight') : t('navbar.themeToDark')}
             >
-              <span className="material-symbols-outlined" style={{ color: 'var(--accent-green)' }} aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">
                 {isDark ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
             <button className="lang-chip" type="button" onClick={toggleLang} aria-label={t('hero.langSwitchAriaLabel')}>
-              <span className="material-symbols-outlined" style={{ color: 'var(--accent-mint)', fontSize: '1rem' }} aria-hidden="true">translate</span>
+              <span className="material-symbols-outlined" aria-hidden="true">translate</span>
               <span className="lang-chip-label">{lang === 'it' ? 'IT' : 'EN'}</span>
+            </button>
+            <button
+              className="menu-toggle"
+              type="button"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? t('navbar.closeMenu') : t('navbar.openMenu')}
+              onClick={() => setIsMenuOpen(open => !open)}
+            >
+              <span className="menu-toggle-bars" aria-hidden="true"><i /><i /></span>
             </button>
           </div>
         </nav>
+        <span className="topbar-progress" ref={progressRef} aria-hidden="true" />
       </header>
 
-      <main className="hero-main" id="home">
+      <div
+        className={`mobile-menu${isMenuOpen ? ' is-open' : ''}`}
+        id="mobile-menu"
+        aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen}
+      >
+        <ol className="mobile-menu-list">
+          {navItems.map((item, index) => (
+            <li key={item.id} style={{ '--stagger-i': index } as CSSProperties}>
+              <button
+                type="button"
+                className={activeSection === item.id ? 'is-current' : ''}
+                onClick={() => goTo(item.id)}
+              >
+                <span className="mobile-menu-index">{String(index).padStart(2, '0')}</span>
+                {item.label}
+                <span className="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+        <div className="mobile-menu-footer">
+          <span className="hero-avail">
+            <span className="availability-dot" aria-hidden="true" />
+            {t('hero.availability')}
+          </span>
+          <a className="btn btn-primary" href={cvFile} download="CV-Mattia-Archina.pdf">
+            {t('hero.ctaPrimary')}
+            <span className="material-symbols-outlined" aria-hidden="true">download</span>
+          </a>
+        </div>
+      </div>
+
+      <main className="hero-main" id="home" tabIndex={-1}>
         {/* 3D interactive background */}
         <div className="hero-canvas-wrap" aria-hidden="true">
-          <Hero3D theme={theme} />
+          <Suspense fallback={null}>
+            <Hero3D theme={theme} />
+          </Suspense>
           <div className="hero-scrim" />
         </div>
 
@@ -213,11 +293,7 @@ function HeroSection() {
               {taglines.map((_, i) => (
                 <span
                   key={i}
-                  className="hero-tag-dot"
-                  style={{
-                    background: i === tagIdx ? 'var(--accent-green)' : 'color-mix(in oklab, var(--text-main) 18%, transparent)',
-                    width: i === tagIdx ? 18 : 6,
-                  }}
+                  className={`hero-tag-dot${i === tagIdx ? ' is-active' : ''}`}
                 />
               ))}
             </div>
@@ -239,28 +315,16 @@ function HeroSection() {
               </button>
             </div>
             <div className="hero-trust">
-              <span className="material-symbols-outlined" style={{ color: 'var(--accent-mint)' }} aria-hidden="true">code</span>
+              <span className="material-symbols-outlined" aria-hidden="true">code</span>
               {t('hero.trust')}
             </div>
             <div className="hero-hint" aria-hidden="true">
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>touch_app</span>
+              <span className="material-symbols-outlined">touch_app</span>
               {lang === 'it' ? 'Muovi il mouse · Clicca per l\'onda' : 'Move your mouse · Click to pulse'}
             </div>
           </div>
 
-          <AnimatedContent
-            className="hud-slot"
-            distance={500}
-            direction="horizontal"
-            reverse={false}
-            duration={1.6}
-            ease="power3.out"
-            initialOpacity={0}
-            animateOpacity={false}
-            scale={1}
-            threshold={0.1}
-            delay={0}
-          >
+          <div className="hud-slot">
             <HeroHudCard
               name="Mattia Archinà"
               role="Builder Dev"
@@ -269,7 +333,7 @@ function HeroSection() {
               quests={quests}
               tags={tags}
             />
-          </AnimatedContent>
+          </div>
         </section>
       </main>
 

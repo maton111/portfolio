@@ -24,14 +24,11 @@ function DecryptedText({
     return scrambleChars.length > 0 ? scrambleChars : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   }, [scrambleChars])
 
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (prefersReducedMotion) {
-        setDisplay(text)
-        return
-      }
-    }
+    if (prefersReducedMotion) return
 
     let current = 0
     const target = text
@@ -63,9 +60,15 @@ function DecryptedText({
     }, Math.max(10, speed))
 
     return () => window.clearInterval(timer)
-  }, [text, speed, charSet])
+  }, [text, speed, charSet, prefersReducedMotion])
 
-  return <span className={className}>{display}</span>
+  // Assistive tech reads the real text once; the scramble is purely visual.
+  return (
+    <span className={className}>
+      <span aria-hidden="true">{prefersReducedMotion ? text : display}</span>
+      <span className="sr-only">{text}</span>
+    </span>
+  )
 }
 
 export default DecryptedText

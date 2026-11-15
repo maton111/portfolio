@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BOOT_STORAGE_KEY, bootTasks } from '../data/bootSequence'
 
@@ -8,6 +8,7 @@ type UseInitialBootResult = {
   progress: number
   activeLabel: string
   logs: string[]
+  skipBoot: () => void
 }
 
 const clamp = (value: number, min: number, max: number) =>
@@ -30,8 +31,12 @@ const formatLog = (template: string) =>
 
 export function useInitialBoot(): UseInitialBootResult {
   const { t } = useTranslation()
+  // Intro only: first visit of the session, on the home page, when motion is welcome.
   const initialVisible =
-    typeof window !== 'undefined' && !window.sessionStorage.getItem(BOOT_STORAGE_KEY)
+    typeof window !== 'undefined' &&
+    window.location.pathname === '/' &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !window.sessionStorage.getItem(BOOT_STORAGE_KEY)
 
   const [isBootVisible, setIsBootVisible] = useState(initialVisible)
   const [isPageGlitching, setIsPageGlitching] = useState(false)
@@ -52,6 +57,12 @@ export function useInitialBoot(): UseInitialBootResult {
         { total: 0, items: [] as Array<{ start: number; end: number }> },
       )
       .items
+  }, [])
+
+  const skipBoot = useCallback(() => {
+    window.sessionStorage.setItem(BOOT_STORAGE_KEY, '1')
+    setProgress(100)
+    setIsBootVisible(false)
   }, [])
 
   useEffect(() => {
@@ -148,6 +159,7 @@ export function useInitialBoot(): UseInitialBootResult {
       ? t('boot.initComplete')
       : t(`boot.${bootTasks[Math.min(taskIndex, bootTasks.length - 1)]?.id ?? ''}`, { defaultValue: t('boot.initFallback') }),
     logs,
+    skipBoot,
   }
 }
 

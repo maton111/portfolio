@@ -1,7 +1,7 @@
 .boot-screen {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: var(--z-boot);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -266,3 +266,35 @@
   }
 }
 
+
+.boot-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 12px;
+  border: 1px solid color-mix(in oklab, var(--accent-green) 35%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--accent-green) 6%, transparent);
+  color: var(--accent-mint);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.boot-skip:hover {
+  border-color: var(--accent-green);
+  background: color-mix(in oklab, var(--accent-green) 14%, transparent);
+  color: var(--accent-green);
+}
+
+.boot-skip kbd {
+  padding: 1px 5px;
+  border: 1px solid color-mix(in oklab, var(--outline) 80%, transparent);
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}

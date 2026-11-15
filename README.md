@@ -1,73 +1,45 @@
-# React + TypeScript + Vite
+# Portfolio — Mattia Archinà
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio with a HUD / terminal visual language: [mattiaarchina.com](https://mattiaarchina.com).
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React 19, TypeScript, Vite, React Router, i18next (IT / EN)
+- **Visuals:** three.js (hero scene, lazy-loaded), cobe (contact globe), plain CSS with design tokens in `src/index.css`
+- **Backend:** small Express server (`server.js`) for the contact form (Nodemailer) and repo metadata
+- **Deploy:** GitHub Actions on a self-hosted runner → nginx + PM2 (`.github/workflows/deploy.yml`). Every push to `main` deploys.
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Vite dev server on `http://localhost:4321` |
+| `npm run server` | Contact API on port `4307` (needs `.env`) |
+| `npm run dev-server` | Both of the above together |
+| `npm run build` | Type-check and production build to `dist/` |
+| `npm run lint` | ESLint |
 
-## Expanding the ESLint configuration
+Without the API running, the site works but the contact form and the "last update" readout fail gracefully.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  sections/        Home page sections (Hero, About, Skills, Projects, Timeline, Blog, Contact)
+  pages/           Routed pages (project notes, blog, 404) — each one is a lazy chunk
+  components/
+    layout/        Site footer
+    overlays/      Boot intro, command palette, glitch transition
+    ui/            Reusable pieces (3D hero, HUD card, globe, …)
+  hooks/           useTheme, useReveal, useInitialBoot, useDocumentMeta, …
+  data/            Structural content (projects, blog posts, navigation)
+  i18n/locales/    All copy, in it.json and en.json
+public/            favicon, Open Graph image, robots.txt, sitemap.xml, web manifest
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Things worth knowing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Command palette:** `Ctrl/⌘ + K` anywhere — sections, projects, posts, theme, language, CV.
+- **Boot intro:** shown once per session on the home page only; `Esc` skips it, and it is disabled under `prefers-reduced-motion`.
+- **Adding a project or post:** add the entry in `src/data/`, its copy in both locale files, and its URL in `public/sitemap.xml`.
+- **Images:** keep bundled assets small (WebP). `src/assets/logo.png` is the 2000px master and is not imported anywhere; the app uses `logo.webp`.

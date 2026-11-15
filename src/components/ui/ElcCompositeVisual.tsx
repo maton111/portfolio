@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import edlc1 from '../../assets/edlc1.png'
-import edlc2 from '../../assets/edlc2.png'
-import edlc3 from '../../assets/edlc3.png'
+import edlc1 from '../../assets/edlc1.webp'
+import edlc2 from '../../assets/edlc2.webp'
+import edlc3 from '../../assets/edlc3.webp'
 import '../../sections/ProjectsSection.css'
 
 export function ElcCompositeVisual() {
