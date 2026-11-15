@@ -28,9 +28,10 @@ src/
   sections/        Home page sections (Hero, About, Skills, Projects, Timeline, Blog, Contact)
   pages/           Routed pages (project notes, blog, 404) — each one is a lazy chunk
   components/
-    layout/        Site footer
+    layout/        Site header (sub-pages) and footer
     overlays/      Boot intro, command palette, glitch transition
     ui/            Reusable pieces (hero backdrop shader, HUD card, globe, …)
+  styles/          system.css: the shared design system (see below)
   hooks/           useTheme, useReveal, useInitialBoot, useDocumentMeta, …
   data/            Structural content (projects, blog posts, navigation)
   i18n/locales/    All copy, in it.json and en.json
@@ -38,6 +39,8 @@ public/            favicon, Open Graph image, robots.txt, sitemap.xml, web manif
 ```
 
 ## Things worth knowing
+
+- **Design system:** `src/styles/system.css` decides how every shared element looks: headlines, mono labels, panels, chips, buttons, form fields. CSS cascade layers make it authoritative (`base` < `components` < `system`), so section and page stylesheets only handle layout. To restyle something site-wide, change it there; to give a new element an existing look, add its selector to the matching list.
 
 - **Command palette:** `Ctrl/⌘ + K` anywhere — sections, projects, posts, theme, language, CV.
 - **Boot intro:** shown once per session on the home page only; `Esc` skips it, and it is disabled under `prefers-reduced-motion`.

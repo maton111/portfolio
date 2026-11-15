@@ -1,3 +1,7 @@
+/* Layout and section-specific styling. Shared primitives (headlines, labels, panels,
+   chips, buttons) are defined once in src/styles/system.css, which sits in a later
+   cascade layer and therefore wins over anything declared here. */
+@layer components {
 .projects-page {
   padding: 96px 24px 120px;
   background-color: var(--bg-base);
@@ -469,4 +473,5 @@
   .project-icon {
     opacity: 0.1;
   }
+}
 }

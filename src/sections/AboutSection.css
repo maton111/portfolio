@@ -1,3 +1,7 @@
+/* Layout and section-specific styling. Shared primitives (headlines, labels, panels,
+   chips, buttons) are defined once in src/styles/system.css, which sits in a later
+   cascade layer and therefore wins over anything declared here. */
+@layer components {
 /* ── Section shell ───────────────────────────────────────── */
 .about-page {
     padding: 104px 24px 100px;
@@ -172,13 +176,13 @@
 
 .about-origin-card {
     padding: 20px 18px;
-    border-radius: 0 !important;
-    border-left: 4px solid var(--accent-green) !important;
-    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    background: color-mix(in oklab, var(--panel) 68%, transparent) !important;
-    box-shadow: none !important;
+    border-radius: 0;
+    border-left: 4px solid var(--accent-green);
+    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    background: color-mix(in oklab, var(--panel) 68%, transparent);
+    box-shadow: none;
 }
 
 .about-origin-icon {
@@ -206,14 +210,14 @@
 
 /* ── Philosophy card ─────────────────────────────────────── */
 .about-philosophy {
-    padding: 26px !important;
-    border-radius: 0 !important;
-    border-left: 4px solid var(--accent-orange) !important;
-    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent) !important;
-    background: color-mix(in oklab, var(--panel) 68%, transparent) !important;
-    box-shadow: none !important;
+    padding: 26px;
+    border-radius: 0;
+    border-left: 4px solid var(--accent-orange);
+    border-top: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    border-right: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 30%, transparent);
+    background: color-mix(in oklab, var(--panel) 68%, transparent);
+    box-shadow: none;
 }
 
 .about-philosophy-eyebrow {
@@ -429,4 +433,5 @@
         transition: none;
         transform: none;
     }
+}
 }

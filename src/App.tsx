@@ -9,6 +9,7 @@ import TimelineSection from './sections/TimelineSection'
 import BlogSection from './sections/BlogSection'
 import ContactSection from './sections/ContactSection'
 import SiteFooter from './components/layout/SiteFooter'
+import SiteHeader from './components/layout/SiteHeader'
 import CommandPalette from './components/overlays/CommandPalette'
 import GlitchTransition from './components/overlays/GlitchTransition'
 import InitialHudLoader from './components/overlays/InitialHudLoader'
@@ -79,15 +80,17 @@ function App() {
   const { isBootVisible, isPageGlitching, progress, activeLabel, logs, skipBoot } = useInitialBoot()
 
   useDocumentMeta()
+  const isHome = location.pathname === '/'
 
   // The boot sequence is a home-page intro: deep links open straight on their content.
-  if (isBootVisible && location.pathname === '/') {
+  if (isBootVisible && isHome) {
     return <InitialHudLoader progress={progress} activeLabel={activeLabel} logs={logs} onSkip={skipBoot} />
   }
 
   return (
     <>
       <SkipLink />
+      {isHome ? null : <SiteHeader />}
       <Suspense fallback={<div className="route-fallback" role="status" aria-label="Loading" />}>
         <Routes>
           <Route path="/" element={<HomePage isPageGlitching={isPageGlitching} />} />
@@ -99,6 +102,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+      {isHome ? null : <SiteFooter />}
       <CommandPalette />
     </>
   )

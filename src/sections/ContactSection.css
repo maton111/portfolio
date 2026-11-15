@@ -1,3 +1,7 @@
+/* Layout and section-specific styling. Shared primitives (headlines, labels, panels,
+   chips, buttons) are defined once in src/styles/system.css, which sits in a later
+   cascade layer and therefore wins over anything declared here. */
+@layer components {
 .contact-page {
   padding: 96px 24px 100px;
   background-color: var(--bg-base);
@@ -493,4 +497,5 @@
     transition: none;
     animation: none;
   }
+}
 }
