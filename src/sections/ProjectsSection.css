@@ -454,3 +454,19 @@
   }
 }
 
+
+/* Small screens: stack the scope badge under the title so it never collides with it */
+@media (max-width: 639px) {
+  .project-head {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-head > span {
+    align-self: flex-start;
+  }
+
+  .project-icon {
+    opacity: 0.1;
+  }
+}

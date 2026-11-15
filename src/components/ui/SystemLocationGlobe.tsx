@@ -78,7 +78,8 @@ function SystemLocationGlobe({ locationLabel, fallbackImage }: SystemLocationGlo
         globe.destroy()
       }
     } catch {
-      setHasError(true)
+      // WebGL unavailable: swap to the static image once this effect has settled.
+      queueMicrotask(() => setHasError(true))
       window.removeEventListener('resize', updateSize)
       resizeObserver?.disconnect()
     }

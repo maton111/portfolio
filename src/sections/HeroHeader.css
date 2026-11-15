@@ -1,0 +1,373 @@
+/* Header upgrades (scroll state, reading progress, palette trigger, mobile menu)
+   and hero polish. Imported after HeroSection.css so it wins on equal specificity. */
+
+.topbar {
+    z-index: var(--z-header);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.topbar:not(.is-scrolled):not(.is-menu-open) {
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+}
+
+.topbar.is-scrolled {
+    box-shadow: 0 10px 30px -18px color-mix(in oklab, var(--bg-base) 90%, black);
+}
+
+.topbar.is-menu-open {
+    background: var(--bg-base);
+}
+
+.topbar-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-mint), var(--accent-green));
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 60%, transparent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+.logo img {
+    filter: drop-shadow(0 0 10px color-mix(in oklab, var(--accent-green) 45%, transparent));
+}
+
+.logo:hover img {
+    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--accent-green) 75%, transparent));
+}
+
+.palette-trigger {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 10px 0 9px;
+    border: 1px solid color-mix(in oklab, var(--outline) 50%, transparent);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.palette-trigger:hover {
+    border-color: color-mix(in oklab, var(--accent-green) 45%, transparent);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-green) 20%, transparent);
+}
+
+.palette-trigger .material-symbols-outlined {
+    font-size: 1rem;
+}
+
+.palette-trigger kbd {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.theme-toggle-btn .material-symbols-outlined,
+.lang-chip .material-symbols-outlined {
+    color: var(--accent-green);
+    font-size: 1rem;
+}
+
+.theme-toggle-btn:active,
+.lang-chip:active,
+.palette-trigger:active,
+.menu-toggle:active {
+    transform: scale(0.94);
+}
+
+.menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid color-mix(in oklab, var(--accent-green) 40%, transparent);
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklab, var(--accent-green) 8%, transparent);
+    cursor: pointer;
+}
+
+.menu-toggle-bars {
+    position: relative;
+    width: 16px;
+    height: 10px;
+}
+
+.menu-toggle-bars i {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent-green);
+    transition: transform 0.35s var(--ease-out-emphasized), top 0.35s var(--ease-out-emphasized);
+}
+
+.menu-toggle-bars i:first-child { top: 0; }
+.menu-toggle-bars i:last-child { top: 8px; }
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars i:first-child { top: 4px; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars i:last-child { top: 4px; transform: rotate(-45deg); }
+
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-menu);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 96px 20px calc(28px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at 100% 0%, color-mix(in oklab, var(--accent-green) 12%, transparent), transparent 55%),
+        var(--bg-base);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+        opacity 0.3s var(--ease-out-emphasized),
+        transform 0.3s var(--ease-out-emphasized),
+        visibility 0s linear 0.3s;
+}
+
+.mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu-list li {
+    border-bottom: 1px solid color-mix(in oklab, var(--outline) 35%, transparent);
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+.mobile-menu.is-open .mobile-menu-list li {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity 0.45s var(--ease-out-emphasized) calc(80ms + var(--stagger-i, 0) * 45ms),
+        transform 0.45s var(--ease-out-emphasized) calc(80ms + var(--stagger-i, 0) * 45ms);
+}
+
+.mobile-menu-list button {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 14px 4px;
+    border: none;
+    background: none;
+    color: var(--text-strong);
+    font-family: var(--font-headline);
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mobile-menu-list button .material-symbols-outlined {
+    margin-left: auto;
+    align-self: center;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.mobile-menu-list button.is-current {
+    color: var(--accent-green);
+}
+
+.mobile-menu-list button.is-current .material-symbols-outlined {
+    color: var(--accent-green);
+    opacity: 1;
+}
+
+.mobile-menu-index {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent-mint);
+}
+
+.mobile-menu-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.mobile-menu-footer .hero-avail {
+    margin: 0;
+}
+
+.mobile-menu-footer .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Character sheet entrance (pure CSS: replaces the GSAP dependency) */
+.hud-slot {
+    animation: hud-enter 1.2s var(--ease-out-emphasized) 0.15s both;
+}
+
+@keyframes hud-enter {
+    from { opacity: 0; transform: translateX(72px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hud-slot {
+        animation: none;
+    }
+}
+
+/* Hero copy polish */
+.hero-copy h1 {
+    font-size: clamp(2.6rem, 7.4vw, 5.4rem);
+    font-weight: 700;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+}
+
+.hero-copy h1 span {
+    color: inherit;
+}
+
+.hero-copy h1 .hero-title-accent {
+    color: var(--accent-green);
+    text-shadow: 0 0 42px color-mix(in oklab, var(--accent-green) 35%, transparent);
+}
+
+.hero-intro {
+    font-size: clamp(1rem, 1.15vw, 1.1rem);
+    text-wrap: pretty;
+}
+
+.hero-tag-dot {
+    width: 6px;
+    background: color-mix(in oklab, var(--text-main) 18%, transparent);
+}
+
+.hero-tag-dot.is-active {
+    width: 18px;
+    background: var(--accent-green);
+}
+
+.hero-trust .material-symbols-outlined {
+    color: var(--accent-mint);
+}
+
+.hero-hint .material-symbols-outlined {
+    font-size: 14px;
+}
+
+.btn {
+    border-radius: var(--radius-sm);
+}
+
+.btn .material-symbols-outlined {
+    font-size: 1.1rem;
+    transition: transform 0.25s var(--ease-out-emphasized);
+}
+
+.btn-primary {
+    color: var(--on-accent);
+}
+
+.btn-primary:hover .material-symbols-outlined {
+    transform: translateY(2px);
+}
+
+.btn-secondary:hover .material-symbols-outlined {
+    transform: translateX(3px);
+}
+
+.status-scanner {
+    z-index: var(--z-scanner);
+    min-height: var(--scanner-height);
+}
+
+@media (min-width: 900px) {
+    .menu-toggle,
+    .mobile-menu {
+        display: none;
+    }
+}
+
+@media (min-width: 1100px) {
+    .palette-trigger {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 1240px) and (min-width: 900px) {
+    .topbar ul {
+        gap: 20px;
+    }
+
+    .availability-chip {
+        display: none;
+    }
+}
+
+@media (max-width: 899px) {
+    /* Headline first on small screens: the character sheet is supporting content. */
+    .hero-copy {
+        order: 1;
+    }
+
+    .hud-slot {
+        order: 2;
+    }
+
+    .hero-main {
+        padding-top: 104px;
+    }
+
+    .hud-card {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (hover: none), (max-width: 899px) {
+    .hero-hint {
+        display: none;
+    }
+}
+
+@media (max-width: 639px) {
+    /* The fixed ticker costs too much of a phone viewport. */
+    .status-scanner {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .mobile-menu.is-open .mobile-menu-list li,
+    .menu-toggle-bars i {
+        transition: none;
+    }
+}

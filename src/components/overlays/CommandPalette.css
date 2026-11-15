@@ -1,0 +1,241 @@
+.cmdk-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-palette);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: min(16vh, 140px) 16px 24px;
+  background: color-mix(in oklab, var(--bg-base) 72%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: cmdk-fade 180ms var(--ease-out-emphasized) both;
+}
+
+.cmdk-panel {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: min(560px, 72dvh);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid color-mix(in oklab, var(--accent-green) 24%, var(--outline));
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--bg-elevated) 94%, transparent);
+  box-shadow: var(--shadow-hud), 0 0 80px color-mix(in oklab, var(--accent-green) 9%, transparent);
+  animation: cmdk-rise 260ms var(--ease-out-emphasized) both;
+}
+
+.cmdk-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.cmdk-corner-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid var(--accent-green);
+  border-right: 2px solid var(--accent-green);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.cmdk-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid var(--accent-green);
+  border-left: 2px solid var(--accent-green);
+  border-bottom-left-radius: var(--radius-lg);
+}
+
+.cmdk-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid color-mix(in oklab, var(--outline) 45%, transparent);
+}
+
+.cmdk-prompt {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.cmdk-input-row input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  caret-color: var(--accent-green);
+}
+
+.cmdk-input-row input:focus,
+.cmdk-input-row input:focus-visible {
+  outline: none;
+}
+
+.cmdk-input-row input::placeholder {
+  color: color-mix(in oklab, var(--text-muted) 62%, transparent);
+}
+
+.cmdk-panel kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  padding: 2px 6px;
+  border: 1px solid color-mix(in oklab, var(--outline) 70%, transparent);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--panel-strong) 55%, transparent);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+
+.cmdk-list {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px 8px 10px;
+  scrollbar-width: thin;
+}
+
+.cmdk-group {
+  margin: 0;
+  padding: 12px 10px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-mint);
+}
+
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.cmdk-item.is-active {
+  border-left-color: var(--accent-green);
+  background: color-mix(in oklab, var(--accent-green) 9%, transparent);
+  color: var(--text-strong);
+}
+
+.cmdk-item-icon {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.cmdk-item.is-active .cmdk-item-icon {
+  color: var(--accent-green);
+}
+
+.cmdk-item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+.cmdk-item-hint {
+  flex-shrink: 0;
+  max-width: 44%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: color-mix(in oklab, var(--text-muted) 78%, transparent);
+}
+
+.cmdk-item-enter {
+  font-size: 0.95rem;
+  color: var(--accent-green);
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.cmdk-item.is-active .cmdk-item-enter {
+  opacity: 1;
+}
+
+.cmdk-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 34px 16px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.cmdk-footer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 18px;
+  border-top: 1px solid color-mix(in oklab, var(--outline) 45%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in oklab, var(--text-muted) 80%, transparent);
+}
+
+.cmdk-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cmdk-footer-brand {
+  margin-left: auto;
+  color: color-mix(in oklab, var(--accent-mint) 80%, transparent);
+}
+
+@keyframes cmdk-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cmdk-rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 560px) {
+  .cmdk-backdrop {
+    padding-top: 76px;
+  }
+
+  .cmdk-item-hint,
+  .cmdk-footer span:not(.cmdk-footer-brand) {
+    display: none;
+  }
+
+  .cmdk-footer-brand {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmdk-backdrop,
+  .cmdk-panel {
+    animation: none;
+  }
+}

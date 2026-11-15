@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap');
+/* Fonts are loaded from index.html (<link> + preconnect) so they download in parallel with the bundle. */
 
 /* Breakpoint scale (min-width, mobile-first)
    sm  640px  — tablet portrait
@@ -34,6 +33,7 @@
   /* Typography */
   --font-headline: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
 
   /* Spacing scale */
   --space-1: 4px;
@@ -66,6 +66,17 @@
   /* Layout */
   --section-anchor-offset: 104px;
   --content-max: 1280px;
+  --scanner-height: 40px;
+
+  /* Stacking scale: one place to reason about layers */
+  --z-scanner: 30;
+  --z-header: 40;
+  --z-menu: 39;
+  --z-palette: 80;
+  --z-boot: 90;
+  --z-transition: 95;
+  --z-grain: 100;
+  --z-skip: 110;
 
   /* Theme-aware 3D scene colors (used by Three.js hero) */
   --hero-fog:        #0b0f0c;
@@ -181,7 +192,7 @@ body::after {
   height: 100%;
   opacity: 0.032;
   pointer-events: none;
-  z-index: 9999;
+  z-index: var(--z-grain);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
@@ -358,4 +369,110 @@ main[id] {
     animation: none;
     display: none;
   }
+}
+
+/* Typography refinements */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--accent-green);
+  color: var(--on-accent);
+}
+
+html {
+  scrollbar-color: color-mix(in oklab, var(--accent-green) 45%, var(--outline)) var(--bg-base);
+  scrollbar-width: thin;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Data-like micro labels (IDs, eyebrows, readouts, chips) are set in mono: it sells the
+   terminal language of the UI and gives numbers tabular alignment. One list, one rule. */
+:is(
+  .hero-eyebrow, .hud-eyebrow, .hud-class, .hud-lvl-label, .hud-lvl-sub, .stat-label, .stat-value,
+  .hud-quest-eyebrow, .hud-tags span, .scanner-track span, .hero-trust, .hero-hint, .logo-role,
+  .about-eyebrow span, .about-section-head > span, .about-kernel-pretitle, .about-kernel-row small,
+  .about-kernel-footer, .about-scanner-group span, .about-philosophy-eyebrow,
+  .skills-header p, .skills-module-id, .skills-module-status, .skills-detail-eyebrow, .skills-heartbeat,
+  .skills-metric-label-row, .skills-tag-chip,
+  .projects-header > div p, .project-head small, .project-head > span, .project-tags span,
+  .log-item small, .repo-status small, .project-visual-placeholder-label,
+  .tl-eyebrow, .tl-kind, .tl-card-id, .tl-card-entry, .tl-chip,
+  .blog-eyebrow, .blog-id, .blog-date, .blog-tag, .blog-read-time, .blog-featured-badge,
+  .contact-hud-meta p, .contact-eyebrow, .contact-state-badge, .contact-node-id, .contact-sla-label,
+  .contact-coordinates-footer,
+  .boot-log p, .boot-footer small, .boot-header small
+) {
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0.08em !important;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 1;
+}
+
+/* Skip link: first tab stop, visible only on keyboard focus */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: var(--z-skip);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-green);
+  color: var(--on-accent);
+  font-family: var(--font-headline);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease-out-emphasized);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* Lazy route placeholder: holds the viewport so nothing jumps while a chunk loads */
+.route-fallback {
+  min-height: 100dvh;
+  background:
+    linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent-green) 60%, transparent), transparent)
+    0 0 / 40% 2px no-repeat;
+  animation: route-loading 1.1s ease-in-out infinite;
+}
+
+@keyframes route-loading {
+  from { background-position: -40% 0; }
+  to { background-position: 140% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .route-fallback {
+    animation: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
