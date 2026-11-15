@@ -1,0 +1,24 @@
+/* Sub-page header: the home bar's styles, plus the few differences below. */
+
+/* No section menu on small screens here, so the search trigger is always available:
+   it opens the command palette, which reaches every section, project and post. */
+.topbar--subpage .palette-trigger {
+  display: inline-flex;
+}
+
+@media (max-width: 1099px) {
+  .topbar--subpage .palette-trigger kbd {
+    display: none;
+  }
+
+  .topbar--subpage .palette-trigger {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+/* Footer on sub-pages: no fixed ticker to clear */
+.site-footer--subpage {
+  padding-bottom: 28px;
+}

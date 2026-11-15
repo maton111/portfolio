@@ -1,0 +1,657 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   Design system — the one place that decides how shared things look.
+
+   Cascade layers (declared in index.css): base < components < system.
+   Section and page stylesheets live in `components` and own layout only;
+   the primitives below live in `system`, so they win without specificity
+   fights and every heading, label, panel, chip and button stays identical
+   across the home page, project pages and blog.
+
+   The visual language comes from the 404 page, the boot intro and the command
+   palette: mono micro-labels, tight sentence-case headlines, flat bordered
+   panels with one accent edge, square controls that lift on hover.
+
+   To restyle a primitive, change it here. To give a new element a primitive's
+   look, add its selector to the relevant list.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@layer system {
+  :root {
+    --panel-bg: color-mix(in oklab, var(--panel-strong) 45%, transparent);
+    --panel-bg-hover: color-mix(in oklab, var(--panel-strong) 70%, transparent);
+    --panel-line: color-mix(in oklab, var(--outline) 50%, transparent);
+    --hud-bg: color-mix(in oklab, var(--bg-elevated) 88%, transparent);
+    --hud-line: color-mix(in oklab, var(--accent-green) 22%, var(--outline));
+    --label-size: 0.7rem;
+    --micro-size: 0.66rem;
+
+    /* Aliases used by the LifeWrapped page, which referenced tokens that were never defined. */
+    --surface-container: var(--panel-bg);
+    --surface-base: var(--bg-base);
+    --text-secondary: var(--text-main);
+  }
+
+  /* ── 1. Headlines ─────────────────────────────────────────────────────── */
+
+  :is(
+    .about-header h2, .skills-header h2, .projects-header h2,
+    .tl-h2, .blog-h2, .contact-main header h2
+  ) {
+    font-family: var(--font-headline);
+    font-size: clamp(2.4rem, 6.2vw, 4.6rem);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    text-transform: none;
+    color: var(--text-strong);
+  }
+
+  /* Page titles on project and blog routes */
+  :is(.project-notes-hero-copy h1, .blog-post-hero-copy h1, .blog-archive-title, .blog-post-not-found h1) {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text-strong);
+  }
+
+  /* Section intros */
+  :is(.about-header > p, .projects-header > p, .tl-sub, .blog-sub, .contact-main header p) {
+    max-width: 62ch;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: color-mix(in oklab, var(--text-main) 82%, transparent);
+  }
+
+  /* Titles inside cards and panels */
+  :is(
+    .project-head h3, .skills-detail-header h3, .tl-card-title, .blog-featured-title,
+    .blog-item-title, .blog-archive-card-title, .blog-post-nav-title, .hud-name,
+    .contact-success h3
+  ) {
+    font-family: var(--font-headline);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text-strong);
+  }
+
+  /* Article headings: readable sentence-case, not micro-labels */
+  .blog-post-panel h2 {
+    margin-bottom: 12px;
+    font-family: var(--font-headline);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-transform: none;
+    color: var(--text-strong);
+  }
+
+  /* ── 2. Eyebrows and labels (mono) ────────────────────────────────────── */
+
+  /* Section eyebrows */
+  :is(
+    .hero-eyebrow, .about-eyebrow span, .skills-header > div p, .projects-header > div p,
+    .tl-eyebrow, .blog-eyebrow, .blog-archive-eyebrow, .contact-eyebrow,
+    .hud-eyebrow, .hud-quest-eyebrow, .about-kernel-pretitle, .about-philosophy-eyebrow,
+    .skills-detail-eyebrow, .blog-post-takeaway-label
+  ) {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* Panel headings: the small titled strip at the top of a panel */
+  :is(
+    .about-section-head h3, .about-origin-card h4, .sidebar-head h4, .project-notes-panel h2,
+    .edlc-section-title, .lw-section-title, .edlc-arch-col-title, .lw-arch-col-title,
+    .blog-post-nav-label
+  ) {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Micro labels: IDs, dates, field names, readouts */
+  :is(
+    .logo-role, .hud-class, .hud-lvl-label, .hud-lvl-sub, .stat-label, .stat-value,
+    .scanner-track span:not(.material-symbols-outlined), .hero-trust, .hero-hint,
+    .about-kernel-row small, .about-kernel-footer > span:last-child, .about-scanner span,
+    .skills-module-id, .skills-heartbeat span:last-child,
+    .skills-metric-label-row > span:first-child, .skills-metric-value,
+    .skills-bottom > div:first-child p, .skills-bottom > div:last-child p,
+    .project-head small, .log-item small, .repo-status small, .project-visual-placeholder-label,
+    .tl-kind, .tl-card-id, .tl-card-entry, .tl-card-org,
+    .blog-id, .blog-date, .blog-read-time,
+    .blog-archive-id, .blog-archive-date, .blog-archive-read-time, .blog-archive-count,
+    .blog-post-hero-copy small, .blog-post-nav-id, .blog-post-not-found small,
+    .contact-hud-meta p, .contact-state-badge, .contact-node-label, .contact-sla-label,
+    .contact-coordinates-footer, .contact-form label > span,
+    .project-notes-hero-copy small,
+    .edlc-hero-stat-label, .edlc-infra-label, .edlc-legend span, .edlc-backlog-legend span, .edlc-arch-arrow,
+    .lw-hero-stat-label, .lw-infra-label, .lw-platform-input-label, .lw-platform-stats-label
+  ) {
+    font-family: var(--font-mono);
+    font-size: var(--micro-size);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Mono without a forced size: large readouts and code-like values */
+  :is(.about-section-head > span, .about-kernel-title, .contact-node-id, .tl-year, .hud-lvl-number) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .about-kernel-title {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-strong);
+  }
+
+  .contact-node-id {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  /* ── 3. Panels ────────────────────────────────────────────────────────── */
+
+  /* Log panels: flat, one accent edge. Same block as the 404 terminal log. */
+  :is(
+    .about-origin-card, .about-philosophy, .project-card, .tl-card, .blog-featured, .blog-item,
+    .project-notes-panel, .project-notes-top-right-placeholder, .project-notes-not-found,
+    .edlc-module-card, .lw-platform-card,
+    .blog-post-panel, .blog-post-nav-item, .blog-post-not-found, .blog-archive-card
+  ) {
+    border: 1px solid var(--panel-line);
+    border-left: 3px solid var(--accent-green);
+    border-radius: var(--radius-md);
+    background: var(--panel-bg);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .about-philosophy {
+    border-left-color: var(--accent-orange);
+  }
+
+  .project-card.featured-card {
+    border-left-color: var(--accent-orange);
+  }
+
+  :is(.lw-platform-card, .project-notes-top-right-placeholder) {
+    border-left-width: 1px;
+    border-left-color: var(--panel-line);
+  }
+
+  .blog-post-panel--takeaway {
+    border-left-color: var(--accent-orange);
+    background: color-mix(in oklab, var(--accent-orange) 6%, var(--panel-bg));
+  }
+
+  /* Interactive panels lift and light their border */
+  :is(.project-card, .blog-featured, .blog-item, .blog-archive-card, .blog-post-nav-item, .edlc-module-card) {
+    transition:
+      transform 0.25s var(--ease-out-emphasized),
+      background-color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  :is(.project-card, .blog-featured, .blog-item, .blog-archive-card, .blog-post-nav-item):hover {
+    transform: translateY(-3px);
+    background: var(--panel-bg-hover);
+    border-top-color: color-mix(in oklab, var(--accent-green) 40%, transparent);
+    border-right-color: color-mix(in oklab, var(--accent-green) 40%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--accent-green) 40%, transparent);
+    box-shadow: none;
+  }
+
+  /* HUD panels: the framed ones with corner brackets. Same frame as the command palette. */
+  :is(
+    .hud-card, .about-kernel-card, .skills-detail-panel, .contact-panel, .contact-node-panel,
+    .projects-sidebar > div, .project-notes-hero, .blog-post-hero, .skills-bottom
+  ) {
+    border: 1px solid var(--hud-line);
+    border-radius: var(--radius-lg);
+    background: var(--hud-bg);
+    box-shadow: 0 18px 48px -24px color-mix(in oklab, var(--bg-base) 80%, black);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* The hero card floats over the animated map, so it keeps a blur for legibility. */
+  .hud-card {
+    background: color-mix(in oklab, var(--bg-elevated) 78%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  :is(.project-notes-hero, .blog-post-hero) {
+    overflow: hidden;
+  }
+
+  /* Corner brackets follow the panel radius */
+  :is(.hud-corner-tr, .about-hud-corner-tr, .skills-corner-tr, .contact-panel .corner.top-right) {
+    border-top-right-radius: var(--radius-lg);
+  }
+
+  :is(.hud-corner-bl, .about-hud-corner-bl, .skills-corner-bl, .contact-panel .corner.bottom-left) {
+    border-bottom-left-radius: var(--radius-lg);
+  }
+
+  /* Rows inside panels */
+  :is(.contact-node-row, .blog-item-icon, .edlc-arch-node, .lw-arch-node, .hud-lvl-badge) {
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--panel-strong) 35%, transparent);
+  }
+
+  .hud-lvl-badge {
+    border-color: color-mix(in oklab, var(--accent-green) 40%, transparent);
+    background: color-mix(in oklab, var(--accent-green) 8%, transparent);
+  }
+
+  .contact-node-row {
+    transition: transform 0.25s var(--ease-out-emphasized), border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .contact-node-row:hover {
+    transform: translateX(4px);
+    border-color: color-mix(in oklab, var(--accent-green) 45%, transparent);
+  }
+
+  /* ── 4. Chips and badges ──────────────────────────────────────────────── */
+
+  /* Neutral chips: tech tags */
+  :is(
+    .hud-tags span, .skills-tag-chip, .project-tags span, .tl-chip,
+    .project-notes-hero-meta span, .project-notes-tags span, .blog-post-hero-meta span
+  ) {
+    padding: 4px 9px;
+    border: 1px solid color-mix(in oklab, var(--outline) 65%, transparent);
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklab, var(--panel-strong) 40%, transparent);
+    color: color-mix(in oklab, var(--text-main) 88%, transparent);
+    font-family: var(--font-mono);
+    font-size: var(--micro-size);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Status badges: outlined, coloured by their own tone */
+  :is(
+    .skills-module-status, .project-head > span, .blog-tag, .blog-featured-badge, .blog-post-tag,
+    .blog-archive-tag, .blog-archive-featured-badge, .edlc-module-highlight, .skills-heartbeat,
+    .project-actions .demo-wip-badge
+  ) {
+    padding: 4px 9px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  :is(.skills-module-status, .project-head > span, .blog-tag, .blog-post-tag, .blog-archive-tag) {
+    white-space: nowrap;
+  }
+
+  /* The oversized ghost icon behind project titles fought with the scope badge */
+  .project-icon {
+    display: none;
+  }
+
+  .repo-status > div:first-child {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  /* ── 5. Buttons ───────────────────────────────────────────────────────── */
+
+  /* Shared shape: every real button in the site */
+  :is(
+    .btn,
+    .project-actions button.primary, .contact-form-footer button, .contact-success button,
+    .project-notes-actions button, .project-notes-actions a, .project-notes-action-link,
+    .project-notes-not-found button, .blog-post-actions button, .blog-post-not-found button,
+    .blog-archive-back, .blog-archive-btn
+  ) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 1px solid color-mix(in oklab, var(--outline) 70%, transparent);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-main);
+    font-family: var(--font-headline);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: none;
+    text-decoration: none;
+    box-shadow: none;
+    cursor: pointer;
+    transition:
+      transform 0.2s var(--ease-out-emphasized),
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  :is(
+    .project-actions button.primary, .contact-success button,
+    .project-notes-actions button, .project-notes-actions a, .project-notes-action-link,
+    .blog-post-actions button, .blog-archive-back
+  ) {
+    padding: 9px 14px;
+    font-size: 0.84rem;
+  }
+
+  :is(
+    .btn,
+    .project-actions button.primary, .contact-form-footer button, .contact-success button,
+    .project-notes-actions button, .project-notes-actions a, .project-notes-action-link,
+    .project-notes-not-found button, .blog-post-actions button, .blog-post-not-found button,
+    .blog-archive-back, .blog-archive-btn
+  ):hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent-green) 55%, transparent);
+    background: color-mix(in oklab, var(--accent-green) 6%, transparent);
+    color: var(--accent-green);
+  }
+
+  :is(
+    .btn,
+    .project-actions button.primary, .contact-form-footer button, .contact-success button,
+    .project-notes-actions button, .project-notes-actions a, .project-notes-action-link,
+    .project-notes-not-found button, .blog-post-actions button, .blog-post-not-found button,
+    .blog-archive-back, .blog-archive-btn
+  ):active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  :is(
+    .btn,
+    .project-actions button.primary, .contact-form-footer button, .contact-success button,
+    .project-notes-actions button, .project-notes-actions a, .project-notes-action-link,
+    .project-notes-not-found button, .blog-post-actions button, .blog-post-not-found button,
+    .blog-archive-back, .blog-archive-btn
+  ) .material-symbols-outlined {
+    font-size: 1.05rem;
+  }
+
+  /* Primary: filled green */
+  :is(
+    .btn-primary,
+    .project-actions button.primary, .contact-form-footer button,
+    .project-notes-actions button.primary, .project-notes-actions a.primary,
+    .project-notes-not-found button, .blog-post-not-found button
+  ) {
+    border-color: var(--accent-green);
+    background: var(--accent-green);
+    color: var(--on-accent);
+  }
+
+  :is(
+    .btn-primary,
+    .project-actions button.primary, .contact-form-footer button,
+    .project-notes-actions button.primary, .project-notes-actions a.primary,
+    .project-notes-not-found button, .blog-post-not-found button
+  ):hover:not(:disabled) {
+    border-color: var(--accent-green);
+    background: var(--accent-green);
+    color: var(--on-accent);
+    box-shadow: var(--glow-green);
+  }
+
+  .contact-form-footer button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  /* Secondary accent: orange outline (hero only) */
+  .btn-secondary {
+    border-color: color-mix(in oklab, var(--accent-orange) 50%, transparent);
+    background: color-mix(in oklab, var(--accent-orange) 8%, transparent);
+    color: var(--accent-orange);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--accent-orange);
+    background: color-mix(in oklab, var(--accent-orange) 16%, transparent);
+    color: var(--accent-orange);
+  }
+
+  /* Ghost: dashed, for "see everything" actions */
+  .blog-archive-btn {
+    width: 100%;
+    border-style: dashed;
+    border-color: color-mix(in oklab, var(--accent-green) 45%, transparent);
+    color: var(--accent-green);
+  }
+
+  /* Text links inside cards */
+  :is(.project-actions a, .blog-cta, .blog-archive-cta) {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    transition: gap 0.25s var(--ease-out-emphasized), color 0.2s ease;
+  }
+
+  .project-actions a:hover {
+    color: var(--text-strong);
+  }
+
+  :is(.blog-featured, .blog-item, .blog-archive-card):hover :is(.blog-cta, .blog-archive-cta) {
+    gap: 10px;
+  }
+
+  .project-actions .repo-private-badge {
+    padding: 5px 9px;
+    border: 1px dashed color-mix(in oklab, var(--outline) 70%, transparent);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Tabs */
+  .skills-module-btn {
+    border: 1px solid var(--panel-line);
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--panel-strong) 25%, transparent);
+    transition: background-color 0.25s ease, border-color 0.2s ease, transform 0.25s var(--ease-out-emphasized);
+  }
+
+  .skills-module-btn:hover {
+    background: var(--panel-bg);
+    transform: translateX(3px);
+  }
+
+  .skills-module-btn.is-active {
+    border-left-color: var(--accent-green);
+    background: var(--panel-bg-hover);
+  }
+
+  .skills-module-btn.tone-orange.is-active {
+    border-left-color: var(--accent-orange);
+  }
+
+  .skills-module-title {
+    font-family: var(--font-headline);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── 6. Form fields ───────────────────────────────────────────────────── */
+
+  :is(.contact-form input, .contact-form select, .contact-form textarea) {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+  }
+
+  :is(.contact-form input, .contact-form textarea)::placeholder {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  .form-error {
+    border-left: 3px solid var(--accent-orange);
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--accent-orange) 10%, transparent);
+    color: var(--accent-orange);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── 7. Meters ────────────────────────────────────────────────────────── */
+
+  /* Same thin, square bar as the boot intro */
+  :is(.stat-bar, .skills-metric-bar-track) {
+    height: 4px;
+    border-radius: 0;
+    background: color-mix(in oklab, var(--outline) 40%, transparent);
+  }
+
+  :is(.stat-bar span, .skills-metric-bar-fill) {
+    border-radius: 0;
+  }
+
+  /* ── 8. Reading sizes ─────────────────────────────────────────────────── */
+
+  /* Body copy that was set too small to read comfortably */
+  :is(.about-origin-card p, .tl-card-copy, .blog-item-excerpt, .blog-archive-card-excerpt) {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  :is(.about-kernel-row strong, .edlc-module-desc, .edlc-status-row, .edlc-backlog-item, .lw-platform-stats ul li) {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .log-item p {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .log-item span {
+    font-size: 0.8rem;
+    font-style: normal;
+    line-height: 1.5;
+  }
+
+  :is(.edlc-module-name, .lw-platform-name, .edlc-arch-node, .lw-arch-node) {
+    font-family: var(--font-headline);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+
+  :is(.edlc-arch-node span, .lw-arch-node span) {
+    font-size: 0.8rem;
+  }
+
+  :is(.edlc-hero-stat-number, .lw-hero-stat-number) {
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :is(.edlc-hero-infra, .lw-hero-infra) span:not(.edlc-infra-label):not(.lw-infra-label),
+  .lw-platform-input code,
+  .lw-arch-node--deploy,
+  .lw-arch-arrow span:first-child {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+  }
+
+  /* Long-form article text */
+  .blog-post-panel p {
+    font-size: 1.02rem;
+    line-height: 1.8;
+  }
+
+  .blog-post-panel--intro p {
+    font-size: 1.14rem;
+    line-height: 1.7;
+    color: var(--text-strong);
+  }
+
+  :is(.project-notes-panel p, .project-notes-panel li) {
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .project-notes-hero-copy p {
+    max-width: 60ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .scanner-track .material-symbols-outlined {
+    font-size: 0.9rem;
+  }
+
+  /* ── 9. Page shells ───────────────────────────────────────────────────── */
+
+  /* Project and blog routes hardcoded a dark background, which broke the light theme. */
+  :is(.project-notes-page, .blog-post-page, .blog-archive-page) {
+    min-height: 100dvh;
+    background-color: var(--bg-base);
+  }
+
+  /* Grid children may shrink: one long nowrap title must not widen the whole page. */
+  :is(.blog-post-shell, .project-notes-shell, .blog-archive-shell) > *,
+  :is(.blog-post-nav, .blog-post-nav-item) > * {
+    min-width: 0;
+  }
+
+  .blog-post-nav-item {
+    min-width: 0;
+  }
+
+  .blog-post-nav-title {
+    white-space: normal;
+  }
+
+  /* Icons keep their own font wherever a label rule above also matches them */
+  span.material-symbols-outlined.material-symbols-outlined,
+  i.material-symbols-outlined.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(.project-card, .blog-featured, .blog-item, .blog-archive-card, .blog-post-nav-item, .contact-node-row, .skills-module-btn):hover {
+      transform: none;
+    }
+  }
+}

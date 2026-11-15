@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { directChannels, externalNodes } from '../../data/contactContent'
-import { SECTION_IDS } from '../../data/sectionNavigation'
+import { SECTION_IDS, type SectionId } from '../../data/sectionNavigation'
 import { scrollToSection } from '../../hooks/useSectionScroll'
 import { openCommandPalette } from '../../utils/commandPalette'
 import './SiteFooter.css'
@@ -9,10 +10,19 @@ const BUILD_YEAR = new Date().getFullYear()
 
 function SiteFooter() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
   const email = directChannels[0]
 
+  // On the home page links scroll; elsewhere they route back to the section.
+  const goTo = (id: SectionId) => {
+    if (isHome) scrollToSection(id)
+    else navigate(id === 'home' ? '/' : `/#${id}`)
+  }
+
   return (
-    <footer className="site-footer">
+    <footer className={`site-footer${isHome ? '' : ' site-footer--subpage'}`}>
       <div className="site-footer-inner">
         <div className="site-footer-brand">
           <p className="site-footer-wordmark">
@@ -32,7 +42,7 @@ function SiteFooter() {
           <ul>
             {SECTION_IDS.filter((id) => id !== 'home').map((id) => (
               <li key={id}>
-                <button type="button" onClick={() => scrollToSection(id)}>
+                <button type="button" onClick={() => goTo(id)}>
                   {t(`navbar.${id}`)}
                 </button>
               </li>
@@ -65,7 +75,11 @@ function SiteFooter() {
             <kbd>K</kbd>
             <span>{t('footer.paletteHint')}</span>
           </button>
-          <button type="button" className="site-footer-top" onClick={() => scrollToSection('home')}>
+          <button
+            type="button"
+            className="site-footer-top"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
             {t('footer.backToTop')}
             <span className="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
           </button>

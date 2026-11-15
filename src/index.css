@@ -1,3 +1,8 @@
+/* Cascade order, lowest to highest priority. Unlayered rules (the standalone
+   overlays: header, palette, boot intro, footer, 404) sit above all three. */
+@layer base, components, system;
+
+@layer base {
 /* Fonts are loaded from index.html (<link> + preconnect) so they download in parallel with the bundle. */
 
 /* Breakpoint scale (min-width, mobile-first)
@@ -391,29 +396,6 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Data-like micro labels (IDs, eyebrows, readouts, chips) are set in mono: it sells the
-   terminal language of the UI and gives numbers tabular alignment. One list, one rule. */
-:is(
-  .hero-eyebrow, .hud-eyebrow, .hud-class, .hud-lvl-label, .hud-lvl-sub, .stat-label, .stat-value,
-  .hud-quest-eyebrow, .hud-tags span, .scanner-track span, .hero-trust, .hero-hint, .logo-role,
-  .about-eyebrow span, .about-section-head > span, .about-kernel-pretitle, .about-kernel-row small,
-  .about-kernel-footer, .about-scanner-group span, .about-philosophy-eyebrow,
-  .skills-header p, .skills-module-id, .skills-module-status, .skills-detail-eyebrow, .skills-heartbeat,
-  .skills-metric-label-row, .skills-tag-chip,
-  .projects-header > div p, .project-head small, .project-head > span, .project-tags span,
-  .log-item small, .repo-status small, .project-visual-placeholder-label,
-  .tl-eyebrow, .tl-kind, .tl-card-id, .tl-card-entry, .tl-chip,
-  .blog-eyebrow, .blog-id, .blog-date, .blog-tag, .blog-read-time, .blog-featured-badge,
-  .contact-hud-meta p, .contact-eyebrow, .contact-state-badge, .contact-node-id, .contact-sla-label,
-  .contact-coordinates-footer,
-  .boot-log p, .boot-footer small, .boot-header small
-) {
-  font-family: var(--font-mono) !important;
-  letter-spacing: 0.08em !important;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'zero' 1;
-}
-
 /* Skip link: first tab stop, visible only on keyboard focus */
 .skip-link {
   position: fixed;
@@ -475,4 +457,5 @@ main:focus {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
 }

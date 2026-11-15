@@ -1,3 +1,7 @@
+/* Layout and section-specific styling. Shared primitives (headlines, labels, panels,
+   chips, buttons) are defined once in src/styles/system.css, which sits in a later
+   cascade layer and therefore wins over anything declared here. */
+@layer components {
 .tl-section {
   position: relative;
   padding: 104px 24px;
@@ -237,4 +241,5 @@
 @media (prefers-reduced-motion: reduce) {
   .tl-line-pulse { animation: none; }
   .tl-node, .tl-card { transition: none; }
+}
 }
